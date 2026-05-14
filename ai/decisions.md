@@ -58,7 +58,15 @@ Decisão: preparar feature de compartilhamento no detalhe/resumo, mas não bloqu
 
 Motivo: requisito existe, porém não há mockup visual. Implementar depois evita inventar UI sem validação.
 
-## Dúvidas Abertas
+## ADR-010: Sessao Minima na P0
+
+Decisao: criar `SessionProvider` em memoria apenas para protecao inicial de rotas.
+
+Motivo: a P0 precisa compor providers e boundaries de navegacao sem antecipar regras de login, refresh token e SecureStore que pertencem a P1 Auth.
+
+Tradeoff: sessao ainda nao persiste entre aberturas; isso sera implementado junto com a feature de autenticacao.
+
+## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?
 - O catálogo de profissões/traits/skills seguirá Project Zomboid oficialmente?

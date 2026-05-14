@@ -2,25 +2,25 @@
 
 ## P0: Setup/Base
 
-- [ ] Inicializar projeto Expo com TypeScript.
-  - [ ] Configurar `tsconfig` strict.
-  - [ ] Configurar alias `@/` para `src`.
-  - [ ] Configurar ESLint, Prettier e scripts.
-- [ ] Criar estrutura `app/`, `src/features`, `src/shared`, `assets`.
-- [ ] Configurar Expo Router.
-  - [ ] Criar grupos `(auth)` e `(app)`.
-  - [ ] Criar layouts com proteção de rota.
-- [ ] Criar providers globais.
-  - [ ] `QueryClientProvider`.
-  - [ ] `ThemeProvider`.
-  - [ ] `SessionProvider` ou store equivalente.
-- [ ] Criar tema base.
-  - [ ] Tokens de cor, spacing, radius, typography.
-  - [ ] Background dark reutilizável.
-- [ ] Configurar testes.
-  - [ ] Jest.
-  - [ ] React Native Testing Library.
-  - [ ] MSW/mocks.
+- [x] Inicializar projeto Expo com TypeScript.
+  - [x] Configurar `tsconfig` strict.
+  - [x] Configurar alias `@/` para `src`.
+  - [x] Configurar ESLint, Prettier e scripts.
+- [x] Criar estrutura `app/`, `src/features`, `src/shared`, `assets`.
+- [x] Configurar Expo Router.
+  - [x] Criar grupos `(auth)` e `(app)`.
+  - [x] Criar layouts com protecao de rota.
+- [x] Criar providers globais.
+  - [x] `QueryClientProvider`.
+  - [x] `ThemeProvider`.
+  - [x] `SessionProvider` ou store equivalente.
+- [x] Criar tema base.
+  - [x] Tokens de cor, spacing, radius, typography.
+  - [x] Background dark reutilizavel.
+- [x] Configurar testes.
+  - [x] Jest.
+  - [x] React Native Testing Library.
+  - [x] MSW/mocks.
 
 ## P1: Auth
 

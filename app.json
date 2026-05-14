@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Project Zomboid Profile",
+    "slug": "project-zomboid-profile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "zomboidprofile",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#101411"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
