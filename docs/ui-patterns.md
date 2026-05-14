@@ -6,6 +6,12 @@ Crie componentes base em `src/shared/ui`: `Button`, `TextField`, `Text`, `Screen
 
 Features devem compor esses componentes, não recriar variações visuais.
 
+O mockup exige uma linguagem dark, temática e densa. Padronize cards com borda sutil, textos compactos, CTAs de largura total em fluxos principais e badges pequenos para status como `Vivo`.
+
+## Componentes Derivados do Mockup
+
+Promova para compartilhado quando usados por duas ou mais features: `AppBackground`, `ScreenHeader`, `CharacterPortrait`, `StatusBadge`, `MetricRow`, `SectionMenuItem`, `StepIndicator`, `SelectField`, `SkillMeter` e `TraitList`.
+
 ## Theming
 
 Centralize tokens em `src/shared/theme`:

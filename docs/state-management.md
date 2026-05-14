@@ -42,6 +42,8 @@ Persistência deve usar storage seguro quando envolver tokens ou dados sensívei
 
 Use `useState`, `useReducer` ou estado do formulário quando o dado pertence a uma tela ou componente. Subir estado para stores globais exige justificativa.
 
+O wizard de criação deve usar estado local de feature com persistência de draft. Não coloque cada campo do wizard em store global do app; exponha apenas hooks da feature.
+
 ## Offline
 
 Se o produto exigir uso offline, adicione persistência do TanStack Query e fila de mutations por domínio. Comece apenas com leitura cacheada; sincronização bidirecional deve ser decisão explícita.

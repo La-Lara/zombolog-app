@@ -19,6 +19,18 @@ Separe estado remoto de estado local. Dados vindos da API pertencem ao TanStack 
 
 Use módulos pequenos e explícitos. Uma tela orquestra UI e hooks, mas não deve conter regra de negócio extensa, validação complexa ou chamadas HTTP diretas.
 
+## Produto Derivado do Mockup
+
+O app é um companion para Project Zomboid com autenticação, lista de sobreviventes, detalhe de ficha, criação de personagem em seis etapas e compartilhamento planejado. A especificação funcional fica em `/docs/specs/app-spec.md`; a arquitetura deve servir esse produto sem virar uma estrutura genérica.
+
+## Features Iniciais
+
+- `auth`: login, cadastro e sessão.
+- `home`: saudação, lista de personagens e CTA de criação.
+- `character`: detalhe, habilidades, traços e futuras seções.
+- `character-creation`: wizard de seis etapas com draft local.
+- `profile-sharing`: compartilhamento planejado a partir do detalhe/resumo.
+
 ## Camadas
 
 - `app/`: rotas, layouts e boundaries de navegação.

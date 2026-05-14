@@ -4,6 +4,8 @@
 
 Use Expo Router como camada de rotas. Ele usa React Navigation por baixo e simplifica deep links, layouts e separação por grupos.
 
+O fluxo de rotas do produto derivado do mockup está documentado em `/docs/navigation/app-navigation-flow.md`.
+
 ## Estrutura
 
 ```txt
@@ -11,15 +13,15 @@ app/
   _layout.tsx
   (auth)/
     login.tsx
-  (tabs)/
+  (app)/
     _layout.tsx
     home.tsx
-    profile.tsx
+    characters/[id].tsx
   modal/
     settings.tsx
 ```
 
-Grupos como `(auth)` e `(tabs)` organizam fluxo sem afetar a URL. Use `_layout.tsx` para providers, stacks, tabs e proteção de rota.
+Grupos como `(auth)` e `(app)` organizam fluxo sem afetar a URL. Use `_layout.tsx` para providers, stacks e proteção de rota.
 
 ## Proteção de Rotas
 

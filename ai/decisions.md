@@ -10,7 +10,7 @@ Motivo: reduz custo operacional de build, distribuição, configuração nativa 
 
 Decisão: usar Expo Router em vez de configurar React Navigation manualmente desde o zero.
 
-Motivo: Expo Router é integrado ao ecossistema Expo, usa React Navigation internamente, simplifica deep links e oferece convenção clara para rotas.
+Motivo: é integrado ao ecossistema Expo, usa React Navigation internamente, simplifica deep links e oferece convenção clara para rotas.
 
 ## ADR-003: Separar Estado Remoto e Local
 
@@ -29,3 +29,39 @@ Motivo: escala melhor que pastas globais por tipo, reduz acoplamento e facilita 
 Decisão: usar React Hook Form para estado e Zod para validação.
 
 Motivo: boa performance em React Native, contratos tipados e validação reutilizável entre UI e lógica.
+
+## ADR-006: Wizard de Personagem em Seis Etapas
+
+Decisão: implementar criação como wizard linear: básico, aparência, localização, traços, habilidades e resumo.
+
+Motivo: o mockup já organiza a complexidade assim e reduz carga cognitiva em telas móveis.
+
+Tradeoff: aumenta necessidade de persistir draft e validar por etapa.
+
+## ADR-007: Draft Local para Criação
+
+Decisão: persistir rascunho localmente durante a criação.
+
+Motivo: fluxo longo não pode perder dados ao voltar, fechar app ou falhar submit.
+
+Tradeoff: exige política de descarte e limpeza após criação.
+
+## ADR-008: Dados Completos por Query, Rotas por ID
+
+Decisão: rotas devem receber apenas IDs; detalhes vêm de TanStack Query.
+
+Motivo: evita parâmetros grandes, melhora deep linking e mantém cache como fonte de dados remotos.
+
+## ADR-009: Compartilhamento como Feature Planejada
+
+Decisão: preparar feature de compartilhamento no detalhe/resumo, mas não bloquear MVP.
+
+Motivo: requisito existe, porém não há mockup visual. Implementar depois evita inventar UI sem validação.
+
+## Dúvidas Abertas
+
+- Haverá backend no MVP ou dados locais primeiro?
+- O catálogo de profissões/traits/skills seguirá Project Zomboid oficialmente?
+- Haverá cálculo de pontos de traços?
+- Usuário poderá marcar personagem como morto?
+- Compartilhamento precisa gerar imagem ou apenas texto/deep link inicialmente?

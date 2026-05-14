@@ -6,7 +6,7 @@
 app/
   _layout.tsx
   (auth)/
-  (tabs)/
+  (app)/
   +not-found.tsx
 src/
   features/
@@ -18,12 +18,28 @@ src/
       schemas/
       types.ts
       index.ts
-    profile/
+    home/
+      components/
+      hooks/
+      screens/
+      index.ts
+    character/
       api/
       components/
       hooks/
       screens/
       types.ts
+      index.ts
+    character-creation/
+      components/
+      hooks/
+      screens/
+      schemas/
+      types.ts
+      index.ts
+    profile-sharing/
+      components/
+      hooks/
       index.ts
   shared/
     api/
@@ -44,6 +60,10 @@ src/
     mocks/
 assets/
 docs/
+  specs/
+  features/
+  screens/
+  navigation/
 ai/
 ```
 
@@ -53,13 +73,18 @@ ai/
 
 Cada feature possui seu próprio limite. Componentes usados por apenas uma feature ficam dentro dela. Só mova para `src/shared` quando houver reutilização real em pelo menos duas features.
 
+As specs de produto ficam em `docs/specs`, fluxos por feature em `docs/features`, documentação de tela em `docs/screens` e rotas em `docs/navigation`.
+
 Use `index.ts` apenas como API pública da feature. Não exporte detalhes internos sem necessidade.
 
 ## Exemplo de Rota
 
 ```tsx
-// app/(tabs)/profile.tsx
-export { ProfileScreen as default } from '@/features/profile';
+// app/(app)/home.tsx
+export { HomeScreen as default } from '@/features/home';
+
+// app/(app)/characters/[id].tsx
+export { CharacterDetailsScreen as default } from '@/features/character';
 ```
 
 ## Anti-padrões
