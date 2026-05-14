@@ -12,6 +12,10 @@ Expo, TypeScript strict, Expo Router, TanStack Query, Zustand, React Hook Form, 
 
 ### Fase 1: Setup/Base
 
+Status: concluida na branch `implement-p0-tasks`.
+
+Base Expo criada com TypeScript strict, alias `@/`, Expo Router, grupos `(auth)` e `(app)`, providers globais, tema dark com tokens, componentes compartilhados minimos e harness de testes com Jest, React Native Testing Library e MSW.
+
 Inicializar app Expo, configurar TypeScript, aliases, lint, formatter, Expo Router, providers, tema, assets base e harness de testes.
 
 ### Fase 2: Autenticação
