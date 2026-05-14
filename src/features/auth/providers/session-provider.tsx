@@ -1,20 +1,13 @@
-import { PropsWithChildren, useMemo, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
-import { SessionContext } from '../hooks/use-session';
-import { UserSession } from '../types';
+import { useSessionStore } from '../store/session-store';
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [session, setSession] = useState<UserSession | null>(null);
+  const hydrateSession = useSessionStore((state) => state.hydrateSession);
 
-  const value = useMemo(
-    () => ({
-      isHydrated: true,
-      session,
-      signIn: setSession,
-      signOut: () => setSession(null),
-    }),
-    [session],
-  );
+  useEffect(() => {
+    void hydrateSession();
+  }, [hydrateSession]);
 
-  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
+  return children;
 }

@@ -66,6 +66,14 @@ Motivo: a P0 precisa compor providers e boundaries de navegacao sem antecipar re
 
 Tradeoff: sessao ainda nao persiste entre aberturas; isso sera implementado junto com a feature de autenticacao.
 
+## ADR-011: Auth Local Quando Nao Houver Backend
+
+Decisao: o modulo `authApi` usa endpoints HTTP quando `EXPO_PUBLIC_API_BASE_URL` existir e um fallback local simples quando a base URL estiver vazia.
+
+Motivo: o projeto ainda nao possui backend definido, mas a P1 precisa entregar login, cadastro, sessao, refresh token seguro e protecao de rotas funcionando no app.
+
+Tradeoff: o fallback local nao valida credenciais reais nem unicidade de username; essas regras ficam para a integracao com backend.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?
