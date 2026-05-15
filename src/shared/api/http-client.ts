@@ -39,6 +39,12 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
       } satisfies AppError;
     }
 
+    const contentType = response.headers.get('content-type') ?? '';
+
+    if (response.status === 204 || !contentType.includes('application/json')) {
+      return undefined as T;
+    }
+
     return (await response.json()) as T;
   } finally {
     clearTimeout(timeout);
@@ -52,5 +58,10 @@ export const httpClient = {
       ...options,
       method: 'POST',
       body: JSON.stringify(body),
+    }),
+  delete: <T>(path: string, options?: RequestOptions) =>
+    request<T>(path, {
+      ...options,
+      method: 'DELETE',
     }),
 };
