@@ -61,24 +61,24 @@
 
 ## P2: Character
 
-- [ ] Criar `features/character`.
-  - [ ] Types `Character`, `Trait`, `Skill`.
-  - [ ] API module.
-  - [ ] Query de detalhe.
-- [ ] Implementar Character Details Screen.
-  - [ ] Header com back/delete.
-  - [ ] Summary card.
-  - [ ] Métricas.
-  - [ ] Menu de seções.
-  - [ ] Botão editar.
-- [ ] Implementar Skills Screen.
-  - [ ] Lista de skills.
-  - [ ] `SkillMeter`.
-- [ ] Implementar Traits Screen.
-  - [ ] Traços positivos.
-  - [ ] Traços negativos.
-  - [ ] Descrições.
-- [ ] Implementar exclusão com confirmação.
+- [x] Criar `features/character`.
+  - [x] Types `Character`, `Trait`, `Skill`.
+  - [x] API module.
+  - [x] Query de detalhe.
+- [x] Implementar Character Details Screen.
+  - [x] Header com back/delete.
+  - [x] Summary card.
+  - [x] Métricas.
+  - [x] Menu de seções.
+  - [x] Botão editar.
+- [x] Implementar Skills Screen.
+  - [x] Lista de skills.
+  - [x] `SkillMeter`.
+- [x] Implementar Traits Screen.
+  - [x] Traços positivos.
+  - [x] Traços negativos.
+  - [x] Descrições.
+- [x] Implementar exclusão com confirmação.
 
 ## P2: Character Creation
 

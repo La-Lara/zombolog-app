@@ -34,7 +34,9 @@ Home implementada com query de personagens, fallback local enquanto nao houver b
 
 ### Fase 4: Personagem
 
-Implementar detalhe, seções de habilidades e traços, exclusão com confirmação e estrutura para editar.
+Status: concluida na branch `implement-p2-character`.
+
+Character implementado com detalhe por ID via TanStack Query, telas de habilidades e tracos, `SkillMeter`, cards de tracos, exclusao com confirmacao e fallback local consistente com a Home enquanto nao houver backend.
 
 ### Fase 5: Criação de Personagem
 

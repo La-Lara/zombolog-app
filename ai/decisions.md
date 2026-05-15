@@ -82,6 +82,14 @@ Motivo: a P1 Home precisa entregar listagem, navegacao e estados visuais complet
 
 Tradeoff: personagens criados no wizard ainda nao aparecem na Home ate a feature de criacao definir persistencia e mutation.
 
+## ADR-013: Fallback Local Compartilhado para Personagens
+
+Decisao: centralizar os dados locais de personagens em `src/shared/lib/local-character-store.ts` enquanto nao houver backend.
+
+Motivo: Home e Character precisam ler e excluir os mesmos personagens durante o desenvolvimento local; manter dois fallbacks separados faria a exclusao do detalhe reaparecer na listagem.
+
+Tradeoff: e uma solucao temporaria de mock local. Quando houver backend ou persistencia real da feature de criacao, esse store deve ser removido ou substituido por API/persistencia de dominio.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

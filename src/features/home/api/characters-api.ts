@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { listLocalCharacters } from '@/shared/lib/local-character-store';
 
 import { CharacterStatus, CharacterSummary } from '../types';
 
@@ -50,36 +51,14 @@ export const charactersApi = {
 };
 
 function getLocalCharacters(ownerId: string): CharacterSummary[] {
-  return [
-    {
-      id: `${ownerId}.maria-knox`,
-      name: 'Maria Knox',
-      profession: 'Carpinteira',
-      status: 'alive',
-      avatarId: null,
-      currentCity: 'Muldraugh',
-      daysAlive: 18,
-      zombiesKilled: 143,
-    },
-    {
-      id: `${ownerId}.eduardo-riverside`,
-      name: 'Eduardo Miller',
-      profession: 'Bombeiro',
-      status: 'alive',
-      avatarId: null,
-      currentCity: 'Riverside',
-      daysAlive: 9,
-      zombiesKilled: 67,
-    },
-    {
-      id: `${ownerId}.ana-westpoint`,
-      name: 'Ana Brooks',
-      profession: 'Veterana',
-      status: 'missing',
-      avatarId: null,
-      currentCity: 'West Point',
-      daysAlive: 31,
-      zombiesKilled: 221,
-    },
-  ];
+  return listLocalCharacters(ownerId).map((character) => ({
+    id: character.id,
+    name: character.name,
+    profession: character.profession,
+    status: character.status,
+    avatarId: character.avatarId,
+    currentCity: character.currentCity,
+    daysAlive: character.daysAlive,
+    zombiesKilled: character.zombiesKilled,
+  }));
 }
