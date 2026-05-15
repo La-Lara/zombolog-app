@@ -6,3 +6,4 @@ export { ErrorState } from './error-state';
 export { LoadingState } from './loading-state';
 export { Screen } from './screen';
 export { Text } from './text';
+export { PasswordField, TextField } from './text-field';

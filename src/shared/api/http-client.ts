@@ -30,7 +30,10 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     if (!response.ok) {
       throw {
         code: 'http_error',
-        message: 'Erro ao comunicar com o servidor.',
+        message:
+          response.status === 401
+            ? 'Usuario ou senha invalidos.'
+            : 'Erro ao comunicar com o servidor.',
         status: response.status,
         retryable: response.status >= 500,
       } satisfies AppError;

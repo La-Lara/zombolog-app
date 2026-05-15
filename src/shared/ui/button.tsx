@@ -1,4 +1,10 @@
-import { Pressable, PressableProps, PressableStateCallbackType, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  PressableProps,
+  PressableStateCallbackType,
+  StyleSheet,
+} from 'react-native';
 
 import { colors, radius, spacing } from '@/shared/theme';
 
@@ -9,13 +15,25 @@ type ButtonVariant = 'primary' | 'secondary';
 type ButtonProps = PressableProps & {
   title: string;
   variant?: ButtonVariant;
+  isLoading?: boolean;
 };
 
-export function Button({ title, variant = 'primary', disabled, style, ...props }: ButtonProps) {
+export function Button({
+  title,
+  variant = 'primary',
+  disabled,
+  isLoading = false,
+  style,
+  ...props
+}: ButtonProps) {
+  const isDisabled = disabled || isLoading;
+
   return (
     <Pressable
+      accessibilityLabel={title}
       accessibilityRole="button"
-      disabled={disabled}
+      accessibilityState={{ disabled: isDisabled, busy: isLoading }}
+      disabled={isDisabled}
       style={(state) => {
         const stateStyle =
           typeof style === 'function' ? style(state as PressableStateCallbackType) : style;
@@ -23,14 +41,14 @@ export function Button({ title, variant = 'primary', disabled, style, ...props }
         return [
           styles.base,
           styles[variant],
-          state.pressed && !disabled ? styles.pressed : null,
-          disabled ? styles.disabled : null,
+          state.pressed && !isDisabled ? styles.pressed : null,
+          isDisabled ? styles.disabled : null,
           stateStyle,
         ];
       }}
       {...props}
     >
-      <Text style={styles.label}>{title}</Text>
+      {isLoading ? <ActivityIndicator color={colors.background} /> : <Text style={styles.label}>{title}</Text>}
     </Pressable>
   );
 }

@@ -24,25 +24,25 @@
 
 ## P1: Auth
 
-- [ ] Criar `features/auth`.
-  - [ ] Schemas Zod de login e cadastro.
-  - [ ] API module de login/register/logout.
-  - [ ] Store/hook de sessão.
-  - [ ] Persistência segura de refresh token.
-- [ ] Implementar Login Screen.
-  - [ ] Campos usuário/senha.
-  - [ ] Toggle de senha.
-  - [ ] Loading e erro.
-  - [ ] Navegação para cadastro.
-- [ ] Implementar Register Screen.
-  - [ ] Campos displayName/username/password.
-  - [ ] Validações.
-  - [ ] Navegação para login.
-- [ ] Testar auth.
-  - [ ] Validação local.
-  - [ ] Submit com sucesso.
-  - [ ] Erro de credenciais/rede.
-  - [ ] Proteção de rotas.
+- [x] Criar `features/auth`.
+  - [x] Schemas Zod de login e cadastro.
+  - [x] API module de login/register/logout.
+  - [x] Store/hook de sessao.
+  - [x] Persistencia segura de refresh token.
+- [x] Implementar Login Screen.
+  - [x] Campos usuario/senha.
+  - [x] Toggle de senha.
+  - [x] Loading e erro.
+  - [x] Navegacao para cadastro.
+- [x] Implementar Register Screen.
+  - [x] Campos displayName/username/password.
+  - [x] Validacoes.
+  - [x] Navegacao para login.
+- [x] Testar auth.
+  - [x] Validacao local.
+  - [x] Submit com sucesso.
+  - [x] Erro de credenciais/rede.
+  - [x] Protecao de rotas.
 
 ## P1: Home
 

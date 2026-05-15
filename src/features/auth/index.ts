@@ -1,5 +1,10 @@
 export { LoginScreen } from './screens/login-screen';
 export { RegisterScreen } from './screens/register-screen';
+export { loginSchema, registerSchema } from './schemas/auth-schemas';
+export { useLoginMutation } from './hooks/use-login-mutation';
+export { useRegisterMutation } from './hooks/use-register-mutation';
+export { useLogout } from './hooks/use-logout';
 export { useSession } from './hooks/use-session';
+export { getAuthRedirect } from './lib/auth-navigation';
 export { SessionProvider } from './providers/session-provider';
 export type { UserSession } from './types';

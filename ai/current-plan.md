@@ -20,6 +20,10 @@ Inicializar app Expo, configurar TypeScript, aliases, lint, formatter, Expo Rout
 
 ### Fase 2: Autenticação
 
+Status: concluida na branch `implement-p1-auth`.
+
+Auth implementado com schemas Zod, React Hook Form, API module, sessao em Zustand, refresh token em SecureStore, telas de login/cadastro, loading/error states e testes de validacao, submit e protecao de rotas.
+
 Implementar login, cadastro, sessão, SecureStore, refresh token futuro, validações e proteção de rotas.
 
 ### Fase 3: Home
