@@ -28,7 +28,9 @@ Implementar login, cadastro, sessão, SecureStore, refresh token futuro, valida�
 
 ### Fase 3: Home
 
-Implementar lista de personagens com dados mockados/API, empty/error/loading states, cards e CTA de criação.
+Status: concluida na branch `implement-p1-home`.
+
+Home implementada com query de personagens, fallback local enquanto nao houver backend, cards, CTA de criacao, estados de loading/empty/error e pull to refresh.
 
 ### Fase 4: Personagem
 

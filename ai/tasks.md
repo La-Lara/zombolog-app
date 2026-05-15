@@ -46,18 +46,18 @@
 
 ## P1: Home
 
-- [ ] Criar `features/home`.
-  - [ ] Query de personagens.
-  - [ ] `HomeHeader`.
-  - [ ] `CharacterCard`.
-  - [ ] `CreateCharacterButton`.
-- [ ] Implementar estados.
-  - [ ] Loading.
-  - [ ] Empty.
-  - [ ] Error retry.
-  - [ ] Pull to refresh.
-- [ ] Navegar card para detalhe.
-- [ ] Navegar CTA para criação.
+- [x] Criar `features/home`.
+  - [x] Query de personagens.
+  - [x] `HomeHeader`.
+  - [x] `CharacterCard`.
+  - [x] `CreateCharacterButton`.
+- [x] Implementar estados.
+  - [x] Loading.
+  - [x] Empty.
+  - [x] Error retry.
+  - [x] Pull to refresh.
+- [x] Navegar card para detalhe.
+- [x] Navegar CTA para criação.
 
 ## P2: Character
 

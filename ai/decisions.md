@@ -74,6 +74,14 @@ Motivo: o projeto ainda nao possui backend definido, mas a P1 precisa entregar l
 
 Tradeoff: o fallback local nao valida credenciais reais nem unicidade de username; essas regras ficam para a integracao com backend.
 
+## ADR-012: Personagens Locais Enquanto Nao Houver Backend
+
+Decisao: a Home usa `charactersApi.listCharacters` com endpoint HTTP quando `EXPO_PUBLIC_API_BASE_URL` existir e uma lista local deterministica quando a base URL estiver vazia.
+
+Motivo: a P1 Home precisa entregar listagem, navegacao e estados visuais completos antes da definicao do backend, mantendo o mesmo criterio usado em Auth.
+
+Tradeoff: personagens criados no wizard ainda nao aparecem na Home ate a feature de criacao definir persistencia e mutation.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?
