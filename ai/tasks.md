@@ -57,7 +57,7 @@
   - [x] Error retry.
   - [x] Pull to refresh.
 - [x] Navegar card para detalhe.
-- [x] Navegar CTA para criação.
+- [x] Navegar CTA para criacao.
 
 ## P2: Character
 
@@ -68,48 +68,48 @@
 - [x] Implementar Character Details Screen.
   - [x] Header com back/delete.
   - [x] Summary card.
-  - [x] Métricas.
-  - [x] Menu de seções.
-  - [x] Botão editar.
+  - [x] Metricas.
+  - [x] Menu de secoes.
+  - [x] Botao editar.
 - [x] Implementar Skills Screen.
   - [x] Lista de skills.
   - [x] `SkillMeter`.
 - [x] Implementar Traits Screen.
-  - [x] Traços positivos.
-  - [x] Traços negativos.
-  - [x] Descrições.
-- [x] Implementar exclusão com confirmação.
+  - [x] Tracos positivos.
+  - [x] Tracos negativos.
+  - [x] Descricoes.
+- [x] Implementar exclusao com confirmacao.
 
 ## P2: Character Creation
 
-- [ ] Criar `features/character-creation`.
-  - [ ] Estado de draft.
-  - [ ] Schemas por etapa.
-  - [ ] Mapper para payload final.
-- [ ] Implementar wizard.
-  - [ ] Layout compartilhado.
-  - [ ] Step indicator.
-  - [ ] Footer Voltar/Próximo.
-- [ ] Implementar etapa 1: informações básicas.
-- [ ] Implementar etapa 2: aparência.
-- [ ] Implementar etapa 3: localização.
-- [ ] Implementar etapa 4: traços.
-- [ ] Implementar etapa 5: habilidades.
-- [ ] Implementar etapa 6: resumo.
-- [ ] Persistir draft local.
-- [ ] Submit final e navegação para detalhe.
+- [x] Criar `features/character-creation`.
+  - [x] Estado de draft.
+  - [x] Schemas por etapa.
+  - [x] Mapper para payload final.
+- [x] Implementar wizard.
+  - [x] Layout compartilhado.
+  - [x] Step indicator.
+  - [x] Footer Voltar/Proximo.
+- [x] Implementar etapa 1: informacoes basicas.
+- [x] Implementar etapa 2: aparencia.
+- [x] Implementar etapa 3: localizacao.
+- [x] Implementar etapa 4: tracos.
+- [x] Implementar etapa 5: habilidades.
+- [x] Implementar etapa 6: resumo.
+- [x] Persistir draft local.
+- [x] Submit final e navegacao para detalhe.
 
 ## P3: Sharing e Refinamentos
 
-- [ ] Definir visual do cartão compartilhável.
+- [ ] Definir visual do cartao compartilhavel.
 - [ ] Implementar `ShareButton`.
 - [ ] Gerar imagem ou fallback textual.
 - [ ] Abrir share sheet nativo.
 - [ ] Adicionar acessibilidade aos controles.
 - [ ] Otimizar listas e imagens.
 - [ ] Configurar Sentry/logger.
-- [ ] Criar fluxos Maestro para login, criação e detalhe.
+- [ ] Criar fluxos Maestro para login, criacao e detalhe.
 
-## Dependências
+## Dependencias
 
-Auth depende de setup. Home depende de sessão e query client. Character depende de home ou rota por ID. Creation depende dos catálogos de profissão, cidades, traços e skills. Sharing depende de Character.
+Auth depende de setup. Home depende de sessao e query client. Character depende de home ou rota por ID. Creation depende dos catalogos de profissao, cidades, tracos e skills. Sharing depende de Character.

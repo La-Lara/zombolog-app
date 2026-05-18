@@ -35,6 +35,7 @@ export type LocalCharacter = {
 };
 
 const deletedCharacterIds = new Set<string>();
+const createdCharactersByOwnerId = new Map<string, LocalCharacter[]>();
 
 function makeCharacters(ownerId: string): LocalCharacter[] {
   return [
@@ -181,7 +182,11 @@ function makeCharacters(ownerId: string): LocalCharacter[] {
 }
 
 export function listLocalCharacters(ownerId: string) {
-  return makeCharacters(ownerId).filter((character) => !deletedCharacterIds.has(character.id));
+  const createdCharacters = createdCharactersByOwnerId.get(ownerId) ?? [];
+
+  return [...createdCharacters, ...makeCharacters(ownerId)].filter(
+    (character) => !deletedCharacterIds.has(character.id),
+  );
 }
 
 export function getLocalCharacter(ownerId: string, characterId: string) {
@@ -190,4 +195,35 @@ export function getLocalCharacter(ownerId: string, characterId: string) {
 
 export function deleteLocalCharacter(characterId: string) {
   deletedCharacterIds.add(characterId);
+}
+
+export type CreateLocalCharacterInput = Pick<
+  LocalCharacter,
+  'ownerId' | 'name' | 'profession' | 'avatarId' | 'spawnCity' | 'currentCity' | 'traits' | 'skills'
+>;
+
+export function createLocalCharacter(input: CreateLocalCharacterInput) {
+  const createdCharacters = createdCharactersByOwnerId.get(input.ownerId) ?? [];
+  const id = `${input.ownerId}.${slugify(input.name)}.${Date.now()}`;
+  const character: LocalCharacter = {
+    ...input,
+    id,
+    status: 'alive',
+    daysAlive: 0,
+    zombiesKilled: 0,
+  };
+
+  createdCharactersByOwnerId.set(input.ownerId, [character, ...createdCharacters]);
+
+  return character;
+}
+
+function slugify(value: string) {
+  const slug = value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+  return slug || 'survivor';
 }

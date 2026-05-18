@@ -90,6 +90,14 @@ Motivo: Home e Character precisam ler e excluir os mesmos personagens durante o 
 
 Tradeoff: e uma solucao temporaria de mock local. Quando houver backend ou persistencia real da feature de criacao, esse store deve ser removido ou substituido por API/persistencia de dominio.
 
+## ADR-014: Draft de Criacao com SecureStore
+
+Decisao: persistir o rascunho do wizard de personagem com `expo-secure-store`, usando chave por usuario.
+
+Motivo: o projeto ainda nao possui AsyncStorage ou outro storage local nao sensivel instalado; SecureStore ja faz parte da stack atual por causa da sessao. Isso evita adicionar uma dependencia apenas para a primeira versao do draft.
+
+Tradeoff: SecureStore nao e a melhor opcao para dados grandes ou listas extensas. Se o wizard crescer com presets, imagens ou builds complexas, migrar o draft para um storage local mais adequado.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

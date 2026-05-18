@@ -2,13 +2,13 @@
 
 ## Contexto
 
-O mockup `telas.png` define um app companion para Project Zomboid com autenticação, home de personagens, detalhe de ficha, criação guiada em seis etapas, telas de habilidades e traços. A arquitetura base já existe; o próximo trabalho deve iniciar desenvolvimento real sem redesenhar a estrutura.
+O mockup `telas.png` define um app companion para Project Zomboid com autenticacao, home de personagens, detalhe de ficha, criacao guiada em seis etapas, telas de habilidades e tracos. A arquitetura base ja existe; o proximo trabalho deve iniciar desenvolvimento real sem redesenhar a estrutura.
 
 ## Stack Confirmada
 
-Expo, TypeScript strict, Expo Router, TanStack Query, Zustand, React Hook Form, Zod, tokens próprios de tema, Jest, React Native Testing Library, MSW, Maestro e Sentry/logger.
+Expo, TypeScript strict, Expo Router, TanStack Query, Zustand, React Hook Form, Zod, tokens proprios de tema, Jest, React Native Testing Library, MSW, Maestro e Sentry/logger.
 
-## Fases de Implementação
+## Fases de Implementacao
 
 ### Fase 1: Setup/Base
 
@@ -18,13 +18,13 @@ Base Expo criada com TypeScript strict, alias `@/`, Expo Router, grupos `(auth)`
 
 Inicializar app Expo, configurar TypeScript, aliases, lint, formatter, Expo Router, providers, tema, assets base e harness de testes.
 
-### Fase 2: Autenticação
+### Fase 2: Autenticacao
 
 Status: concluida na branch `implement-p1-auth`.
 
 Auth implementado com schemas Zod, React Hook Form, API module, sessao em Zustand, refresh token em SecureStore, telas de login/cadastro, loading/error states e testes de validacao, submit e protecao de rotas.
 
-Implementar login, cadastro, sessão, SecureStore, refresh token futuro, validações e proteção de rotas.
+Implementar login, cadastro, sessao, SecureStore, refresh token futuro, validacoes e protecao de rotas.
 
 ### Fase 3: Home
 
@@ -38,22 +38,24 @@ Status: concluida na branch `implement-p2-character`.
 
 Character implementado com detalhe por ID via TanStack Query, telas de habilidades e tracos, `SkillMeter`, cards de tracos, exclusao com confirmacao e fallback local consistente com a Home enquanto nao houver backend.
 
-### Fase 5: Criação de Personagem
+### Fase 5: Criacao de Personagem
 
-Implementar wizard de seis etapas com draft persistido, validação por etapa e submit final.
+Status: concluida na branch `implement-p2-character-creation`.
+
+Wizard de seis etapas implementado com draft persistido, validacao por etapa, catalogos locais, selecao de aparencia/localizacao/tracos/habilidades, resumo final e submit com fallback local enquanto nao houver backend.
 
 ### Fase 6: Compartilhamento e Refinamentos
 
-Adicionar share sheet, geração de cartão, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
+Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
 
 ## Fontes de Verdade
 
 - Produto: `/docs/specs/app-spec.md`.
-- Navegação: `/docs/navigation/app-navigation-flow.md`.
+- Navegacao: `/docs/navigation/app-navigation-flow.md`.
 - Features: `/docs/features/*`.
 - Telas: `/docs/screens/*`.
 - Arquitetura base: `/docs/architecture.md`.
 
-## Restrições
+## Restricoes
 
-Não gerar novas abstrações antes da primeira vertical completa. Reutilizar componentes do design system e manter lógica de domínio dentro de cada feature.
+Nao gerar novas abstracoes antes da primeira vertical completa. Reutilizar componentes do design system e manter logica de dominio dentro de cada feature.
