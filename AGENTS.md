@@ -15,11 +15,12 @@ Este repositório documenta a arquitetura base de um app React Native profission
 ## Workflow Padrao
 
 - Cada task deve ser desenvolvida em branch propria.
-- A branch principal de integracao do projeto e `project-zomboid-profile-app`.
+- A branch principal de integracao do projeto e `main`.
 - Apos aprovacao da task:
-  - mergear a branch da task na branch principal `project-zomboid-profile-app`;
+  - mergear a branch da task na branch principal `main`;
   - atualizar a branch principal;
   - criar a branch da proxima task a partir da principal atualizada.
+- Nao faca push para o GitHub no fluxo padrao; push deve ocorrer somente quando solicitado expressamente.
 
 ## Convencao de Branches
 
@@ -38,7 +39,7 @@ Este repositório documenta a arquitetura base de um app React Native profission
 
 ## Continuidade Entre Tasks
 
-- Depois do merge aprovado, sempre volte para `project-zomboid-profile-app`.
+- Depois do merge aprovado, sempre volte para `main`.
 - Garanta que a principal esteja atualizada localmente ou com o remote, quando existir.
 - Crie a proxima branch somente depois desse ponto.
 - Nao implemente a proxima task antes de a branch correta existir.
