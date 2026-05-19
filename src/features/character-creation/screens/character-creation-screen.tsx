@@ -1,19 +1,21 @@
-import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
 import { toAppError } from '@/shared/api/errors';
 import { colors, radius, spacing } from '@/shared/theme';
-import { Card, LoadingState, Screen, Text, TextField } from '@/shared/ui';
+import { Card, EmptyState, ErrorState, LoadingState, Screen, Text, TextField } from '@/shared/ui';
 
 import { FieldSection } from '../components/field-section';
 import { OptionChip } from '../components/option-chip';
 import { StepIndicator } from '../components/step-indicator';
 import { WizardFooter } from '../components/wizard-footer';
 import { creationCatalog } from '../data/creation-catalog';
+import { useCharacterEditDraftQuery } from '../hooks/use-character-edit-draft-query';
 import { useCharacterCreationDraft } from '../hooks/use-character-creation-draft';
 import { useCreateCharacterMutation } from '../hooks/use-create-character-mutation';
+import { useUpdateCharacterMutation } from '../hooks/use-update-character-mutation';
 import {
   appearanceStepSchema,
   basicInfoStepSchema,
@@ -28,20 +30,43 @@ const totalSteps = 6;
 
 export function CharacterCreationScreen() {
   const router = useRouter();
+  const { editId } = useLocalSearchParams<{ editId?: string }>();
+  const characterId = Array.isArray(editId) ? editId[0] : editId;
+  const isEditMode = Boolean(characterId);
   const { session } = useSession();
   const userId = session?.user.id;
-  const { draft, setDraft, isHydrated, clearDraft } = useCharacterCreationDraft(userId);
+  const { draft, setDraft, isHydrated, clearDraft } = useCharacterCreationDraft(
+    isEditMode ? undefined : userId,
+  );
+  const editDraftQuery = useCharacterEditDraftQuery({
+    accessToken: session?.accessToken,
+    characterId,
+    userId,
+  });
   const createCharacterMutation = useCreateCharacterMutation();
+  const updateCharacterMutation = useUpdateCharacterMutation();
   const [stepIndex, setStepIndex] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
+  const [hasLoadedEditDraft, setHasLoadedEditDraft] = useState(false);
   const isLastStep = stepIndex === totalSteps - 1;
   const selectedTraits = useMemo(
     () => creationCatalog.traits.filter((trait) => draft.traitIds.includes(trait.id)),
     [draft.traitIds],
   );
-  const mutationError = createCharacterMutation.error
-    ? toAppError(createCharacterMutation.error).message
+  const mutationError =
+    createCharacterMutation.error ? toAppError(createCharacterMutation.error).message
+    : updateCharacterMutation.error ? toAppError(updateCharacterMutation.error).message
     : null;
+  const isSubmitting = createCharacterMutation.isPending || updateCharacterMutation.isPending;
+
+  useEffect(() => {
+    if (!isEditMode || !editDraftQuery.data || hasLoadedEditDraft) {
+      return;
+    }
+
+    setDraft(editDraftQuery.data);
+    setHasLoadedEditDraft(true);
+  }, [editDraftQuery.data, hasLoadedEditDraft, isEditMode, setDraft]);
 
   function updateDraft(values: Partial<CharacterCreationDraft>) {
     setDraft((currentDraft) => ({
@@ -71,7 +96,7 @@ export function CharacterCreationScreen() {
     }
 
     if (hasDraftData(draft)) {
-      Alert.alert('Descartar rascunho?', 'Os dados preenchidos ficam salvos se voce continuar no wizard.', [
+      Alert.alert(isEditMode ? 'Descartar edicao?' : 'Descartar rascunho?', getBackAlertMessage(isEditMode), [
         { text: 'Continuar editando', style: 'cancel' },
         { text: 'Sair', style: 'destructive', onPress: () => router.back() },
       ]);
@@ -98,6 +123,28 @@ export function CharacterCreationScreen() {
       return;
     }
 
+    if (isEditMode && characterId) {
+      updateCharacterMutation.mutate(
+        {
+          accessToken: session?.accessToken,
+          payload: {
+            ...finalResult.data,
+            characterId,
+            ownerId: userId,
+          },
+        },
+        {
+          onSuccess: (updatedCharacter) => {
+            router.replace({
+              pathname: '/characters/[id]',
+              params: { id: updatedCharacter.id },
+            });
+          },
+        },
+      );
+      return;
+    }
+
     createCharacterMutation.mutate(
       {
         accessToken: session?.accessToken,
@@ -118,10 +165,40 @@ export function CharacterCreationScreen() {
     );
   }
 
-  if (!isHydrated) {
+  if (!isHydrated || (isEditMode && editDraftQuery.isLoading)) {
     return (
       <Screen>
-        <LoadingState label="Carregando rascunho..." />
+        <LoadingState label={isEditMode ? 'Carregando personagem...' : 'Carregando rascunho...'} />
+      </Screen>
+    );
+  }
+
+  if (isEditMode && editDraftQuery.isError) {
+    return (
+      <Screen>
+        <ErrorState
+          message="Nao foi possivel carregar o personagem para edicao."
+          onRetry={() => void editDraftQuery.refetch()}
+        />
+      </Screen>
+    );
+  }
+
+  if (isEditMode && !editDraftQuery.data) {
+    return (
+      <Screen>
+        <EmptyState
+          description="Esse personagem nao foi encontrado ou ja foi removido."
+          title="Edicao indisponivel"
+        />
+      </Screen>
+    );
+  }
+
+  if (isEditMode && !hasLoadedEditDraft) {
+    return (
+      <Screen>
+        <LoadingState label="Preparando edicao..." />
       </Screen>
     );
   }
@@ -137,7 +214,7 @@ export function CharacterCreationScreen() {
         >
           <Text style={styles.backLabel}>{'<'}</Text>
         </Pressable>
-        <Text style={styles.title}>Novo Personagem</Text>
+        <Text style={styles.title}>{isEditMode ? 'Editar Personagem' : 'Novo Personagem'}</Text>
         <View style={styles.headerSpacer} />
       </View>
 
@@ -157,7 +234,8 @@ export function CharacterCreationScreen() {
       <WizardFooter
         canGoBack={stepIndex > 0}
         isLastStep={isLastStep}
-        isSubmitting={createCharacterMutation.isPending}
+        isSubmitting={isSubmitting}
+        submitTitle={isEditMode ? 'Salvar Personagem' : 'Criar Personagem'}
         onBack={handleBack}
         onNext={handleNext}
       />
@@ -435,6 +513,14 @@ function hasDraftData(draft: CharacterCreationDraft) {
       draft.traitIds.length ||
       Object.values(draft.skills).some((level) => level > 0),
   );
+}
+
+function getBackAlertMessage(isEditMode: boolean) {
+  if (isEditMode) {
+    return 'As alteracoes nao salvas serao perdidas se voce sair agora.';
+  }
+
+  return 'Os dados preenchidos ficam salvos se voce continuar no wizard.';
 }
 
 const styles = StyleSheet.create({

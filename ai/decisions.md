@@ -130,6 +130,14 @@ Motivo: Home, detalhe e criacao precisam compartilhar a mesma fonte local sem im
 
 Tradeoff: o repositorio local ainda convive com chamadas HTTP condicionadas por `env.apiBaseUrl`; a sincronizacao bidirecional futura deve transformar essa condicional em uma estrategia explicita de remote + local repository.
 
+## ADR-019: Reutilizar Wizard para Edicao de Personagem
+
+Decisao: usar o mesmo wizard de `character-creation` para criacao e edicao, alternando o comportamento por `editId`.
+
+Motivo: o fluxo de campos, validacao por etapa e resumo ja existem e a documentacao previa indicava reutilizacao futura do wizard em modo `create`/`edit`.
+
+Tradeoff: campos de aparencia que ainda nao existem no modelo persistido local usam defaults do catalogo ao editar personagens antigos. A edicao preserva metricas, status, data de criacao e skills fora do catalogo visivel.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

@@ -93,6 +93,20 @@ describe('CharacterDetailsScreen', () => {
     expect(mockPush).toHaveBeenCalledWith('./traits');
   });
 
+  it('navigates to character edit with the current id', async () => {
+    jest.spyOn(characterApi, 'getCharacter').mockResolvedValueOnce(character);
+
+    const screen = renderWithProviders(<CharacterDetailsScreen />);
+
+    await screen.findByText('Maria Knox');
+    fireEvent.press(screen.getByRole('button', { name: 'Editar Personagem' }));
+
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/characters/new',
+      params: { editId: 'character-1' },
+    });
+  });
+
   it('shows not found state when the character does not exist', async () => {
     jest.spyOn(characterApi, 'getCharacter').mockResolvedValueOnce(null);
 

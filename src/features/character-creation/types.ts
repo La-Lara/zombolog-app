@@ -18,6 +18,10 @@ export type CharacterCreationPayload = CharacterCreationDraft & {
   ownerId: string;
 };
 
+export type CharacterUpdatePayload = CharacterCreationPayload & {
+  characterId: string;
+};
+
 export type CreationCatalog = {
   professions: string[];
   cities: string[];

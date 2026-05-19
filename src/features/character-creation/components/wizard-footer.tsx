@@ -7,6 +7,7 @@ type WizardFooterProps = {
   canGoBack: boolean;
   isLastStep: boolean;
   isSubmitting: boolean;
+  submitTitle?: string;
   onBack: () => void;
   onNext: () => void;
 };
@@ -15,6 +16,7 @@ export function WizardFooter({
   canGoBack,
   isLastStep,
   isSubmitting,
+  submitTitle = 'Criar Personagem',
   onBack,
   onNext,
 }: WizardFooterProps) {
@@ -23,7 +25,7 @@ export function WizardFooter({
       <Button disabled={!canGoBack || isSubmitting} title="Voltar" variant="secondary" onPress={onBack} />
       <Button
         isLoading={isSubmitting}
-        title={isLastStep ? 'Criar Personagem' : 'Proximo'}
+        title={isLastStep ? submitTitle : 'Proximo'}
         onPress={onNext}
       />
     </View>

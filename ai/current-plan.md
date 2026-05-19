@@ -56,6 +56,12 @@ Status: concluida na branch `implement-p1-local-database`.
 
 Adicionar persistencia local com SQLite via Expo, substituindo o mock em memoria de personagens por uma camada de storage/repository desacoplada e preparada para sincronizacao futura com backend.
 
+### Fase 8: Edicao de Personagem
+
+Status: concluida na branch `implement-p1-character-edit`.
+
+Implementar modo edicao no wizard de personagem, carregando os dados atuais por `editId` e salvando no mesmo registro para evitar duplicacao.
+
 ### Backlog: Compartilhamento e Refinamentos
 
 Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.

@@ -119,6 +119,17 @@
 - [x] Substituir fallback em memoria por persistencia SQLite.
 - [x] Validar com typecheck, lint aplicavel e testes.
 
+## P1: Edicao de Personagem
+
+- [x] Analisar fluxo atual de editar personagem.
+- [x] Ler `editId` na rota do wizard.
+- [x] Carregar dados atuais do personagem em modo edicao.
+- [x] Evitar que draft de criacao sobrescreva a edicao.
+- [x] Atualizar personagem existente no submit final.
+- [x] Invalidar queries de lista, detalhe e draft de edicao.
+- [x] Cobrir fluxo de edicao com teste.
+- [x] Validar com typecheck, lint aplicavel e testes.
+
 ## Backlog
 
 ### Sharing e Refinamentos

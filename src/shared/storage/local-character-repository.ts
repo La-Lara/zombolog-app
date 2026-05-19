@@ -52,6 +52,11 @@ export type CreateLocalCharacterInput = Pick<
   'ownerId' | 'name' | 'profession' | 'avatarId' | 'spawnCity' | 'currentCity' | 'traits' | 'skills'
 >;
 
+export type UpdateLocalCharacterInput = Pick<
+  LocalCharacter,
+  'name' | 'profession' | 'avatarId' | 'spawnCity' | 'currentCity' | 'traits' | 'skills'
+>;
+
 type LocalCharacterRow = {
   id: string;
   remote_id: string | null;
@@ -390,6 +395,27 @@ export const localCharacterRepository = {
       updatedAt: now,
       deletedAt: null,
       lastSyncedAt: null,
+    };
+
+    await upsertCharacter(character);
+
+    return character;
+  },
+
+  async update(ownerId: string, characterId: string, input: UpdateLocalCharacterInput) {
+    const currentCharacter = await this.getById(ownerId, characterId);
+
+    if (!currentCharacter) {
+      return null;
+    }
+
+    const now = new Date().toISOString();
+    const character: LocalCharacter = {
+      ...currentCharacter,
+      ...input,
+      syncStatus: currentCharacter.syncStatus === 'created' ? 'created' : 'updated',
+      syncVersion: currentCharacter.syncVersion + 1,
+      updatedAt: now,
     };
 
     await upsertCharacter(character);
