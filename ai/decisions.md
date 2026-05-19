@@ -114,6 +114,22 @@ Motivo: `useLogout` ja limpa cache do TanStack Query e chama `clearSession`, que
 
 Tradeoff: a UI depende do redirecionamento global ao limpar a sessao, em vez de navegar manualmente para login.
 
+## ADR-017: SQLite como Banco Local
+
+Decisao: usar `expo-sqlite` para persistencia local de dados de dominio e manter SecureStore apenas para tokens e dados pequenos/sensiveis.
+
+Motivo: personagens precisam sobreviver ao fechamento do app, crescer para consultas/listas e carregar metadados de sincronizacao. SQLite e suportado no Expo, evita acoplamento com UI e permite evoluir para fila de sync sem trocar os hooks e telas.
+
+Tradeoff: adiciona uma dependencia nativa e exige migracoes de schema. Para dados simples de chave/valor, SecureStore ou storage equivalente continuam preferiveis.
+
+## ADR-018: Repositorio Local Desacoplado
+
+Decisao: centralizar acesso ao banco em `src/shared/storage`, expondo repositorio local de personagens para os modulos de API usarem quando nao houver backend configurado.
+
+Motivo: Home, detalhe e criacao precisam compartilhar a mesma fonte local sem importar UI, hooks ou stores. Manter a troca dentro dos APIs preserva TanStack Query como borda de consumo das telas.
+
+Tradeoff: o repositorio local ainda convive com chamadas HTTP condicionadas por `env.apiBaseUrl`; a sincronizacao bidirecional futura deve transformar essa condicional em uma estrategia explicita de remote + local repository.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

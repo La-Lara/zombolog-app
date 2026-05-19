@@ -1,4 +1,4 @@
-import { LocalSkill, LocalTrait } from '@/shared/lib/local-character-store';
+import { LocalSkill, LocalTrait } from '@/shared/storage';
 
 export type CharacterCreationDraft = {
   name: string;

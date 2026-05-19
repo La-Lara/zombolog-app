@@ -109,6 +109,16 @@
 - [x] Validar redirecionamento automatico para login via protecao de rotas.
 - [x] Cobrir o fluxo com teste aplicavel.
 
+## P1: Banco Local
+
+- [x] Analisar arquitetura, estrutura de pastas, padroes de API e estado.
+- [x] Escolher persistencia local compativel com Expo e sincronizacao futura.
+- [x] Instalar e configurar `expo-sqlite`.
+- [x] Criar camada compartilhada de banco local.
+- [x] Criar repositorio local de personagens com metadados de sincronizacao.
+- [x] Substituir fallback em memoria por persistencia SQLite.
+- [x] Validar com typecheck, lint aplicavel e testes.
+
 ## Backlog
 
 ### Sharing e Refinamentos

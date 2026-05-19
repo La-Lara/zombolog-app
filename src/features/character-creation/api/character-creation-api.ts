@@ -1,6 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
-import { createLocalCharacter } from '@/shared/lib/local-character-store';
+import { localCharacterRepository } from '@/shared/storage';
 
 import { creationCatalog } from '../data/creation-catalog';
 import { CharacterCreationPayload } from '../types';
@@ -34,7 +34,7 @@ function toRequestBody(payload: CharacterCreationPayload) {
 export const characterCreationApi = {
   async createCharacter({ accessToken, payload }: CreateCharacterParams) {
     if (!env.apiBaseUrl) {
-      const character = createLocalCharacter({
+      const character = await localCharacterRepository.create({
         ownerId: payload.ownerId,
         name: payload.name,
         profession: payload.profession,

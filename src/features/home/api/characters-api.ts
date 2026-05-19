@@ -1,6 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
-import { listLocalCharacters } from '@/shared/lib/local-character-store';
+import { localCharacterRepository } from '@/shared/storage';
 
 import { CharacterStatus, CharacterSummary } from '../types';
 
@@ -50,8 +50,10 @@ export const charactersApi = {
   },
 };
 
-function getLocalCharacters(ownerId: string): CharacterSummary[] {
-  return listLocalCharacters(ownerId).map((character) => ({
+async function getLocalCharacters(ownerId: string): Promise<CharacterSummary[]> {
+  const characters = await localCharacterRepository.listByOwner(ownerId);
+
+  return characters.map((character) => ({
     id: character.id,
     name: character.name,
     profession: character.profession,

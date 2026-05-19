@@ -1,6 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
-import { deleteLocalCharacter, getLocalCharacter, LocalCharacter } from '@/shared/lib/local-character-store';
+import { localCharacterRepository, LocalCharacter } from '@/shared/storage';
 
 import { Character, CharacterStatus, Skill, Trait, TraitType } from '../types';
 
@@ -104,7 +104,7 @@ function clampMetric(value: number) {
 export const characterApi = {
   async getCharacter({ accessToken, characterId, ownerId }: CharacterRequestParams) {
     if (!env.apiBaseUrl) {
-      const character = getLocalCharacter(ownerId, characterId);
+      const character = await localCharacterRepository.getById(ownerId, characterId);
       return character ? toCharacterFromLocal(character) : null;
     }
 
@@ -120,7 +120,7 @@ export const characterApi = {
 
   async deleteCharacter({ accessToken, characterId }: Omit<CharacterRequestParams, 'ownerId'>) {
     if (!env.apiBaseUrl) {
-      deleteLocalCharacter(characterId);
+      await localCharacterRepository.markDeleted(characterId);
       return;
     }
 

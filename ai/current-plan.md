@@ -50,6 +50,12 @@ Status: concluida na branch `implement-p3-logoff`.
 
 Botao de sair adicionado na Home, com confirmacao antes de encerrar a sessao. O fluxo reutiliza `useLogout`, mantem limpeza de cache e refresh token no fluxo existente e depende da protecao de rotas para redirecionar o usuario para login.
 
+### Fase 7: Banco Local
+
+Status: concluida na branch `implement-p1-local-database`.
+
+Adicionar persistencia local com SQLite via Expo, substituindo o mock em memoria de personagens por uma camada de storage/repository desacoplada e preparada para sincronizacao futura com backend.
+
 ### Backlog: Compartilhamento e Refinamentos
 
 Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
