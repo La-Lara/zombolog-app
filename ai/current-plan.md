@@ -44,7 +44,13 @@ Status: concluida na branch `implement-p2-character-creation`.
 
 Wizard de seis etapas implementado com draft persistido, validacao por etapa, catalogos locais, selecao de aparencia/localizacao/tracos/habilidades, resumo final e submit com fallback local enquanto nao houver backend.
 
-### Fase 6: Compartilhamento e Refinamentos
+### Fase 6: Logoff
+
+Status: concluida na branch `implement-p3-logoff`.
+
+Botao de sair adicionado na Home, com confirmacao antes de encerrar a sessao. O fluxo reutiliza `useLogout`, mantem limpeza de cache e refresh token no fluxo existente e depende da protecao de rotas para redirecionar o usuario para login.
+
+### Backlog: Compartilhamento e Refinamentos
 
 Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
 

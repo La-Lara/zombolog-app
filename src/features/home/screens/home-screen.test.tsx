@@ -1,4 +1,5 @@
-import { fireEvent, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, waitFor } from '@testing-library/react-native';
+import { Alert } from 'react-native';
 
 import { useSessionStore } from '@/features/auth/store/session-store';
 import { makeUserSession } from '@/test/factories/session-factory';
@@ -92,6 +93,33 @@ describe('HomeScreen', () => {
 
     await waitFor(() => {
       expect(listCharacters).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  it('confirms logout and clears the current session', async () => {
+    jest.spyOn(charactersApi, 'listCharacters').mockResolvedValueOnce([character]);
+    const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
+
+    const screen = renderWithProviders(<HomeScreen />);
+
+    expect(await screen.findByText('Maria Knox')).toBeTruthy();
+
+    fireEvent.press(screen.getByRole('button', { name: 'Sair da conta' }));
+
+    expect(alertSpy).toHaveBeenCalledWith(
+      'Sair da conta',
+      'Deseja encerrar sua sessao neste dispositivo?',
+      expect.any(Array),
+    );
+
+    const actions = alertSpy.mock.calls[0][2];
+    await act(async () => {
+      actions?.[1]?.onPress?.();
+      await Promise.resolve();
+    });
+
+    await waitFor(() => {
+      expect(useSessionStore.getState().session).toBeNull();
     });
   });
 });

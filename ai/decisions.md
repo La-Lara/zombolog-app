@@ -98,6 +98,22 @@ Motivo: o projeto ainda nao possui AsyncStorage ou outro storage local nao sensi
 
 Tradeoff: SecureStore nao e a melhor opcao para dados grandes ou listas extensas. Se o wizard crescer com presets, imagens ou builds complexas, migrar o draft para um storage local mais adequado.
 
+## ADR-015: Priorizar Logoff antes de Sharing
+
+Decisao: mover sharing e refinamentos para backlog e priorizar uma P3 focada em logoff.
+
+Motivo: logout ja e um gap funcional documentado na spec e completa o ciclo basico de autenticacao antes de investir em compartilhamento, observabilidade e E2E.
+
+Tradeoff: recursos de compartilhamento seguem planejados, mas deixam de ser o proximo desenvolvimento ativo.
+
+## ADR-016: Logoff Reutiliza Fluxo de Sessao Existente
+
+Decisao: implementar o botao de logoff usando `useLogout`, sem criar nova store, novo provider ou dependencia.
+
+Motivo: `useLogout` ja limpa cache do TanStack Query e chama `clearSession`, que remove refresh token e tenta notificar o backend quando houver API configurada. A navegacao deve continuar sendo responsabilidade da protecao de rotas.
+
+Tradeoff: a UI depende do redirecionamento global ao limpar a sessao, em vez de navegar manualmente para login.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

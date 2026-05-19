@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 
-import { useSession } from '@/features/auth';
+import { useLogout, useSession } from '@/features/auth';
 import { colors, spacing } from '@/shared/theme';
 import { ErrorState, LoadingState, Screen, Text } from '@/shared/ui';
 
@@ -15,6 +16,8 @@ import { CharacterSummary } from '../types';
 export function HomeScreen() {
   const router = useRouter();
   const { session } = useSession();
+  const logout = useLogout();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const charactersQuery = useCharactersQuery({
     accessToken: session?.accessToken,
     userId: session?.user.id,
@@ -30,8 +33,27 @@ export function HomeScreen() {
     router.push('/characters/new');
   }
 
-  function handleSettingsPress() {
-    // Settings are planned, but the header action is part of the Home spec.
+  function handleLogoutPress() {
+    Alert.alert('Sair da conta', 'Deseja encerrar sua sessao neste dispositivo?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Sair',
+        style: 'destructive',
+        onPress: () => {
+          void handleConfirmLogout();
+        },
+      },
+    ]);
+  }
+
+  async function handleConfirmLogout() {
+    try {
+      setIsLoggingOut(true);
+      await logout();
+    } catch {
+      setIsLoggingOut(false);
+      Alert.alert('Nao foi possivel sair', 'Tente novamente em alguns instantes.');
+    }
   }
 
   if (charactersQuery.isLoading) {
@@ -39,7 +61,8 @@ export function HomeScreen() {
       <Screen>
         <HomeHeader
           displayName={session?.user.displayName}
-          onSettingsPress={handleSettingsPress}
+          isLoggingOut={isLoggingOut}
+          onLogoutPress={handleLogoutPress}
         />
         <LoadingState label="Carregando sobreviventes..." />
       </Screen>
@@ -51,7 +74,8 @@ export function HomeScreen() {
       <Screen>
         <HomeHeader
           displayName={session?.user.displayName}
-          onSettingsPress={handleSettingsPress}
+          isLoggingOut={isLoggingOut}
+          onLogoutPress={handleLogoutPress}
         />
         <ErrorState
           message="Nao foi possivel carregar seus personagens."
@@ -76,7 +100,8 @@ export function HomeScreen() {
           <View style={styles.header}>
             <HomeHeader
               displayName={session?.user.displayName}
-              onSettingsPress={handleSettingsPress}
+              isLoggingOut={isLoggingOut}
+              onLogoutPress={handleLogoutPress}
             />
             <Text variant="subtitle">Personagens</Text>
           </View>

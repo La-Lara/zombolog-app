@@ -5,10 +5,11 @@ import { Text } from '@/shared/ui';
 
 type HomeHeaderProps = {
   displayName?: string;
-  onSettingsPress: () => void;
+  isLoggingOut?: boolean;
+  onLogoutPress: () => void;
 };
 
-export function HomeHeader({ displayName, onSettingsPress }: HomeHeaderProps) {
+export function HomeHeader({ displayName, isLoggingOut = false, onLogoutPress }: HomeHeaderProps) {
   const greetingName = displayName?.trim() || 'Sobrevivente';
 
   return (
@@ -20,12 +21,18 @@ export function HomeHeader({ displayName, onSettingsPress }: HomeHeaderProps) {
         </Text>
       </View>
       <Pressable
-        accessibilityLabel="Abrir configuracoes"
+        accessibilityLabel="Sair da conta"
         accessibilityRole="button"
-        onPress={onSettingsPress}
-        style={({ pressed }) => [styles.settingsButton, pressed ? styles.pressed : null]}
+        accessibilityState={{ disabled: isLoggingOut, busy: isLoggingOut }}
+        disabled={isLoggingOut}
+        onPress={onLogoutPress}
+        style={({ pressed }) => [
+          styles.logoutButton,
+          pressed && !isLoggingOut ? styles.pressed : null,
+          isLoggingOut ? styles.disabled : null,
+        ]}
       >
-        <Text style={styles.settingsIcon}>⚙</Text>
+        <Text style={styles.logoutLabel}>{isLoggingOut ? 'Saindo' : 'Sair'}</Text>
       </Pressable>
     </View>
   );
@@ -42,20 +49,25 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
   },
-  settingsButton: {
+  logoutButton: {
     alignItems: 'center',
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: radius.md,
     borderWidth: 1,
-    height: 44,
     justifyContent: 'center',
-    width: 44,
+    minHeight: 44,
+    minWidth: 72,
+    paddingHorizontal: spacing.md,
   },
   pressed: {
     opacity: 0.8,
   },
-  settingsIcon: {
-    fontSize: 18,
+  disabled: {
+    opacity: 0.6,
+  },
+  logoutLabel: {
+    color: colors.danger,
+    fontWeight: '700',
   },
 });

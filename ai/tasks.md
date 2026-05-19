@@ -99,7 +99,19 @@
 - [x] Persistir draft local.
 - [x] Submit final e navegacao para detalhe.
 
-## P3: Sharing e Refinamentos
+## P3: Logoff
+
+- [x] Analisar ponto de entrada do logoff seguindo as diretrizes do projeto.
+- [x] Reutilizar o fluxo existente de sessao e `useLogout`.
+- [x] Adicionar botao de sair na Home.
+- [x] Confirmar a acao antes de encerrar a sessao.
+- [x] Limpar sessao, refresh token e cache de queries.
+- [x] Validar redirecionamento automatico para login via protecao de rotas.
+- [x] Cobrir o fluxo com teste aplicavel.
+
+## Backlog
+
+### Sharing e Refinamentos
 
 - [ ] Definir visual do cartao compartilhavel.
 - [ ] Implementar `ShareButton`.
