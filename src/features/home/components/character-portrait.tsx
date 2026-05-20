@@ -12,7 +12,7 @@ export function CharacterPortrait({ avatarId, name }: CharacterPortraitProps) {
   const portrait = getCharacterPortrait(avatarId);
 
   return (
-    <View accessibilityLabel={`Retrato de ${name}`} style={styles.portrait}>
+    <View accessibilityLabel={`Retrato de ${name}`} style={[styles.portrait, { aspectRatio: portrait.aspectRatio }]}>
       <Image resizeMode="cover" source={portrait.source} style={styles.image} />
     </View>
   );
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     height: 64,
     justifyContent: 'center',
     overflow: 'hidden',
-    width: 64,
   },
   image: {
     height: '100%',
