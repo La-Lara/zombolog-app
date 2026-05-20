@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 const databaseName = 'zombolog.db';
-const databaseVersion = 1;
+const databaseVersion = 2;
 
 type SQLiteDatabase = SQLite.SQLiteDatabase;
 
@@ -23,6 +23,7 @@ async function migrateDatabase(database: SQLiteDatabase) {
         owner_id TEXT NOT NULL,
         name TEXT NOT NULL,
         profession TEXT NOT NULL,
+        run_mode TEXT NOT NULL DEFAULT 'Apocalipse',
         status TEXT NOT NULL,
         avatar_id TEXT,
         spawn_city TEXT NOT NULL,
@@ -45,6 +46,15 @@ async function migrateDatabase(database: SQLiteDatabase) {
       CREATE INDEX IF NOT EXISTS local_characters_sync_status_idx
         ON local_characters(sync_status);
     `);
+
+    const columns = await database.getAllAsync<{ name: string }>('PRAGMA table_info(local_characters)');
+    const hasRunMode = columns.some((column) => column.name === 'run_mode');
+
+    if (!hasRunMode) {
+      await database.execAsync(
+        "ALTER TABLE local_characters ADD COLUMN run_mode TEXT NOT NULL DEFAULT 'Apocalipse'",
+      );
+    }
 
     await database.execAsync(`PRAGMA user_version = ${databaseVersion}`);
   });

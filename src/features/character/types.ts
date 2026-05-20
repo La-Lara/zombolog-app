@@ -1,4 +1,8 @@
+import { LocalCharacterRunMode } from '@/shared/storage';
+
 export type CharacterStatus = 'alive' | 'dead' | 'missing';
+
+export type CharacterRunMode = LocalCharacterRunMode;
 
 export type TraitType = 'positive' | 'negative';
 
@@ -24,6 +28,7 @@ export type Character = {
   ownerId: string;
   name: string;
   profession: string;
+  runMode: CharacterRunMode;
   status: CharacterStatus;
   avatarId?: string | null;
   spawnCity: string;

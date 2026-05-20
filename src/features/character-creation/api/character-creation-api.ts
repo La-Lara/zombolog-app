@@ -6,6 +6,7 @@ import { creationCatalog } from '../data/creation-catalog';
 import {
   CharacterCreationDraft,
   CharacterCreationPayload,
+  CharacterRunMode,
   CharacterUpdatePayload,
 } from '../types';
 
@@ -23,6 +24,7 @@ type CharacterDraftDto = {
   owner_id: string;
   name: string;
   profession: string;
+  run_mode?: string | null;
   avatar_id?: string | null;
   gender?: string | null;
   skin_tone?: string | null;
@@ -40,6 +42,7 @@ function toRequestBody(payload: CharacterCreationPayload) {
     owner_id: payload.ownerId,
     name: payload.name.trim(),
     profession: payload.profession,
+    run_mode: payload.runMode,
     avatar_id: payload.avatarId,
     gender: payload.gender,
     skin_tone: payload.skinTone,
@@ -57,6 +60,7 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     ...defaultDraftWithCurrentCatalog(),
     name: character.name,
     profession: character.profession,
+    runMode: character.runMode,
     avatarId: character.avatarId ?? creationCatalog.avatars[0],
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
@@ -79,6 +83,7 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     ...defaultDraftWithCurrentCatalog(),
     name: character.name,
     profession: character.profession,
+    runMode: toRunMode(character.run_mode),
     avatarId: character.avatar_id ?? creationCatalog.avatars[0],
     gender: character.gender ?? creationCatalog.genders[0],
     skinTone: character.skin_tone ?? creationCatalog.skinTones[0],
@@ -98,6 +103,7 @@ function defaultDraftWithCurrentCatalog(): CharacterCreationDraft {
   return {
     name: '',
     profession: '',
+    runMode: '',
     avatarId: creationCatalog.avatars[0],
     gender: creationCatalog.genders[0],
     skinTone: creationCatalog.skinTones[0],
@@ -108,6 +114,14 @@ function defaultDraftWithCurrentCatalog(): CharacterCreationDraft {
     traitIds: [],
     skills: defaultSkills(),
   };
+}
+
+function toRunMode(runMode?: string | null): CharacterRunMode {
+  if (runMode && creationCatalog.runModes.includes(runMode as CharacterRunMode)) {
+    return runMode as CharacterRunMode;
+  }
+
+  return 'Apocalipse';
 }
 
 function defaultSkills() {
@@ -160,6 +174,7 @@ export const characterCreationApi = {
         ownerId: payload.ownerId,
         name: payload.name,
         profession: payload.profession,
+        runMode: payload.runMode,
         avatarId: payload.avatarId,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
@@ -187,6 +202,7 @@ export const characterCreationApi = {
       const character = await localCharacterRepository.update(payload.ownerId, payload.characterId, {
         name: payload.name,
         profession: payload.profession,
+        runMode: payload.runMode,
         avatarId: payload.avatarId,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,

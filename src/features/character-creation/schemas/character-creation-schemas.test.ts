@@ -8,12 +8,29 @@ import {
 
 describe('character creation schemas', () => {
   it('requires name and profession in the basic info step', () => {
-    expect(() => basicInfoStepSchema.parse({ name: '', profession: '' })).toThrow();
+    expect(() => basicInfoStepSchema.parse({ name: '', profession: '', runMode: '' })).toThrow();
 
-    expect(basicInfoStepSchema.parse({ name: ' Maria Knox ', profession: 'Carpinteira' })).toEqual({
+    expect(
+      basicInfoStepSchema.parse({
+        name: ' Maria Knox ',
+        profession: 'Carpinteira',
+        runMode: 'Apocalipse',
+      }),
+    ).toEqual({
       name: 'Maria Knox',
       profession: 'Carpinteira',
+      runMode: 'Apocalipse',
     });
+  });
+
+  it('requires a valid run mode in the basic info step', () => {
+    expect(() =>
+      basicInfoStepSchema.parse({
+        name: 'Maria Knox',
+        profession: 'Carpinteira',
+        runMode: 'Custom',
+      }),
+    ).toThrow();
   });
 
   it('requires spawn and current cities', () => {
@@ -34,6 +51,7 @@ describe('character creation schemas', () => {
       characterCreationSchema.parse({
         name: 'Ana Brooks',
         profession: 'Veterana',
+        runMode: 'Sandbox',
         avatarId: 'survivor-a',
         gender: 'Feminino',
         skinTone: 'Medio',
@@ -47,6 +65,7 @@ describe('character creation schemas', () => {
     ).toEqual({
       name: 'Ana Brooks',
       profession: 'Veterana',
+      runMode: 'Sandbox',
       avatarId: 'survivor-a',
       gender: 'Feminino',
       skinTone: 'Medio',

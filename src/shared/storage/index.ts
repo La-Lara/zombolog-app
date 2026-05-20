@@ -3,6 +3,7 @@ export {
   localCharacterRepository,
   type CreateLocalCharacterInput,
   type LocalCharacter,
+  type LocalCharacterRunMode,
   type LocalCharacterStatus,
   type LocalSkill,
   type LocalSyncStatus,

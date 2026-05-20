@@ -24,7 +24,7 @@ import {
   skillsStepSchema,
   traitsStepSchema,
 } from '../schemas/character-creation-schemas';
-import { CharacterCreationDraft } from '../types';
+import { CharacterCreationDraft, CharacterRunMode } from '../types';
 
 const totalSteps = 6;
 
@@ -271,6 +271,12 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
             />
           ))}
         </FieldSection>
+        <OptionGroup
+          options={creationCatalog.runModes}
+          selected={draft.runMode}
+          title="Modo da run"
+          onSelect={(runMode) => updateDraft({ runMode: runMode as CharacterRunMode })}
+        />
       </View>
     );
   }
@@ -406,6 +412,7 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
       <Text variant="subtitle">Resumo</Text>
       <SummaryRow label="Nome" value={draft.name || 'Sem nome'} />
       <SummaryRow label="Profissao" value={draft.profession || 'Nao selecionada'} />
+      <SummaryRow label="Modo da run" value={draft.runMode || 'Nao selecionado'} />
       <SummaryRow
         label="Localizacao"
         value={`${draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
@@ -508,6 +515,7 @@ function hasDraftData(draft: CharacterCreationDraft) {
   return Boolean(
     draft.name.trim() ||
       draft.profession ||
+      draft.runMode ||
       draft.spawnCity ||
       draft.currentCity ||
       draft.traitIds.length ||

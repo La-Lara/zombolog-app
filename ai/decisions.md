@@ -138,6 +138,14 @@ Motivo: o fluxo de campos, validacao por etapa e resumo ja existem e a documenta
 
 Tradeoff: campos de aparencia que ainda nao existem no modelo persistido local usam defaults do catalogo ao editar personagens antigos. A edicao preserva metricas, status, data de criacao e skills fora do catalogo visivel.
 
+## ADR-020: Modo de Run Obrigatorio com Fallback Local
+
+Decisao: adicionar `runMode` como campo obrigatorio nos payloads de criacao/edicao e como coluna `run_mode` no SQLite, usando `Apocalipse` como fallback de migration para personagens antigos.
+
+Motivo: o modo faz parte das informacoes basicas da ficha e precisa ser salvo, carregado e exibido junto do personagem sem quebrar registros existentes.
+
+Tradeoff: personagens antigos recebem `Apocalipse` automaticamente ate serem editados pelo usuario.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

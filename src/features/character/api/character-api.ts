@@ -2,7 +2,7 @@ import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
 import { localCharacterRepository, LocalCharacter } from '@/shared/storage';
 
-import { Character, CharacterStatus, Skill, Trait, TraitType } from '../types';
+import { Character, CharacterRunMode, CharacterStatus, Skill, Trait, TraitType } from '../types';
 
 type TraitDto = {
   id: string;
@@ -26,6 +26,7 @@ type CharacterDto = {
   owner_id: string;
   name: string;
   profession: string;
+  run_mode?: CharacterRunMode | null;
   status: CharacterStatus;
   avatar_id?: string | null;
   spawn_city: string;
@@ -69,6 +70,7 @@ function toCharacter(dto: CharacterDto): Character {
     ownerId: dto.owner_id,
     name: dto.name,
     profession: dto.profession,
+    runMode: dto.run_mode ?? 'Apocalipse',
     status: dto.status,
     avatarId: dto.avatar_id,
     spawnCity: dto.spawn_city,
@@ -86,6 +88,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     ownerId: character.ownerId,
     name: character.name,
     profession: character.profession,
+    runMode: character.runMode,
     status: character.status,
     avatarId: character.avatarId,
     spawnCity: character.spawnCity,

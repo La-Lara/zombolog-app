@@ -1,7 +1,17 @@
 import { CreationCatalog, CharacterCreationDraft } from '../types';
 
+export const characterRunModes = [
+  'Apocalipse',
+  'Outbreak',
+  'Rising',
+  'Extinction',
+  'Sandbox',
+  'Desafio: Um Dia De Cão',
+] as const;
+
 export const creationCatalog: CreationCatalog = {
   professions: ['Desempregado', 'Carpinteira', 'Bombeiro', 'Veterana', 'Enfermeira', 'Mecanico'],
+  runModes: [...characterRunModes],
   cities: ['Rosewood', 'Muldraugh', 'Riverside', 'West Point'],
   avatars: ['survivor-a', 'survivor-b', 'survivor-c', 'survivor-d'],
   genders: ['Feminino', 'Masculino', 'Nao informado'],
@@ -79,6 +89,7 @@ export const creationCatalog: CreationCatalog = {
 export const defaultCharacterCreationDraft: CharacterCreationDraft = {
   name: '',
   profession: '',
+  runMode: '',
   avatarId: creationCatalog.avatars[0],
   gender: creationCatalog.genders[0],
   skinTone: creationCatalog.skinTones[0],

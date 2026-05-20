@@ -130,6 +130,16 @@
 - [x] Cobrir fluxo de edicao com teste.
 - [x] Validar com typecheck, lint aplicavel e testes.
 
+## P1: Modo de Run do Personagem
+
+- [x] Analisar arquitetura, contratos e persistencia atuais.
+- [x] Adicionar campo obrigatorio ao draft, schemas, payloads e catalogo.
+- [x] Persistir campo no SQLite com migration e fallback para registros antigos.
+- [x] Propagar campo entre API local/remota, criacao, edicao e detalhe.
+- [x] Exibir campo no wizard, resumo e ficha.
+- [x] Atualizar testes de validacao, criacao/edicao e detalhe.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

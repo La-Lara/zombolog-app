@@ -66,6 +66,12 @@ Implementar modo edicao no wizard de personagem, carregando os dados atuais por 
 
 Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
 
+### Task Atual: Modo de Run do Personagem
+
+Status: concluida na branch `implement-p1-run-mode`.
+
+Adicionar o modo em que o jogador comecou a run ao cadastro, edicao, resumo, detalhe e persistencia local, mantendo fallback seguro para personagens antigos.
+
 ## Fontes de Verdade
 
 - Produto: `/docs/specs/app-spec.md`.

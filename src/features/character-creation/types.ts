@@ -1,8 +1,11 @@
-import { LocalSkill, LocalTrait } from '@/shared/storage';
+import { LocalCharacterRunMode, LocalSkill, LocalTrait } from '@/shared/storage';
+
+export type CharacterRunMode = LocalCharacterRunMode;
 
 export type CharacterCreationDraft = {
   name: string;
   profession: string;
+  runMode: CharacterRunMode | '';
   avatarId: string;
   gender: string;
   skinTone: string;
@@ -14,8 +17,9 @@ export type CharacterCreationDraft = {
   skills: Record<string, number>;
 };
 
-export type CharacterCreationPayload = CharacterCreationDraft & {
+export type CharacterCreationPayload = Omit<CharacterCreationDraft, 'runMode'> & {
   ownerId: string;
+  runMode: CharacterRunMode;
 };
 
 export type CharacterUpdatePayload = CharacterCreationPayload & {
@@ -24,6 +28,7 @@ export type CharacterUpdatePayload = CharacterCreationPayload & {
 
 export type CreationCatalog = {
   professions: string[];
+  runModes: CharacterRunMode[];
   cities: string[];
   avatars: string[];
   genders: string[];

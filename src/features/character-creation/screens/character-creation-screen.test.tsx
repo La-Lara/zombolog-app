@@ -40,6 +40,7 @@ describe('CharacterCreationScreen', () => {
     jest.spyOn(characterCreationApi, 'getCharacterDraft').mockResolvedValueOnce({
       name: 'Maria Knox',
       profession: 'Carpinteira',
+      runMode: 'Outbreak',
       avatarId: 'survivor-a',
       gender: 'Feminino',
       skinTone: 'Medio',
@@ -74,6 +75,7 @@ describe('CharacterCreationScreen', () => {
           ownerId: 'user-1',
           name: 'Maria Knox',
           profession: 'Carpinteira',
+          runMode: 'Outbreak',
         }),
       });
     });
@@ -81,6 +83,49 @@ describe('CharacterCreationScreen', () => {
     expect(mockReplace).toHaveBeenCalledWith({
       pathname: '/characters/[id]',
       params: { id: 'character-1' },
+    });
+  });
+
+  it('requires run mode before creating and sends it in the creation payload', async () => {
+    const createCharacterSpy = jest
+      .spyOn(characterCreationApi, 'createCharacter')
+      .mockResolvedValueOnce({ id: 'character-2' });
+
+    const screen = renderWithProviders(<CharacterCreationScreen />);
+
+    expect(await screen.findByText('Novo Personagem')).toBeTruthy();
+
+    fireEvent.changeText(screen.getByLabelText('Nome'), 'Ana Brooks');
+    fireEvent.press(screen.getByRole('button', { name: 'Veterana' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+
+    expect(await screen.findByText('Selecione o modo da run.')).toBeTruthy();
+    expect(createCharacterSpy).not.toHaveBeenCalled();
+
+    fireEvent.press(screen.getByRole('button', { name: 'Sandbox' }));
+
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getAllByRole('button', { name: 'Rosewood' })[0]);
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+
+    expect(screen.getByText('Modo da run')).toBeTruthy();
+    expect(screen.getAllByText('Sandbox').length).toBeGreaterThan(0);
+
+    fireEvent.press(screen.getByRole('button', { name: 'Criar Personagem' }));
+
+    await waitFor(() => {
+      expect(createCharacterSpy).toHaveBeenCalledWith({
+        accessToken: 'test-access-token',
+        payload: expect.objectContaining({
+          ownerId: 'user-1',
+          name: 'Ana Brooks',
+          profession: 'Veterana',
+          runMode: 'Sandbox',
+        }),
+      });
     });
   });
 });

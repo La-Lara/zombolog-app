@@ -26,6 +26,7 @@ const character: Character = {
   ownerId: 'user-1',
   name: 'Maria Knox',
   profession: 'Carpinteira',
+  runMode: 'Apocalipse',
   status: 'alive',
   avatarId: null,
   spawnCity: 'Rosewood',
@@ -75,6 +76,7 @@ describe('CharacterDetailsScreen', () => {
 
     expect(await screen.findByText('Maria Knox')).toBeTruthy();
     expect(screen.getByText('Carpinteira')).toBeTruthy();
+    expect(screen.getByText('Apocalipse')).toBeTruthy();
     expect(screen.getByText('Habilidades')).toBeTruthy();
     expect(screen.getByText('Tracos')).toBeTruthy();
   });
