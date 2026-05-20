@@ -33,9 +33,21 @@ describe('character creation schemas', () => {
     ).toThrow();
   });
 
-  it('requires spawn and current cities', () => {
-    expect(() => locationStepSchema.parse({ spawnCity: 'Rosewood', currentCity: '' })).toThrow();
-    expect(locationStepSchema.parse({ spawnCity: 'Rosewood', currentCity: 'Muldraugh' })).toEqual({
+  it('requires initial, spawn and current cities', () => {
+    expect(() =>
+      locationStepSchema.parse({ initialCity: '', spawnCity: 'Rosewood', currentCity: 'Muldraugh' }),
+    ).toThrow();
+    expect(() =>
+      locationStepSchema.parse({ initialCity: 'Rosewood', spawnCity: 'Rosewood', currentCity: '' }),
+    ).toThrow();
+    expect(
+      locationStepSchema.parse({
+        initialCity: 'Rosewood',
+        spawnCity: 'Rosewood',
+        currentCity: 'Muldraugh',
+      }),
+    ).toEqual({
+      initialCity: 'Rosewood',
       spawnCity: 'Rosewood',
       currentCity: 'Muldraugh',
     });
@@ -54,6 +66,7 @@ describe('character creation schemas', () => {
         runMode: 'Sandbox',
         avatarId: 'CharacterF',
         gender: 'Feminino',
+        initialCity: 'West Point',
         spawnCity: 'West Point',
         currentCity: 'West Point',
         traitIds: ['lucky'],
@@ -65,6 +78,7 @@ describe('character creation schemas', () => {
       runMode: 'Sandbox',
       avatarId: 'CharacterF',
       gender: 'Feminino',
+      initialCity: 'West Point',
       spawnCity: 'West Point',
       currentCity: 'West Point',
       traitIds: ['lucky'],

@@ -302,15 +302,16 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
       <View style={styles.step}>
         <Text variant="subtitle">Localizacao</Text>
         <FieldSection title="Cidade inicial">
-          {creationCatalog.cities.map((spawnCity) => (
+          {creationCatalog.cities.map((initialCity) => (
             <OptionChip
-              key={spawnCity}
-              label={spawnCity}
-              selected={draft.spawnCity === spawnCity}
+              key={initialCity}
+              label={initialCity}
+              selected={draft.initialCity === initialCity}
               onPress={() =>
                 updateDraft({
-                  spawnCity,
-                  currentCity: draft.currentCity || spawnCity,
+                  initialCity,
+                  spawnCity: initialCity,
+                  currentCity: draft.currentCity || initialCity,
                 })
               }
             />
@@ -389,9 +390,10 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
       <SummaryRow label="Modo da run" value={draft.runMode || 'Nao selecionado'} />
       <SummaryRow label="Retrato" value={getCharacterPortrait(draft.avatarId).label} />
       <SummaryRow label="Genero" value={draft.gender || 'Nao selecionado'} />
+      <SummaryRow label="Cidade inicial" value={draft.initialCity || 'Nao selecionada'} />
       <SummaryRow
         label="Localizacao"
-        value={`${draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
+        value={`${draft.initialCity || draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
       />
       <SummaryRow label="Sobrevivencia" value="0 dias vivos - 0 zumbis mortos" />
       <FieldSection title="Tracos selecionados">
@@ -530,6 +532,7 @@ function hasDraftData(draft: CharacterCreationDraft) {
     draft.name.trim() ||
       draft.profession ||
       draft.runMode ||
+      draft.initialCity ||
       draft.spawnCity ||
       draft.currentCity ||
       draft.traitIds.length ||

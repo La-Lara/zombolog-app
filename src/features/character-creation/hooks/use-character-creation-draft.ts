@@ -79,6 +79,7 @@ function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null
     runMode: storedDraft.runMode,
     avatarId: getCharacterPortrait(storedDraft.avatarId).id,
     gender: storedDraft.gender,
+    initialCity: storedDraft.initialCity ?? storedDraft.spawnCity,
     spawnCity: storedDraft.spawnCity,
     currentCity: storedDraft.currentCity,
     traitIds: storedDraft.traitIds,

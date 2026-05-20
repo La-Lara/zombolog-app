@@ -43,6 +43,7 @@ export type LocalCharacter = {
   gender: string;
   status: LocalCharacterStatus;
   avatarId?: string | null;
+  initialCity: string;
   spawnCity: string;
   currentCity: string;
   daysAlive: number;
@@ -65,6 +66,7 @@ export type CreateLocalCharacterInput = Pick<
   | 'runMode'
   | 'gender'
   | 'avatarId'
+  | 'initialCity'
   | 'spawnCity'
   | 'currentCity'
   | 'traits'
@@ -73,7 +75,16 @@ export type CreateLocalCharacterInput = Pick<
 
 export type UpdateLocalCharacterInput = Pick<
   LocalCharacter,
-  'name' | 'profession' | 'runMode' | 'gender' | 'avatarId' | 'spawnCity' | 'currentCity' | 'traits' | 'skills'
+  | 'name'
+  | 'profession'
+  | 'runMode'
+  | 'gender'
+  | 'avatarId'
+  | 'initialCity'
+  | 'spawnCity'
+  | 'currentCity'
+  | 'traits'
+  | 'skills'
 >;
 
 type LocalCharacterRow = {
@@ -86,6 +97,7 @@ type LocalCharacterRow = {
   gender?: string | null;
   status: LocalCharacterStatus;
   avatar_id: string | null;
+  initial_city?: string | null;
   spawn_city: string;
   current_city: string;
   days_alive: number;
@@ -112,6 +124,7 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       gender: 'Feminino',
       status: 'alive',
       avatarId: 'CharacterF',
+      initialCity: 'Rosewood',
       spawnCity: 'Rosewood',
       currentCity: 'Muldraugh',
       daysAlive: 18,
@@ -168,6 +181,7 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       gender: 'Masculino',
       status: 'alive',
       avatarId: 'CharacterM',
+      initialCity: 'Riverside',
       spawnCity: 'Riverside',
       currentCity: 'Riverside',
       daysAlive: 9,
@@ -223,6 +237,7 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       gender: 'Feminino',
       status: 'missing',
       avatarId: 'CharacterF',
+      initialCity: 'West Point',
       spawnCity: 'West Point',
       currentCity: 'West Point',
       daysAlive: 31,
@@ -282,6 +297,7 @@ function toRowParams(character: LocalCharacter) {
     character.gender,
     character.status,
     character.avatarId ?? null,
+    character.initialCity,
     character.spawnCity,
     character.currentCity,
     character.daysAlive,
@@ -308,6 +324,7 @@ function toCharacter(row: LocalCharacterRow): LocalCharacter {
     gender: row.gender ?? 'Nao informado',
     status: row.status,
     avatarId: row.avatar_id,
+    initialCity: row.initial_city ?? row.spawn_city,
     spawnCity: row.spawn_city,
     currentCity: row.current_city,
     daysAlive: row.days_alive,
@@ -327,10 +344,10 @@ async function runUpsertCharacter(database: LocalDatabase, character: LocalChara
   await database.runAsync(
     `
       INSERT INTO local_characters (
-        id, remote_id, owner_id, name, profession, run_mode, gender, status, avatar_id, spawn_city,
+        id, remote_id, owner_id, name, profession, run_mode, gender, status, avatar_id, initial_city, spawn_city,
         current_city, days_alive, zombies_killed, traits_json, skills_json,
         sync_status, sync_version, created_at, updated_at, deleted_at, last_synced_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(id) DO UPDATE SET
         remote_id = excluded.remote_id,
         owner_id = excluded.owner_id,
@@ -340,6 +357,7 @@ async function runUpsertCharacter(database: LocalDatabase, character: LocalChara
         gender = excluded.gender,
         status = excluded.status,
         avatar_id = excluded.avatar_id,
+        initial_city = excluded.initial_city,
         spawn_city = excluded.spawn_city,
         current_city = excluded.current_city,
         days_alive = excluded.days_alive,

@@ -14,7 +14,19 @@ export const characterRunModes = [
 export const creationCatalog: CreationCatalog = {
   professions: ['Desempregado', 'Carpinteira', 'Bombeiro', 'Veterana', 'Enfermeira', 'Mecanico'],
   runModes: [...characterRunModes],
-  cities: ['Rosewood', 'Muldraugh', 'Riverside', 'West Point'],
+  cities: [
+    'Muldraugh',
+    'Brandenburg',
+    'Echo Creek',
+    'Ekron',
+    'Fallas Lake',
+    'Irvington',
+    'March Ridge',
+    'Riverside',
+    'Rosewood',
+    'Valley Station',
+    'West Point',
+  ],
   avatars: characterPortraits.map((portrait) => portrait.id),
   genders: ['Feminino', 'Masculino', 'Nao informado'],
   traits: [
@@ -91,6 +103,7 @@ export const defaultCharacterCreationDraft: CharacterCreationDraft = {
   runMode: '',
   avatarId: creationCatalog.avatars[0],
   gender: creationCatalog.genders[0],
+  initialCity: '',
   spawnCity: '',
   currentCity: '',
   traitIds: [],

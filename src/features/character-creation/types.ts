@@ -8,6 +8,7 @@ export type CharacterCreationDraft = {
   runMode: CharacterRunMode | '';
   avatarId: string;
   gender: string;
+  initialCity: string;
   spawnCity: string;
   currentCity: string;
   traitIds: string[];

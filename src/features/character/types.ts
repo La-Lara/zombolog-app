@@ -32,6 +32,7 @@ export type Character = {
   gender: string;
   status: CharacterStatus;
   avatarId?: string | null;
+  initialCity: string;
   spawnCity: string;
   currentCity: string;
   daysAlive: number;

@@ -28,6 +28,7 @@ type CharacterDraftDto = {
   run_mode?: string | null;
   avatar_id?: string | null;
   gender?: string | null;
+  initial_city?: string | null;
   spawn_city: string;
   current_city: string;
   trait_ids?: string[];
@@ -43,6 +44,7 @@ function toRequestBody(payload: CharacterCreationPayload) {
     run_mode: payload.runMode,
     avatar_id: payload.avatarId,
     gender: payload.gender,
+    initial_city: payload.initialCity,
     spawn_city: payload.spawnCity,
     current_city: payload.currentCity,
     trait_ids: payload.traitIds,
@@ -58,6 +60,7 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     runMode: character.runMode,
     gender: character.gender,
     avatarId: getCharacterPortrait(character.avatarId).id,
+    initialCity: character.initialCity,
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
     traitIds: character.traits.map((trait) => trait.id),
@@ -82,6 +85,7 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     runMode: toRunMode(character.run_mode),
     avatarId: getCharacterPortrait(character.avatar_id).id,
     gender: character.gender ?? creationCatalog.genders[0],
+    initialCity: character.initial_city ?? character.spawn_city,
     spawnCity: character.spawn_city,
     currentCity: character.current_city,
     traitIds,
@@ -99,6 +103,7 @@ function defaultDraftWithCurrentCatalog(): CharacterCreationDraft {
     runMode: '',
     avatarId: creationCatalog.avatars[0],
     gender: creationCatalog.genders[0],
+    initialCity: '',
     spawnCity: '',
     currentCity: '',
     traitIds: [],
@@ -167,6 +172,7 @@ export const characterCreationApi = {
         runMode: payload.runMode,
         gender: payload.gender,
         avatarId: payload.avatarId,
+        initialCity: payload.initialCity,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
         traits: toLocalTraits(payload),
@@ -196,6 +202,7 @@ export const characterCreationApi = {
         runMode: payload.runMode,
         gender: payload.gender,
         avatarId: payload.avatarId,
+        initialCity: payload.initialCity,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
         traits: toLocalTraits(payload),

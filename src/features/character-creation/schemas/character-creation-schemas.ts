@@ -17,6 +17,7 @@ export const appearanceStepSchema = z.object({
 });
 
 export const locationStepSchema = z.object({
+  initialCity: z.string().trim().min(1, 'Selecione a cidade inicial.'),
   spawnCity: z.string().trim().min(1, 'Selecione a cidade inicial.'),
   currentCity: z.string().trim().min(1, 'Selecione a cidade atual.'),
 });

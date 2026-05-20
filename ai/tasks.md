@@ -151,6 +151,16 @@
 - [x] Atualizar testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Cidade Inicial do Personagem
+
+- [x] Analisar arquitetura, fluxo atual e pontos de persistencia.
+- [x] Adicionar campo ao dominio, drafts, schemas e catalogos.
+- [x] Persistir campo no SQLite com migration e fallback para registros antigos.
+- [x] Propagar campo entre API local/remota, criacao, edicao e detalhe.
+- [x] Exibir campo no wizard, resumo e ficha.
+- [x] Atualizar testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

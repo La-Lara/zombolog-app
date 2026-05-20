@@ -30,6 +30,7 @@ type CharacterDto = {
   gender?: string | null;
   status: CharacterStatus;
   avatar_id?: string | null;
+  initial_city?: string | null;
   spawn_city: string;
   current_city: string;
   days_alive?: number | null;
@@ -75,6 +76,7 @@ function toCharacter(dto: CharacterDto): Character {
     gender: dto.gender ?? 'Nao informado',
     status: dto.status,
     avatarId: dto.avatar_id,
+    initialCity: dto.initial_city ?? dto.spawn_city,
     spawnCity: dto.spawn_city,
     currentCity: dto.current_city,
     daysAlive: clampMetric(dto.days_alive ?? 0),
@@ -94,6 +96,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     gender: character.gender,
     status: character.status,
     avatarId: character.avatarId,
+    initialCity: character.initialCity,
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
     daysAlive: clampMetric(character.daysAlive),

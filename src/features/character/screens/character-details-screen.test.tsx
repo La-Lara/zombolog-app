@@ -30,6 +30,7 @@ const character: Character = {
   gender: 'Feminino',
   status: 'alive',
   avatarId: 'CharacterF',
+  initialCity: 'Rosewood',
   spawnCity: 'Rosewood',
   currentCity: 'Muldraugh',
   daysAlive: 18,
@@ -79,6 +80,8 @@ describe('CharacterDetailsScreen', () => {
     expect(screen.getByText('Carpinteira')).toBeTruthy();
     expect(screen.getByText('Apocalipse')).toBeTruthy();
     expect(screen.getByText('Feminino')).toBeTruthy();
+    expect(screen.getByText('Cidade inicial')).toBeTruthy();
+    expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
     expect(screen.getByText('Habilidades')).toBeTruthy();
     expect(screen.getByText('Tracos')).toBeTruthy();
   });

@@ -43,6 +43,7 @@ describe('CharacterCreationScreen', () => {
       runMode: 'Outbreak',
       avatarId: 'CharacterF',
       gender: 'Feminino',
+      initialCity: 'Rosewood',
       spawnCity: 'Rosewood',
       currentCity: 'Muldraugh',
       traitIds: ['organized'],
@@ -73,6 +74,7 @@ describe('CharacterCreationScreen', () => {
           name: 'Maria Knox',
           profession: 'Carpinteira',
           runMode: 'Outbreak',
+          initialCity: 'Rosewood',
         }),
       });
     });
@@ -110,7 +112,9 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
     expect(screen.getByText('Modo da run')).toBeTruthy();
+    expect(screen.getByText('Cidade inicial')).toBeTruthy();
     expect(screen.getAllByText('Sandbox').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
 
     fireEvent.press(screen.getByRole('button', { name: 'Criar Personagem' }));
 
@@ -124,6 +128,9 @@ describe('CharacterCreationScreen', () => {
           runMode: 'Sandbox',
           avatarId: 'CharacterM',
           gender: 'Feminino',
+          initialCity: 'Rosewood',
+          spawnCity: 'Rosewood',
+          currentCity: 'Rosewood',
         }),
       });
     });
