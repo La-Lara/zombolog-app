@@ -436,14 +436,13 @@ function PortraitCarousel({ selected, onSelect }: PortraitCarouselProps) {
         >
           <Text style={styles.carouselArrowLabel}>{'<'}</Text>
         </Pressable>
-        <View style={styles.portraitPreview}>
+        <View style={[styles.portraitPreview, { aspectRatio: portrait.aspectRatio }]}>
           <Image
             accessibilityLabel={`Retrato ${portrait.label}`}
             resizeMode="cover"
             source={portrait.source}
             style={styles.portraitImage}
           />
-          <Text variant="caption">{portrait.label}</Text>
         </View>
         <Pressable
           accessibilityLabel="Proximo retrato"
@@ -592,11 +591,9 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: radius.lg,
     borderWidth: 1,
-    gap: spacing.xs,
-    height: 112,
     justifyContent: 'center',
     overflow: 'hidden',
-    width: 112,
+    width: 132,
   },
   portraitCarousel: {
     alignItems: 'center',
@@ -606,7 +603,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   portraitImage: {
-    height: 84,
+    height: '100%',
     width: '100%',
   },
   carouselArrow: {
