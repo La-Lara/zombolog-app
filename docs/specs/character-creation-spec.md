@@ -23,9 +23,6 @@ Campos:
 
 - avatar/portrait com navegação anterior/próximo;
 - gênero;
-- tom de pele;
-- cabelo;
-- cor do cabelo.
 
 UX:
 

@@ -27,6 +27,7 @@ type CharacterDto = {
   name: string;
   profession: string;
   run_mode?: CharacterRunMode | null;
+  gender?: string | null;
   status: CharacterStatus;
   avatar_id?: string | null;
   spawn_city: string;
@@ -71,6 +72,7 @@ function toCharacter(dto: CharacterDto): Character {
     name: dto.name,
     profession: dto.profession,
     runMode: dto.run_mode ?? 'Apocalipse',
+    gender: dto.gender ?? 'Nao informado',
     status: dto.status,
     avatarId: dto.avatar_id,
     spawnCity: dto.spawn_city,
@@ -89,6 +91,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     name: character.name,
     profession: character.profession,
     runMode: character.runMode,
+    gender: character.gender,
     status: character.status,
     avatarId: character.avatarId,
     spawnCity: character.spawnCity,

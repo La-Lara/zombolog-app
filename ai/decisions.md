@@ -146,6 +146,14 @@ Motivo: o modo faz parte das informacoes basicas da ficha e precisa ser salvo, c
 
 Tradeoff: personagens antigos recebem `Apocalipse` automaticamente ate serem editados pelo usuario.
 
+## ADR-021: Retratos Locais para Aparencia Simplificada
+
+Decisao: reduzir a aparencia do personagem para genero e retrato, usando os assets locais `CharacterF` e `CharacterM` como catalogo inicial.
+
+Motivo: simplifica o wizard e evita manter campos visuais sem representacao concreta no app.
+
+Tradeoff: IDs antigos de avatar passam a cair no retrato default `CharacterF` ate o usuario salvar uma nova escolha.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

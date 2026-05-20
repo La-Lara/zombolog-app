@@ -27,8 +27,9 @@ const character: Character = {
   name: 'Maria Knox',
   profession: 'Carpinteira',
   runMode: 'Apocalipse',
+  gender: 'Feminino',
   status: 'alive',
-  avatarId: null,
+  avatarId: 'CharacterF',
   spawnCity: 'Rosewood',
   currentCity: 'Muldraugh',
   daysAlive: 18,
@@ -77,6 +78,7 @@ describe('CharacterDetailsScreen', () => {
     expect(await screen.findByText('Maria Knox')).toBeTruthy();
     expect(screen.getByText('Carpinteira')).toBeTruthy();
     expect(screen.getByText('Apocalipse')).toBeTruthy();
+    expect(screen.getByText('Feminino')).toBeTruthy();
     expect(screen.getByText('Habilidades')).toBeTruthy();
     expect(screen.getByText('Tracos')).toBeTruthy();
   });

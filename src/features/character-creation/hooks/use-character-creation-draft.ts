@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { getCharacterPortrait } from '@/shared/config/character-portraits';
+
 import { defaultCharacterCreationDraft } from '../data/creation-catalog';
 import { characterCreationDraftStorage } from '../storage/character-creation-draft-storage';
 import { CharacterCreationDraft } from '../types';
@@ -18,6 +20,7 @@ export function useCharacterCreationDraft(userId?: string) {
       }
 
       const storedDraft = await characterCreationDraftStorage.getDraft(userId);
+      const sanitizedDraft = sanitizeStoredDraft(storedDraft);
 
       if (!isActive) {
         return;
@@ -25,10 +28,10 @@ export function useCharacterCreationDraft(userId?: string) {
 
       setDraft({
         ...defaultCharacterCreationDraft,
-        ...storedDraft,
+        ...sanitizedDraft,
         skills: {
           ...defaultCharacterCreationDraft.skills,
-          ...storedDraft?.skills,
+          ...sanitizedDraft?.skills,
         },
       });
       setIsHydrated(true);
@@ -63,4 +66,22 @@ export function useCharacterCreationDraft(userId?: string) {
     isHydrated,
     clearDraft,
   };
+}
+
+function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null) {
+  if (!storedDraft) {
+    return null;
+  }
+
+  return {
+    name: storedDraft.name,
+    profession: storedDraft.profession,
+    runMode: storedDraft.runMode,
+    avatarId: getCharacterPortrait(storedDraft.avatarId).id,
+    gender: storedDraft.gender,
+    spawnCity: storedDraft.spawnCity,
+    currentCity: storedDraft.currentCity,
+    traitIds: storedDraft.traitIds,
+    skills: storedDraft.skills,
+  } satisfies Partial<CharacterCreationDraft>;
 }

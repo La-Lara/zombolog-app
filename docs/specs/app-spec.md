@@ -14,7 +14,7 @@ App mobile companion para Project Zomboid focado em criar, consultar e compartil
 
 - `User`: displayName, username, credentials, settings.
 - `Character`: id, ownerId, name, profession, status, avatar, spawnCity, currentCity, daysAlive, zombiesKilled.
-- `Appearance`: gender, skinTone, hairStyle, hairColor, portraitVariant.
+- `Appearance`: gender, portraitVariant.
 - `Trait`: id, name, type positive/negative, description, effects, points.
 - `Skill`: id, name, category, level, icon.
 - `ShareProfile`: characterId, imagePreset, visibility, generatedAssetUrl.

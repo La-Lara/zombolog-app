@@ -1,3 +1,5 @@
+import { characterPortraits } from '@/shared/config/character-portraits';
+
 import { CreationCatalog, CharacterCreationDraft } from '../types';
 
 export const characterRunModes = [
@@ -13,11 +15,8 @@ export const creationCatalog: CreationCatalog = {
   professions: ['Desempregado', 'Carpinteira', 'Bombeiro', 'Veterana', 'Enfermeira', 'Mecanico'],
   runModes: [...characterRunModes],
   cities: ['Rosewood', 'Muldraugh', 'Riverside', 'West Point'],
-  avatars: ['survivor-a', 'survivor-b', 'survivor-c', 'survivor-d'],
+  avatars: characterPortraits.map((portrait) => portrait.id),
   genders: ['Feminino', 'Masculino', 'Nao informado'],
-  skinTones: ['Claro', 'Medio', 'Escuro'],
-  hairStyles: ['Curto', 'Longo', 'Preso', 'Raspado'],
-  hairColors: ['Castanho', 'Preto', 'Loiro', 'Ruivo', 'Grisalho'],
   traits: [
     {
       id: 'fast-reader',
@@ -92,9 +91,6 @@ export const defaultCharacterCreationDraft: CharacterCreationDraft = {
   runMode: '',
   avatarId: creationCatalog.avatars[0],
   gender: creationCatalog.genders[0],
-  skinTone: creationCatalog.skinTones[0],
-  hairStyle: creationCatalog.hairStyles[0],
-  hairColor: creationCatalog.hairColors[0],
   spawnCity: '',
   currentCity: '',
   traitIds: [],

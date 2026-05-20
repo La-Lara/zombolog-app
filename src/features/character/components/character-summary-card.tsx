@@ -16,7 +16,7 @@ export function CharacterSummaryCard({ character }: CharacterSummaryCardProps) {
   return (
     <Card>
       <View style={styles.header}>
-        <CharacterPortrait name={character.name} />
+        <CharacterPortrait avatarId={character.avatarId} name={character.name} />
         <View style={styles.identity}>
           <Text numberOfLines={2} variant="subtitle">
             {character.name}
@@ -31,6 +31,7 @@ export function CharacterSummaryCard({ character }: CharacterSummaryCardProps) {
         <MetricRow label="Dias vivos" value={character.daysAlive} />
         <MetricRow label="Zumbis abatidos" value={character.zombiesKilled} />
         <MetricRow label="Modo da run" value={character.runMode} />
+        <MetricRow label="Genero" value={character.gender} />
         <MetricRow label="Spawn" value={character.spawnCity} />
         <MetricRow label="Cidade atual" value={character.currentCity} />
       </View>

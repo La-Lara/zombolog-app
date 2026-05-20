@@ -11,7 +11,7 @@ Todas as etapas usam background dark, header com back, título `Novo Personagem`
 ## Etapas
 
 1. Informações básicas: nome e profissão.
-2. Aparência: portrait, gênero, tom de pele, cabelo e cor.
+2. Aparência: portrait e gênero.
 3. Localização: cidade de spawn e cidade atual.
 4. Traços: positivos e negativos.
 5. Habilidades: lista de skills.
