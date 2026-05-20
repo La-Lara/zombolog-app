@@ -66,7 +66,13 @@ Implementar modo edicao no wizard de personagem, carregando os dados atuais por 
 
 Adicionar share sheet, geracao de cartao, acessibilidade, polish visual, performance de listas, observabilidade e E2E.
 
-### Task Atual: Modo de Run do Personagem
+### Task Atual: Simplificacao da Aparencia
+
+Status: concluida na branch `implement-p1-appearance-simplification`.
+
+Simplificar a customizacao visual para manter apenas genero e retrato, usando retratos locais `CharacterF` e `CharacterM`, com carrossel no wizard e compatibilidade para personagens/drafts antigos.
+
+### Task Anterior: Modo de Run do Personagem
 
 Status: concluida na branch `implement-p1-run-mode`.
 

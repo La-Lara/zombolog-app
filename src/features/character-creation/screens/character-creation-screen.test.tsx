@@ -41,11 +41,8 @@ describe('CharacterCreationScreen', () => {
       name: 'Maria Knox',
       profession: 'Carpinteira',
       runMode: 'Outbreak',
-      avatarId: 'survivor-a',
+      avatarId: 'CharacterF',
       gender: 'Feminino',
-      skinTone: 'Medio',
-      hairStyle: 'Curto',
-      hairColor: 'Preto',
       spawnCity: 'Rosewood',
       currentCity: 'Muldraugh',
       traitIds: ['organized'],
@@ -105,6 +102,7 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Sandbox' }));
 
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo retrato' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
     fireEvent.press(screen.getAllByRole('button', { name: 'Rosewood' })[0]);
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
@@ -124,6 +122,8 @@ describe('CharacterCreationScreen', () => {
           name: 'Ana Brooks',
           profession: 'Veterana',
           runMode: 'Sandbox',
+          avatarId: 'CharacterM',
+          gender: 'Feminino',
         }),
       });
     });

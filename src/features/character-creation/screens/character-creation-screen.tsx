@@ -1,9 +1,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, Image, Pressable, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
 import { toAppError } from '@/shared/api/errors';
+import { getCharacterPortrait } from '@/shared/config/character-portraits';
 import { colors, radius, spacing } from '@/shared/theme';
 import { Card, EmptyState, ErrorState, LoadingState, Screen, Text, TextField } from '@/shared/ui';
 
@@ -285,39 +286,12 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
     return (
       <View style={styles.step}>
         <Text variant="subtitle">Aparencia</Text>
-        <View style={styles.portraitPreview}>
-          <Text style={styles.portraitInitial}>{getInitials(draft.name)}</Text>
-          <Text variant="caption">{draft.avatarId}</Text>
-        </View>
-        <OptionGroup
-          options={creationCatalog.avatars}
-          selected={draft.avatarId}
-          title="Retrato"
-          onSelect={(avatarId) => updateDraft({ avatarId })}
-        />
+        <PortraitCarousel selected={draft.avatarId} onSelect={(avatarId) => updateDraft({ avatarId })} />
         <OptionGroup
           options={creationCatalog.genders}
           selected={draft.gender}
           title="Genero"
           onSelect={(gender) => updateDraft({ gender })}
-        />
-        <OptionGroup
-          options={creationCatalog.skinTones}
-          selected={draft.skinTone}
-          title="Tom de pele"
-          onSelect={(skinTone) => updateDraft({ skinTone })}
-        />
-        <OptionGroup
-          options={creationCatalog.hairStyles}
-          selected={draft.hairStyle}
-          title="Cabelo"
-          onSelect={(hairStyle) => updateDraft({ hairStyle })}
-        />
-        <OptionGroup
-          options={creationCatalog.hairColors}
-          selected={draft.hairColor}
-          title="Cor do cabelo"
-          onSelect={(hairColor) => updateDraft({ hairColor })}
         />
       </View>
     );
@@ -413,6 +387,8 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
       <SummaryRow label="Nome" value={draft.name || 'Sem nome'} />
       <SummaryRow label="Profissao" value={draft.profession || 'Nao selecionada'} />
       <SummaryRow label="Modo da run" value={draft.runMode || 'Nao selecionado'} />
+      <SummaryRow label="Retrato" value={getCharacterPortrait(draft.avatarId).label} />
+      <SummaryRow label="Genero" value={draft.gender || 'Nao selecionado'} />
       <SummaryRow
         label="Localizacao"
         value={`${draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
@@ -428,6 +404,56 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
         )}
       </FieldSection>
     </View>
+  );
+}
+
+type PortraitCarouselProps = {
+  selected: string;
+  onSelect: (avatarId: string) => void;
+};
+
+function PortraitCarousel({ selected, onSelect }: PortraitCarouselProps) {
+  const selectedIndex = Math.max(
+    creationCatalog.avatars.findIndex((avatarId) => avatarId === selected),
+    0,
+  );
+  const portrait = getCharacterPortrait(creationCatalog.avatars[selectedIndex]);
+
+  function selectRelative(offset: number) {
+    const nextIndex =
+      (selectedIndex + offset + creationCatalog.avatars.length) % creationCatalog.avatars.length;
+    onSelect(creationCatalog.avatars[nextIndex]);
+  }
+
+  return (
+    <FieldSection title="Retrato">
+      <View style={styles.portraitCarousel}>
+        <Pressable
+          accessibilityLabel="Retrato anterior"
+          accessibilityRole="button"
+          onPress={() => selectRelative(-1)}
+          style={({ pressed }) => [styles.carouselArrow, pressed ? styles.pressed : null]}
+        >
+          <Text style={styles.carouselArrowLabel}>{'<'}</Text>
+        </Pressable>
+        <View style={[styles.portraitPreview, { aspectRatio: portrait.aspectRatio }]}>
+          <Image
+            accessibilityLabel={`Retrato ${portrait.label}`}
+            resizeMode="cover"
+            source={portrait.source}
+            style={styles.portraitImage}
+          />
+        </View>
+        <Pressable
+          accessibilityLabel="Proximo retrato"
+          accessibilityRole="button"
+          onPress={() => selectRelative(1)}
+          style={({ pressed }) => [styles.carouselArrow, pressed ? styles.pressed : null]}
+        >
+          <Text style={styles.carouselArrowLabel}>{'>'}</Text>
+        </Pressable>
+      </View>
+    </FieldSection>
   );
 }
 
@@ -499,18 +525,6 @@ function toggleValue(values: string[], value: string) {
   return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
 }
 
-function getInitials(name: string) {
-  const initials = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('');
-
-  return initials || '??';
-}
-
 function hasDraftData(draft: CharacterCreationDraft) {
   return Boolean(
     draft.name.trim() ||
@@ -577,14 +591,34 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: radius.lg,
     borderWidth: 1,
-    gap: spacing.xs,
-    height: 112,
     justifyContent: 'center',
-    width: 112,
+    overflow: 'hidden',
+    width: 132,
   },
-  portraitInitial: {
+  portraitCarousel: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.md,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  portraitImage: {
+    height: '100%',
+    width: '100%',
+  },
+  carouselArrow: {
+    alignItems: 'center',
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    height: 44,
+    justifyContent: 'center',
+    width: 44,
+  },
+  carouselArrowLabel: {
     color: colors.primary,
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: '700',
   },
   skillRow: {

@@ -14,9 +14,6 @@ export const basicInfoStepSchema = z.object({
 export const appearanceStepSchema = z.object({
   avatarId: z.string().trim().min(1, 'Selecione um retrato.'),
   gender: z.string().trim().min(1, 'Selecione um genero.'),
-  skinTone: z.string().trim().min(1, 'Selecione um tom de pele.'),
-  hairStyle: z.string().trim().min(1, 'Selecione um cabelo.'),
-  hairColor: z.string().trim().min(1, 'Selecione uma cor de cabelo.'),
 });
 
 export const locationStepSchema = z.object({

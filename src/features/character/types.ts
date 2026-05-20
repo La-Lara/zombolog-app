@@ -29,6 +29,7 @@ export type Character = {
   name: string;
   profession: string;
   runMode: CharacterRunMode;
+  gender: string;
   status: CharacterStatus;
   avatarId?: string | null;
   spawnCity: string;

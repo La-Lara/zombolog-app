@@ -8,9 +8,6 @@ export type CharacterCreationDraft = {
   runMode: CharacterRunMode | '';
   avatarId: string;
   gender: string;
-  skinTone: string;
-  hairStyle: string;
-  hairColor: string;
   spawnCity: string;
   currentCity: string;
   traitIds: string[];
@@ -32,9 +29,6 @@ export type CreationCatalog = {
   cities: string[];
   avatars: string[];
   genders: string[];
-  skinTones: string[];
-  hairStyles: string[];
-  hairColors: string[];
   traits: LocalTrait[];
   skills: LocalSkill[];
 };

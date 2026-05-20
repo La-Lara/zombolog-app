@@ -21,7 +21,7 @@ export function CharacterCard({ character, onPress }: CharacterCardProps) {
       onPress={() => onPress(character.id)}
       style={({ pressed }) => [styles.card, pressed ? styles.pressed : null]}
     >
-      <CharacterPortrait name={character.name} />
+      <CharacterPortrait avatarId={character.avatarId} name={character.name} />
       <View style={styles.content}>
         <View style={styles.titleRow}>
           <View style={styles.nameGroup}>

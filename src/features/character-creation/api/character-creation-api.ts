@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { getCharacterPortrait } from '@/shared/config/character-portraits';
 import { localCharacterRepository, LocalCharacter, LocalSkill } from '@/shared/storage';
 
 import { creationCatalog } from '../data/creation-catalog';
@@ -27,9 +28,6 @@ type CharacterDraftDto = {
   run_mode?: string | null;
   avatar_id?: string | null;
   gender?: string | null;
-  skin_tone?: string | null;
-  hair_style?: string | null;
-  hair_color?: string | null;
   spawn_city: string;
   current_city: string;
   trait_ids?: string[];
@@ -45,9 +43,6 @@ function toRequestBody(payload: CharacterCreationPayload) {
     run_mode: payload.runMode,
     avatar_id: payload.avatarId,
     gender: payload.gender,
-    skin_tone: payload.skinTone,
-    hair_style: payload.hairStyle,
-    hair_color: payload.hairColor,
     spawn_city: payload.spawnCity,
     current_city: payload.currentCity,
     trait_ids: payload.traitIds,
@@ -61,7 +56,8 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     name: character.name,
     profession: character.profession,
     runMode: character.runMode,
-    avatarId: character.avatarId ?? creationCatalog.avatars[0],
+    gender: character.gender,
+    avatarId: getCharacterPortrait(character.avatarId).id,
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
     traitIds: character.traits.map((trait) => trait.id),
@@ -84,11 +80,8 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     name: character.name,
     profession: character.profession,
     runMode: toRunMode(character.run_mode),
-    avatarId: character.avatar_id ?? creationCatalog.avatars[0],
+    avatarId: getCharacterPortrait(character.avatar_id).id,
     gender: character.gender ?? creationCatalog.genders[0],
-    skinTone: character.skin_tone ?? creationCatalog.skinTones[0],
-    hairStyle: character.hair_style ?? creationCatalog.hairStyles[0],
-    hairColor: character.hair_color ?? creationCatalog.hairColors[0],
     spawnCity: character.spawn_city,
     currentCity: character.current_city,
     traitIds,
@@ -106,9 +99,6 @@ function defaultDraftWithCurrentCatalog(): CharacterCreationDraft {
     runMode: '',
     avatarId: creationCatalog.avatars[0],
     gender: creationCatalog.genders[0],
-    skinTone: creationCatalog.skinTones[0],
-    hairStyle: creationCatalog.hairStyles[0],
-    hairColor: creationCatalog.hairColors[0],
     spawnCity: '',
     currentCity: '',
     traitIds: [],
@@ -175,6 +165,7 @@ export const characterCreationApi = {
         name: payload.name,
         profession: payload.profession,
         runMode: payload.runMode,
+        gender: payload.gender,
         avatarId: payload.avatarId,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
@@ -203,6 +194,7 @@ export const characterCreationApi = {
         name: payload.name,
         profession: payload.profession,
         runMode: payload.runMode,
+        gender: payload.gender,
         avatarId: payload.avatarId,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,

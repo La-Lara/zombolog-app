@@ -140,6 +140,17 @@
 - [x] Atualizar testes de validacao, criacao/edicao e detalhe.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Simplificacao da Aparencia
+
+- [x] Analisar arquitetura, fluxo atual e pontos de persistencia.
+- [x] Copiar assets `CharacterF` e `CharacterM` para o projeto.
+- [x] Remover tom de pele, cabelo e cor de cabelo de tipos, schemas, draft, API e UI.
+- [x] Criar carrossel de retratos com selecao pelo item visivel.
+- [x] Persistir e exibir retrato escolhido em criacao, edicao, Home e detalhe.
+- [x] Manter compatibilidade com avatars/drafts antigos via fallback.
+- [x] Atualizar testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

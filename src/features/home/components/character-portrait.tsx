@@ -1,23 +1,19 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
+import { getCharacterPortrait } from '@/shared/config/character-portraits';
 import { colors, radius } from '@/shared/theme';
-import { Text } from '@/shared/ui';
 
 type CharacterPortraitProps = {
+  avatarId?: string | null;
   name: string;
 };
 
-export function CharacterPortrait({ name }: CharacterPortraitProps) {
-  const initials = name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('');
+export function CharacterPortrait({ avatarId, name }: CharacterPortraitProps) {
+  const portrait = getCharacterPortrait(avatarId);
 
   return (
-    <View accessibilityLabel={`Retrato de ${name}`} style={styles.portrait}>
-      <Text style={styles.initials}>{initials || '?'}</Text>
+    <View accessibilityLabel={`Retrato de ${name}`} style={[styles.portrait, { aspectRatio: portrait.aspectRatio }]}>
+      <Image resizeMode="cover" source={portrait.source} style={styles.image} />
     </View>
   );
 }
@@ -31,11 +27,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 64,
     justifyContent: 'center',
-    width: 64,
+    overflow: 'hidden',
   },
-  initials: {
-    color: colors.primary,
-    fontSize: 20,
-    fontWeight: '700',
+  image: {
+    height: '100%',
+    width: '100%',
   },
 });

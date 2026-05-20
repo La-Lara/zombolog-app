@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 const databaseName = 'zombolog.db';
-const databaseVersion = 2;
+const databaseVersion = 3;
 
 type SQLiteDatabase = SQLite.SQLiteDatabase;
 
@@ -24,6 +24,7 @@ async function migrateDatabase(database: SQLiteDatabase) {
         name TEXT NOT NULL,
         profession TEXT NOT NULL,
         run_mode TEXT NOT NULL DEFAULT 'Apocalipse',
+        gender TEXT NOT NULL DEFAULT 'Nao informado',
         status TEXT NOT NULL,
         avatar_id TEXT,
         spawn_city TEXT NOT NULL,
@@ -49,10 +50,17 @@ async function migrateDatabase(database: SQLiteDatabase) {
 
     const columns = await database.getAllAsync<{ name: string }>('PRAGMA table_info(local_characters)');
     const hasRunMode = columns.some((column) => column.name === 'run_mode');
+    const hasGender = columns.some((column) => column.name === 'gender');
 
     if (!hasRunMode) {
       await database.execAsync(
         "ALTER TABLE local_characters ADD COLUMN run_mode TEXT NOT NULL DEFAULT 'Apocalipse'",
+      );
+    }
+
+    if (!hasGender) {
+      await database.execAsync(
+        "ALTER TABLE local_characters ADD COLUMN gender TEXT NOT NULL DEFAULT 'Nao informado'",
       );
     }
 
