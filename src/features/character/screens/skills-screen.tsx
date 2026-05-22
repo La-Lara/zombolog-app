@@ -39,7 +39,7 @@ export function SkillsScreen() {
       <Screen>
         <ScreenHeader title="Habilidades" onBack={handleBack} />
         <ErrorState
-          message="Nao foi possivel carregar as habilidades."
+          message="Não foi possível carregar as habilidades."
           onRetry={() => void characterQuery.refetch()}
         />
       </Screen>

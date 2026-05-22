@@ -78,11 +78,17 @@ Status: concluida na branch `implement-p1-run-mode`.
 
 Adicionar o modo em que o jogador comecou a run ao cadastro, edicao, resumo, detalhe e persistencia local, mantendo fallback seguro para personagens antigos.
 
-### Task Atual: Cidade Inicial do Personagem
+### Task Anterior: Cidade Inicial do Personagem
 
 Status: concluida na branch `implement-p1-start-city`.
 
 Adicionar cidade inicial na criacao, edicao, resumo, detalhe e persistencia local, mantendo fallback seguro para personagens antigos.
+
+### Task Atual: Tracos do Personagem
+
+Status: concluida na branch `implement-p1-character-traits`.
+
+Corrigir selecao, persistencia, edicao e exibicao de tracos do personagem, atualizando o catalogo completo de tracos positivos/negativos e mantendo compatibilidade com registros antigos.
 
 ## Fontes de Verdade
 

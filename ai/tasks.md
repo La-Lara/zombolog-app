@@ -161,6 +161,16 @@
 - [x] Atualizar testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Tracos do Personagem
+
+- [x] Analisar arquitetura, fluxo atual e pontos de persistencia.
+- [x] Atualizar catalogo completo de tracos positivos e negativos.
+- [x] Normalizar formatos antigos de tracos na persistencia e APIs.
+- [x] Garantir criacao, edicao, resumo e detalhe com tracos corretos.
+- [x] Separar visualmente tracos positivos e negativos na selecao e exibicao.
+- [x] Atualizar testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

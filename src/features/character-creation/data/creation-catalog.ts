@@ -1,4 +1,5 @@
 import { characterPortraits } from '@/shared/config/character-portraits';
+import { characterTraits } from '@/shared/config/character-traits';
 
 import { CreationCatalog, CharacterCreationDraft } from '../types';
 
@@ -28,71 +29,14 @@ export const creationCatalog: CreationCatalog = {
     'West Point',
   ],
   avatars: characterPortraits.map((portrait) => portrait.id),
-  genders: ['Feminino', 'Masculino', 'Nao informado'],
-  traits: [
-    {
-      id: 'fast-reader',
-      name: 'Leitura Rapida',
-      type: 'positive',
-      description: 'Conclui livros em menos tempo.',
-      effects: ['Velocidade de leitura aumentada'],
-      points: -2,
-    },
-    {
-      id: 'fit',
-      name: 'Em Forma',
-      type: 'positive',
-      description: 'Comeca com melhor condicionamento.',
-      effects: ['Condicionamento inicial aumentado'],
-      points: -6,
-    },
-    {
-      id: 'organized',
-      name: 'Organizada',
-      type: 'positive',
-      description: 'Aproveita melhor espaco de recipientes.',
-      effects: ['Capacidade de recipientes aumentada'],
-      points: -6,
-    },
-    {
-      id: 'lucky',
-      name: 'Sortudo',
-      type: 'positive',
-      description: 'Encontra itens uteis com mais frequencia.',
-      effects: ['Chance de loot raro aumentada'],
-      points: -4,
-    },
-    {
-      id: 'high-thirst',
-      name: 'Muita Sede',
-      type: 'negative',
-      description: 'Precisa beber agua com mais frequencia.',
-      effects: ['Consumo de agua aumentado'],
-      points: 6,
-    },
-    {
-      id: 'slow-reader',
-      name: 'Leitor Lento',
-      type: 'negative',
-      description: 'Demora mais para concluir livros.',
-      effects: ['Velocidade de leitura reduzida'],
-      points: 2,
-    },
-    {
-      id: 'smoker',
-      name: 'Fumante',
-      type: 'negative',
-      description: 'Precisa de cigarros para controlar ansiedade.',
-      effects: ['Estresse aumenta sem fumar'],
-      points: 4,
-    },
-  ],
+  genders: ['Feminino', 'Masculino', 'Não informado'],
+  traits: characterTraits,
   skills: [
-    { id: 'fitness', name: 'Condicionamento', category: 'Fisico', level: 0, maxLevel: 10 },
-    { id: 'strength', name: 'Forca', category: 'Fisico', level: 0, maxLevel: 10 },
-    { id: 'sprinting', name: 'Corrida', category: 'Fisico', level: 0, maxLevel: 10 },
-    { id: 'carpentry', name: 'Carpintaria', category: 'Construcao', level: 0, maxLevel: 10 },
-    { id: 'cooking', name: 'Culinaria', category: 'Sobrevivencia', level: 0, maxLevel: 10 },
+    { id: 'fitness', name: 'Condicionamento', category: 'Físico', level: 0, maxLevel: 10 },
+    { id: 'strength', name: 'Força', category: 'Físico', level: 0, maxLevel: 10 },
+    { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 0, maxLevel: 10 },
+    { id: 'carpentry', name: 'Carpintaria', category: 'Construção', level: 0, maxLevel: 10 },
+    { id: 'cooking', name: 'Culinária', category: 'Sobrevivência', level: 0, maxLevel: 10 },
     { id: 'aiming', name: 'Mira', category: 'Combate', level: 0, maxLevel: 10 },
   ],
 };

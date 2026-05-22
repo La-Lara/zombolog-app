@@ -1,16 +1,17 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { normalizeCharacterTrait, normalizeCharacterTraits } from '@/shared/config/character-traits';
 import { localCharacterRepository, LocalCharacter } from '@/shared/storage';
 
 import { Character, CharacterRunMode, CharacterStatus, Skill, Trait, TraitType } from '../types';
 
 type TraitDto = {
   id: string;
-  name: string;
-  type: TraitType;
-  description: string;
+  name?: string;
+  type?: TraitType;
+  description?: string;
   effects?: string[];
-  points: number;
+  points?: number;
 };
 
 type SkillDto = {
@@ -46,14 +47,16 @@ type CharacterRequestParams = {
 };
 
 function toTrait(dto: TraitDto): Trait {
-  return {
-    id: dto.id,
-    name: dto.name,
-    type: dto.type,
-    description: dto.description,
-    effects: dto.effects ?? [],
-    points: dto.points,
-  };
+  return (
+    normalizeCharacterTrait(dto) ?? {
+      id: dto.id,
+      name: dto.name ?? dto.id,
+      type: dto.type ?? 'positive',
+      description: dto.description ?? dto.name ?? dto.id,
+      effects: dto.effects ?? [],
+      points: dto.points ?? 0,
+    }
+  );
 }
 
 function toSkill(dto: SkillDto): Skill {
@@ -73,7 +76,7 @@ function toCharacter(dto: CharacterDto): Character {
     name: dto.name,
     profession: dto.profession,
     runMode: dto.run_mode ?? 'Apocalipse',
-    gender: dto.gender ?? 'Nao informado',
+    gender: dto.gender ?? 'Não informado',
     status: dto.status,
     avatarId: dto.avatar_id,
     initialCity: dto.initial_city ?? dto.spawn_city,
@@ -101,7 +104,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     currentCity: character.currentCity,
     daysAlive: clampMetric(character.daysAlive),
     zombiesKilled: clampMetric(character.zombiesKilled),
-    traits: character.traits,
+    traits: normalizeCharacterTraits(character.traits),
     skills: character.skills,
   };
 }

@@ -2,6 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Alert, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
+import { formatTraitPoints } from '@/shared/config/character-traits';
 import { spacing } from '@/shared/theme';
 import { Button, EmptyState, ErrorState, LoadingState, Screen, Text } from '@/shared/ui';
 
@@ -32,7 +33,7 @@ export function CharacterDetailsScreen() {
       return;
     }
 
-    Alert.alert('Excluir personagem', 'Esta ficha sera removida da sua lista de sobreviventes.', [
+    Alert.alert('Excluir personagem', 'Esta ficha será removida da sua lista de sobreviventes.', [
       { text: 'Cancelar', style: 'cancel' },
       {
         text: 'Excluir',
@@ -47,7 +48,7 @@ export function CharacterDetailsScreen() {
             {
               onSuccess: () => router.replace('/home'),
               onError: () =>
-                Alert.alert('Erro ao excluir', 'Nao foi possivel excluir o personagem agora.'),
+                Alert.alert('Erro ao excluir', 'Não foi possível excluir o personagem agora.'),
             },
           );
         },
@@ -57,13 +58,13 @@ export function CharacterDetailsScreen() {
 
   function handleOpenSkills() {
     if (characterId) {
-      router.push('./skills');
+      router.push({ pathname: '/characters/[id]/skills', params: { id: characterId } });
     }
   }
 
   function handleOpenTraits() {
     if (characterId) {
-      router.push('./traits');
+      router.push({ pathname: '/characters/[id]/traits', params: { id: characterId } });
     }
   }
 
@@ -87,7 +88,7 @@ export function CharacterDetailsScreen() {
       <Screen>
         <ScreenHeader title="Ficha" onBack={handleBack} />
         <ErrorState
-          message="Nao foi possivel carregar a ficha do personagem."
+          message="Não foi possível carregar a ficha do personagem."
           onRetry={() => void characterQuery.refetch()}
         />
       </Screen>
@@ -99,14 +100,16 @@ export function CharacterDetailsScreen() {
       <Screen>
         <ScreenHeader title="Ficha" onBack={handleBack} />
         <EmptyState
-          description="Esse personagem nao foi encontrado ou ja foi removido."
-          title="Ficha indisponivel"
+          description="Esse personagem não foi encontrado ou já foi removido."
+          title="Ficha indisponível"
         />
       </Screen>
     );
   }
 
   const character = characterQuery.data;
+  const positiveTraits = character.traits.filter((trait) => trait.type === 'positive');
+  const negativeTraits = character.traits.filter((trait) => trait.type === 'negative');
 
   return (
     <Screen scroll>
@@ -118,23 +121,23 @@ export function CharacterDetailsScreen() {
       />
       <CharacterSummaryCard character={character} />
       <View style={styles.section}>
-        <Text variant="subtitle">Metricas</Text>
+        <Text variant="subtitle">Métricas</Text>
         <View style={styles.metrics}>
-          <Text variant="caption">Sobrevivencia: {character.daysAlive} dias</Text>
+          <Text variant="caption">Sobrevivência: {character.daysAlive} dias</Text>
           <Text variant="caption">Combate: {character.zombiesKilled} zumbis abatidos</Text>
-          <Text variant="caption">Localizacao: {character.currentCity}</Text>
+          <Text variant="caption">Localização: {character.currentCity}</Text>
         </View>
       </View>
       <View style={styles.section}>
-        <Text variant="subtitle">Secoes</Text>
+        <Text variant="subtitle">Seções</Text>
         <SectionMenuItem
           description={`${character.skills.length} habilidades com progresso visual`}
           label="Habilidades"
           onPress={handleOpenSkills}
         />
         <SectionMenuItem
-          description={`${character.traits.length} tracos positivos e negativos`}
-          label="Tracos"
+          description={formatTraitsSummary(positiveTraits, negativeTraits)}
+          label="Traços"
           onPress={handleOpenTraits}
         />
       </View>
@@ -151,3 +154,17 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
 });
+
+function formatTraitsSummary(
+  positiveTraits: { points: number }[],
+  negativeTraits: { points: number }[],
+) {
+  const positivePoints = positiveTraits.reduce((total, trait) => total + trait.points, 0);
+  const negativePoints = negativeTraits.reduce((total, trait) => total + trait.points, 0);
+
+  return `${formatTraitCount(positiveTraits.length, 'positivo')} (${formatTraitPoints(positivePoints)}), ${formatTraitCount(negativeTraits.length, 'negativo')} (${formatTraitPoints(negativePoints)})`;
+}
+
+function formatTraitCount(count: number, label: 'positivo' | 'negativo') {
+  return `${count} ${count === 1 ? label : `${label}s`}`;
+}

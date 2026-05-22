@@ -1,7 +1,8 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
-import { localCharacterRepository, LocalCharacter, LocalSkill } from '@/shared/storage';
+import { normalizeTraitId, resolveCharacterTraits } from '@/shared/config/character-traits';
+import { localCharacterRepository, LocalCharacter, LocalSkill, LocalTrait } from '@/shared/storage';
 
 import { creationCatalog } from '../data/creation-catalog';
 import {
@@ -63,7 +64,8 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     initialCity: character.initialCity,
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
-    traitIds: character.traits.map((trait) => trait.id),
+    traitIds: character.traits.map((trait) => normalizeTraitId(trait.id)),
+    legacyTraits: character.traits,
     skills: {
       ...defaultSkills(),
       ...Object.fromEntries(character.skills.map((skill) => [skill.id, skill.level])),
@@ -88,7 +90,7 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     initialCity: character.initial_city ?? character.spawn_city,
     spawnCity: character.spawn_city,
     currentCity: character.current_city,
-    traitIds,
+    traitIds: traitIds.map(normalizeTraitId),
     skills: {
       ...defaultSkills(),
       ...skills,
@@ -123,8 +125,8 @@ function defaultSkills() {
   return Object.fromEntries(creationCatalog.skills.map((skill) => [skill.id, 0]));
 }
 
-function toLocalTraits(payload: CharacterCreationPayload) {
-  return creationCatalog.traits.filter((trait) => payload.traitIds.includes(trait.id));
+function toLocalTraits(payload: CharacterCreationPayload, currentTraits: LocalTrait[] = []) {
+  return resolveCharacterTraits(payload.traitIds, currentTraits);
 }
 
 function toLocalSkills(payload: CharacterCreationPayload, currentSkills: LocalSkill[] = []) {
@@ -205,7 +207,7 @@ export const characterCreationApi = {
         initialCity: payload.initialCity,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
-        traits: toLocalTraits(payload),
+        traits: toLocalTraits(payload, currentCharacter?.traits),
         skills: toLocalSkills(payload, currentCharacter?.skills),
       });
 

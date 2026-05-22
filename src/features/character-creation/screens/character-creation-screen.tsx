@@ -5,6 +5,7 @@ import { Alert, Image, Pressable, StyleSheet, View } from 'react-native';
 import { useSession } from '@/features/auth';
 import { toAppError } from '@/shared/api/errors';
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
+import { formatTraitPoints, normalizeTraitId, resolveCharacterTraits } from '@/shared/config/character-traits';
 import { colors, radius, spacing } from '@/shared/theme';
 import { Card, EmptyState, ErrorState, LoadingState, Screen, Text, TextField } from '@/shared/ui';
 
@@ -48,11 +49,12 @@ export function CharacterCreationScreen() {
   const updateCharacterMutation = useUpdateCharacterMutation();
   const [stepIndex, setStepIndex] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
+  const [traitSearch, setTraitSearch] = useState('');
   const [hasLoadedEditDraft, setHasLoadedEditDraft] = useState(false);
   const isLastStep = stepIndex === totalSteps - 1;
   const selectedTraits = useMemo(
-    () => creationCatalog.traits.filter((trait) => draft.traitIds.includes(trait.id)),
-    [draft.traitIds],
+    () => resolveCharacterTraits(draft.traitIds, draft.legacyTraits),
+    [draft.legacyTraits, draft.traitIds],
   );
   const mutationError =
     createCharacterMutation.error ? toAppError(createCharacterMutation.error).message
@@ -65,7 +67,10 @@ export function CharacterCreationScreen() {
       return;
     }
 
-    setDraft(editDraftQuery.data);
+    setDraft({
+      ...editDraftQuery.data,
+      traitIds: [...new Set(editDraftQuery.data.traitIds.map(normalizeTraitId))],
+    });
     setHasLoadedEditDraft(true);
   }, [editDraftQuery.data, hasLoadedEditDraft, isEditMode, setDraft]);
 
@@ -97,7 +102,7 @@ export function CharacterCreationScreen() {
     }
 
     if (hasDraftData(draft)) {
-      Alert.alert(isEditMode ? 'Descartar edicao?' : 'Descartar rascunho?', getBackAlertMessage(isEditMode), [
+      Alert.alert(isEditMode ? 'Descartar edição?' : 'Descartar rascunho?', getBackAlertMessage(isEditMode), [
         { text: 'Continuar editando', style: 'cancel' },
         { text: 'Sair', style: 'destructive', onPress: () => router.back() },
       ]);
@@ -178,7 +183,7 @@ export function CharacterCreationScreen() {
     return (
       <Screen>
         <ErrorState
-          message="Nao foi possivel carregar o personagem para edicao."
+          message="Não foi possível carregar o personagem para edição."
           onRetry={() => void editDraftQuery.refetch()}
         />
       </Screen>
@@ -190,7 +195,7 @@ export function CharacterCreationScreen() {
       <Screen>
         <EmptyState
           description="Esse personagem nao foi encontrado ou ja foi removido."
-          title="Edicao indisponivel"
+          title="Edição indisponível"
         />
       </Screen>
     );
@@ -199,7 +204,7 @@ export function CharacterCreationScreen() {
   if (isEditMode && !hasLoadedEditDraft) {
     return (
       <Screen>
-        <LoadingState label="Preparando edicao..." />
+        <LoadingState label="Preparando edição..." />
       </Screen>
     );
   }
@@ -226,6 +231,8 @@ export function CharacterCreationScreen() {
           draft,
           selectedTraits,
           stepIndex,
+          traitSearch,
+          setTraitSearch,
           updateDraft,
         })}
         {stepError ? <Text style={styles.error}>{stepError}</Text> : null}
@@ -247,11 +254,20 @@ export function CharacterCreationScreen() {
 type RenderStepParams = {
   draft: CharacterCreationDraft;
   selectedTraits: typeof creationCatalog.traits;
+  traitSearch: string;
+  setTraitSearch: (value: string) => void;
   stepIndex: number;
   updateDraft: (values: Partial<CharacterCreationDraft>) => void;
 };
 
-function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderStepParams) {
+function renderStep({
+  draft,
+  selectedTraits,
+  stepIndex,
+  traitSearch,
+  setTraitSearch,
+  updateDraft,
+}: RenderStepParams) {
   if (stepIndex === 0) {
     return (
       <View style={styles.step}>
@@ -262,7 +278,7 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
           placeholder="Maria Knox"
           value={draft.name}
         />
-        <FieldSection title="Profissao">
+        <FieldSection title="Profissão">
           {creationCatalog.professions.map((profession) => (
             <OptionChip
               key={profession}
@@ -300,7 +316,7 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
   if (stepIndex === 2) {
     return (
       <View style={styles.step}>
-        <Text variant="subtitle">Localizacao</Text>
+        <Text variant="subtitle">Localização</Text>
         <FieldSection title="Cidade inicial">
           {creationCatalog.cities.map((initialCity) => (
             <OptionChip
@@ -330,9 +346,15 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
   if (stepIndex === 3) {
     return (
       <View style={styles.step}>
-        <Text variant="subtitle">Tracos</Text>
-        <TraitGroup draft={draft} type="positive" updateDraft={updateDraft} />
-        <TraitGroup draft={draft} type="negative" updateDraft={updateDraft} />
+        <Text variant="subtitle">Traços</Text>
+        <TextField
+          label="Buscar traço"
+          onChangeText={setTraitSearch}
+          placeholder="Filtrar por nome"
+          value={traitSearch}
+        />
+        <TraitGroup draft={draft} search={traitSearch} type="positive" updateDraft={updateDraft} />
+        <TraitGroup draft={draft} search={traitSearch} type="negative" updateDraft={updateDraft} />
       </View>
     );
   }
@@ -386,25 +408,17 @@ function renderStep({ draft, selectedTraits, stepIndex, updateDraft }: RenderSte
     <View style={styles.step}>
       <Text variant="subtitle">Resumo</Text>
       <SummaryRow label="Nome" value={draft.name || 'Sem nome'} />
-      <SummaryRow label="Profissao" value={draft.profession || 'Nao selecionada'} />
-      <SummaryRow label="Modo da run" value={draft.runMode || 'Nao selecionado'} />
+      <SummaryRow label="Profissão" value={draft.profession || 'Não selecionada'} />
+      <SummaryRow label="Modo da run" value={draft.runMode || 'Não selecionado'} />
       <SummaryRow label="Retrato" value={getCharacterPortrait(draft.avatarId).label} />
-      <SummaryRow label="Genero" value={draft.gender || 'Nao selecionado'} />
-      <SummaryRow label="Cidade inicial" value={draft.initialCity || 'Nao selecionada'} />
+      <SummaryRow label="Gênero" value={draft.gender || 'Não selecionado'} />
+      <SummaryRow label="Cidade inicial" value={draft.initialCity || 'Não selecionada'} />
       <SummaryRow
-        label="Localizacao"
+        label="Localização"
         value={`${draft.initialCity || draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
       />
-      <SummaryRow label="Sobrevivencia" value="0 dias vivos - 0 zumbis mortos" />
-      <FieldSection title="Tracos selecionados">
-        {selectedTraits.length ? (
-          selectedTraits.map((trait) => (
-            <OptionChip key={trait.id} label={trait.name} selected onPress={() => undefined} />
-          ))
-        ) : (
-          <Text variant="caption">Nenhum traco selecionado.</Text>
-        )}
-      </FieldSection>
+      <SummaryRow label="Sobrevivência" value="0 dias vivos - 0 zumbis mortos" />
+      <TraitSummary selectedTraits={selectedTraits} />
     </View>
   );
 }
@@ -478,26 +492,79 @@ function OptionGroup({ options, selected, title, onSelect }: OptionGroupProps) {
 
 type TraitGroupProps = {
   draft: CharacterCreationDraft;
+  search: string;
   type: 'positive' | 'negative';
   updateDraft: (values: Partial<CharacterCreationDraft>) => void;
 };
 
-function TraitGroup({ draft, type, updateDraft }: TraitGroupProps) {
+function TraitGroup({ draft, search, type, updateDraft }: TraitGroupProps) {
   const title = type === 'positive' ? 'Positivos' : 'Negativos';
+  const normalizedSearch = search.trim().toLowerCase();
+  const traits = creationCatalog.traits.filter(
+    (trait) => trait.type === type && trait.name.toLowerCase().includes(normalizedSearch),
+  );
 
   return (
     <FieldSection title={title}>
-      {creationCatalog.traits
-        .filter((trait) => trait.type === type)
-        .map((trait) => (
+      {traits.length ? (
+        traits.map((trait) => (
           <OptionChip
             key={trait.id}
-            label={`${trait.name} (${trait.points > 0 ? '+' : ''}${trait.points})`}
+            label={`${trait.name} (${formatTraitPoints(trait.points)})`}
             selected={draft.traitIds.includes(trait.id)}
             onPress={() => updateDraft({ traitIds: toggleValue(draft.traitIds, trait.id) })}
           />
-        ))}
+        ))
+      ) : (
+        <Text variant="caption">Nenhum traço encontrado nesta categoria.</Text>
+      )}
     </FieldSection>
+  );
+}
+
+function TraitSummary({ selectedTraits }: { selectedTraits: typeof creationCatalog.traits }) {
+  const positiveTraits = selectedTraits.filter((trait) => trait.type === 'positive');
+  const negativeTraits = selectedTraits.filter((trait) => trait.type === 'negative');
+
+  if (!selectedTraits.length) {
+    return (
+      <FieldSection title="Traços selecionados">
+        <Text variant="caption">Nenhum traço selecionado.</Text>
+      </FieldSection>
+    );
+  }
+
+  return (
+    <>
+      <FieldSection title="Traços positivos">
+        {positiveTraits.length ? (
+          positiveTraits.map((trait) => (
+            <OptionChip
+              key={trait.id}
+              label={`${trait.name} (${formatTraitPoints(trait.points)})`}
+              selected
+              onPress={() => undefined}
+            />
+          ))
+        ) : (
+          <Text variant="caption">Nenhum traço positivo selecionado.</Text>
+        )}
+      </FieldSection>
+      <FieldSection title="Traços negativos">
+        {negativeTraits.length ? (
+          negativeTraits.map((trait) => (
+            <OptionChip
+              key={trait.id}
+              label={`${trait.name} (${formatTraitPoints(trait.points)})`}
+              selected
+              onPress={() => undefined}
+            />
+          ))
+        ) : (
+          <Text variant="caption">Nenhum traço negativo selecionado.</Text>
+        )}
+      </FieldSection>
+    </>
   );
 }
 

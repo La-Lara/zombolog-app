@@ -1,3 +1,5 @@
+import { getCharacterTrait, normalizeCharacterTraits } from '@/shared/config/character-traits';
+
 import { getLocalDatabase } from './local-database';
 
 type LocalDatabase = Awaited<ReturnType<typeof getLocalDatabase>>;
@@ -136,39 +138,18 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       deletedAt: null,
       lastSyncedAt: null,
       traits: [
-        {
-          id: 'fast-reader',
-          name: 'Leitura Rapida',
-          type: 'positive',
-          description: 'Aprende com livros em menos tempo, ideal para bases longas.',
-          effects: ['Velocidade de leitura aumentada'],
-          points: -2,
-        },
-        {
-          id: 'organized',
-          name: 'Organizada',
-          type: 'positive',
-          description: 'Carrega suprimentos com melhor aproveitamento de inventario.',
-          effects: ['Capacidade de recipientes aumentada'],
-          points: -6,
-        },
-        {
-          id: 'high-thirst',
-          name: 'Muita Sede',
-          type: 'negative',
-          description: 'Precisa beber agua com mais frequencia durante exploracoes.',
-          effects: ['Consumo de agua aumentado'],
-          points: 6,
-        },
-      ],
+        getCharacterTrait('leitora-rapida'),
+        getCharacterTrait('organizada'),
+        getCharacterTrait('sedenta'),
+      ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
-        { id: 'carpentry', name: 'Carpintaria', category: 'Construcao', level: 6, maxLevel: 10 },
-        { id: 'cooking', name: 'Culinaria', category: 'Sobrevivencia', level: 3, maxLevel: 10 },
-        { id: 'foraging', name: 'Coleta', category: 'Sobrevivencia', level: 4, maxLevel: 10 },
-        { id: 'sprinting', name: 'Corrida', category: 'Fisico', level: 2, maxLevel: 10 },
+        { id: 'carpentry', name: 'Carpintaria', category: 'Construção', level: 6, maxLevel: 10 },
+        { id: 'cooking', name: 'Culinária', category: 'Sobrevivência', level: 3, maxLevel: 10 },
+        { id: 'foraging', name: 'Coleta', category: 'Sobrevivência', level: 4, maxLevel: 10 },
+        { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 2, maxLevel: 10 },
         { id: 'nimble', name: 'Agilidade', category: 'Combate', level: 2, maxLevel: 10 },
         { id: 'long-blunt', name: 'Contundente Longo', category: 'Combate', level: 5, maxLevel: 10 },
-        { id: 'maintenance', name: 'Manutencao', category: 'Tecnica', level: 4, maxLevel: 10 },
+        { id: 'maintenance', name: 'Manutenção', category: 'Técnica', level: 4, maxLevel: 10 },
       ],
     },
     {
@@ -193,38 +174,17 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       deletedAt: null,
       lastSyncedAt: null,
       traits: [
-        {
-          id: 'fit',
-          name: 'Em Forma',
-          type: 'positive',
-          description: 'Mantem melhor folego em fugas, buscas e combate corpo a corpo.',
-          effects: ['Condicionamento inicial aumentado'],
-          points: -6,
-        },
-        {
-          id: 'lucky',
-          name: 'Sortudo',
-          type: 'positive',
-          description: 'Encontra itens uteis com um pouco mais de frequencia.',
-          effects: ['Chance de loot rara aumentada'],
-          points: -4,
-        },
-        {
-          id: 'slow-reader',
-          name: 'Leitor Lento',
-          type: 'negative',
-          description: 'Demora mais para concluir livros tecnicos.',
-          effects: ['Velocidade de leitura reduzida'],
-          points: 2,
-        },
-      ],
+        getCharacterTrait('em-forma'),
+        getCharacterTrait('robusta'),
+        getCharacterTrait('leitora-lenta'),
+      ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
-        { id: 'fitness', name: 'Condicionamento', category: 'Fisico', level: 7, maxLevel: 10 },
-        { id: 'strength', name: 'Forca', category: 'Fisico', level: 6, maxLevel: 10 },
+        { id: 'fitness', name: 'Condicionamento', category: 'Físico', level: 7, maxLevel: 10 },
+        { id: 'strength', name: 'Força', category: 'Físico', level: 6, maxLevel: 10 },
         { id: 'axe', name: 'Machado', category: 'Combate', level: 4, maxLevel: 10 },
-        { id: 'sprinting', name: 'Corrida', category: 'Fisico', level: 5, maxLevel: 10 },
-        { id: 'first-aid', name: 'Primeiros Socorros', category: 'Sobrevivencia', level: 2, maxLevel: 10 },
-        { id: 'mechanics', name: 'Mecanica', category: 'Tecnica', level: 1, maxLevel: 10 },
+        { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 5, maxLevel: 10 },
+        { id: 'first-aid', name: 'Primeiros Socorros', category: 'Sobrevivência', level: 2, maxLevel: 10 },
+        { id: 'mechanics', name: 'Mecânica', category: 'Técnica', level: 1, maxLevel: 10 },
       ],
     },
     {
@@ -249,38 +209,17 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
       deletedAt: null,
       lastSyncedAt: null,
       traits: [
-        {
-          id: 'brave',
-          name: 'Corajosa',
-          type: 'positive',
-          description: 'Controla melhor o panico em confrontos perigosos.',
-          effects: ['Panico reduzido'],
-          points: -4,
-        },
-        {
-          id: 'eagle-eyed',
-          name: 'Olhos de Aguia',
-          type: 'positive',
-          description: 'Percebe ameacas e oportunidades a uma distancia maior.',
-          effects: ['Campo de visao aumentado'],
-          points: -6,
-        },
-        {
-          id: 'smoker',
-          name: 'Fumante',
-          type: 'negative',
-          description: 'Precisa de cigarros para controlar ansiedade.',
-          effects: ['Estresse aumenta sem fumar'],
-          points: 4,
-        },
-      ],
+        getCharacterTrait('corajosa'),
+        getCharacterTrait('visao-de-aguia'),
+        getCharacterTrait('fumante'),
+      ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
         { id: 'aiming', name: 'Mira', category: 'Combate', level: 6, maxLevel: 10 },
         { id: 'reloading', name: 'Recarga', category: 'Combate', level: 5, maxLevel: 10 },
-        { id: 'sneaking', name: 'Furtividade', category: 'Sobrevivencia', level: 4, maxLevel: 10 },
-        { id: 'lightfooted', name: 'Passos Leves', category: 'Sobrevivencia', level: 4, maxLevel: 10 },
-        { id: 'tailoring', name: 'Costura', category: 'Tecnica', level: 3, maxLevel: 10 },
-        { id: 'trapping', name: 'Armadilhas', category: 'Sobrevivencia', level: 2, maxLevel: 10 },
+        { id: 'sneaking', name: 'Furtividade', category: 'Sobrevivência', level: 4, maxLevel: 10 },
+        { id: 'lightfooted', name: 'Passos Leves', category: 'Sobrevivência', level: 4, maxLevel: 10 },
+        { id: 'tailoring', name: 'Costura', category: 'Técnica', level: 3, maxLevel: 10 },
+        { id: 'trapping', name: 'Armadilhas', category: 'Sobrevivência', level: 2, maxLevel: 10 },
       ],
     },
   ];
@@ -321,7 +260,7 @@ function toCharacter(row: LocalCharacterRow): LocalCharacter {
     name: row.name,
     profession: row.profession,
     runMode: row.run_mode ?? 'Apocalipse',
-    gender: row.gender ?? 'Nao informado',
+    gender: row.gender ?? 'Não informado',
     status: row.status,
     avatarId: row.avatar_id,
     initialCity: row.initial_city ?? row.spawn_city,
@@ -329,7 +268,7 @@ function toCharacter(row: LocalCharacterRow): LocalCharacter {
     currentCity: row.current_city,
     daysAlive: row.days_alive,
     zombiesKilled: row.zombies_killed,
-    traits: JSON.parse(row.traits_json) as LocalTrait[],
+    traits: normalizeCharacterTraits(parseJson(row.traits_json)),
     skills: JSON.parse(row.skills_json) as LocalSkill[],
     syncStatus: row.sync_status,
     syncVersion: row.sync_version,
@@ -502,4 +441,12 @@ function slugify(value: string) {
     .replace(/^-|-$/g, '');
 
   return slug || 'survivor';
+}
+
+function parseJson(value: string): unknown {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return [];
+  }
 }

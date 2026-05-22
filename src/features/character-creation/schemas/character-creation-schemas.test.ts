@@ -54,7 +54,8 @@ describe('character creation schemas', () => {
   });
 
   it('rejects duplicated traits and skill levels outside the allowed range', () => {
-    expect(() => traitsStepSchema.parse({ traitIds: ['fit', 'fit'] })).toThrow();
+    expect(() => traitsStepSchema.parse({ traitIds: ['em-forma', 'em-forma'] })).toThrow();
+    expect(() => traitsStepSchema.parse({ traitIds: [''] })).toThrow();
     expect(() => skillsStepSchema.parse({ skills: { carpentry: 11 } })).toThrow();
   });
 
@@ -69,7 +70,7 @@ describe('character creation schemas', () => {
         initialCity: 'West Point',
         spawnCity: 'West Point',
         currentCity: 'West Point',
-        traitIds: ['lucky'],
+        traitIds: ['corajosa'],
         skills: { aiming: 3 },
       }),
     ).toEqual({
@@ -81,7 +82,7 @@ describe('character creation schemas', () => {
       initialCity: 'West Point',
       spawnCity: 'West Point',
       currentCity: 'West Point',
-      traitIds: ['lucky'],
+      traitIds: ['corajosa'],
       skills: { aiming: 3 },
     });
   });

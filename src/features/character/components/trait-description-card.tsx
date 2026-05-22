@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
+import { formatTraitPoints } from '@/shared/config/character-traits';
 import { colors, radius, spacing } from '@/shared/theme';
 import { Card, Text } from '@/shared/ui';
 
@@ -15,19 +16,9 @@ export function TraitDescriptionCard({ trait }: TraitDescriptionCardProps) {
       <View style={styles.header}>
         <Text style={styles.name}>{trait.name}</Text>
         <View style={[styles.pointsBadge, trait.type === 'positive' ? styles.positive : styles.negative]}>
-          <Text style={styles.points}>{trait.points > 0 ? `+${trait.points}` : trait.points}</Text>
+          <Text style={styles.points}>{formatTraitPoints(trait.points)}</Text>
         </View>
       </View>
-      <Text variant="caption">{trait.description}</Text>
-      {trait.effects.length > 0 ? (
-        <View style={styles.effects}>
-          {trait.effects.map((effect) => (
-            <Text key={effect} variant="caption">
-              {effect}
-            </Text>
-          ))}
-        </View>
-      ) : null}
     </Card>
   );
 }
@@ -62,11 +53,5 @@ const styles = StyleSheet.create({
   points: {
     fontSize: 12,
     fontWeight: '700',
-  },
-  effects: {
-    borderColor: colors.border,
-    borderTopWidth: 1,
-    gap: spacing.xs,
-    paddingTop: spacing.sm,
   },
 });

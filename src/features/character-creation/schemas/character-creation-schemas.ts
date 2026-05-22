@@ -13,7 +13,7 @@ export const basicInfoStepSchema = z.object({
 
 export const appearanceStepSchema = z.object({
   avatarId: z.string().trim().min(1, 'Selecione um retrato.'),
-  gender: z.string().trim().min(1, 'Selecione um genero.'),
+  gender: z.string().trim().min(1, 'Selecione um gênero.'),
 });
 
 export const locationStepSchema = z.object({
@@ -23,9 +23,11 @@ export const locationStepSchema = z.object({
 });
 
 export const traitsStepSchema = z.object({
-  traitIds: z.array(z.string()).refine((traitIds) => new Set(traitIds).size === traitIds.length, {
-    message: 'Remova tracos duplicados.',
-  }),
+  traitIds: z
+    .array(z.string().trim().min(1, 'Remova traços inválidos.'))
+    .refine((traitIds) => new Set(traitIds).size === traitIds.length, {
+      message: 'Remova traços duplicados.',
+    }),
 });
 
 export const skillsStepSchema = z.object({

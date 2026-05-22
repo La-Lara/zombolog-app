@@ -12,10 +12,11 @@ export type CharacterCreationDraft = {
   spawnCity: string;
   currentCity: string;
   traitIds: string[];
+  legacyTraits?: LocalTrait[];
   skills: Record<string, number>;
 };
 
-export type CharacterCreationPayload = Omit<CharacterCreationDraft, 'runMode'> & {
+export type CharacterCreationPayload = Omit<CharacterCreationDraft, 'runMode' | 'legacyTraits'> & {
   ownerId: string;
   runMode: CharacterRunMode;
 };

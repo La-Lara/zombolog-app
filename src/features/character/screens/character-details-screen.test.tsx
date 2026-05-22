@@ -37,19 +37,27 @@ const character: Character = {
   zombiesKilled: 143,
   traits: [
     {
-      id: 'organized',
+      id: 'organizada',
       name: 'Organizada',
       type: 'positive',
       description: 'Carrega mais suprimentos.',
       effects: ['Capacidade aumentada'],
-      points: -6,
+      points: -4,
+    },
+    {
+      id: 'fumante',
+      name: 'Fumante',
+      type: 'negative',
+      description: 'Precisa de cigarros para controlar ansiedade.',
+      effects: [],
+      points: 3,
     },
   ],
   skills: [
     {
       id: 'carpentry',
       name: 'Carpintaria',
-      category: 'Construcao',
+      category: 'Construção',
       level: 6,
       maxLevel: 10,
     },
@@ -83,7 +91,10 @@ describe('CharacterDetailsScreen', () => {
     expect(screen.getByText('Cidade inicial')).toBeTruthy();
     expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
     expect(screen.getByText('Habilidades')).toBeTruthy();
-    expect(screen.getByText('Tracos')).toBeTruthy();
+    expect(screen.getByText('Traços')).toBeTruthy();
+    expect(screen.getByText('1 positivo (-4), 1 negativo (+3)')).toBeTruthy();
+    expect(screen.queryByText('Positivos: Organizada (-4)')).toBeNull();
+    expect(screen.queryByText('Negativos: Fumante (+3)')).toBeNull();
   });
 
   it('navigates to skills and traits sections', async () => {
@@ -94,10 +105,16 @@ describe('CharacterDetailsScreen', () => {
     await screen.findByText('Maria Knox');
 
     fireEvent.press(screen.getByRole('button', { name: 'Abrir Habilidades' }));
-    fireEvent.press(screen.getByRole('button', { name: 'Abrir Tracos' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Abrir Traços' }));
 
-    expect(mockPush).toHaveBeenCalledWith('./skills');
-    expect(mockPush).toHaveBeenCalledWith('./traits');
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/characters/[id]/skills',
+      params: { id: 'character-1' },
+    });
+    expect(mockPush).toHaveBeenCalledWith({
+      pathname: '/characters/[id]/traits',
+      params: { id: 'character-1' },
+    });
   });
 
   it('navigates to character edit with the current id', async () => {
@@ -119,6 +136,6 @@ describe('CharacterDetailsScreen', () => {
 
     const screen = renderWithProviders(<CharacterDetailsScreen />);
 
-    expect(await screen.findByText('Ficha indisponivel')).toBeTruthy();
+    expect(await screen.findByText('Ficha indisponível')).toBeTruthy();
   });
 });

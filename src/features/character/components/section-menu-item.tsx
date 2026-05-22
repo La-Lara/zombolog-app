@@ -23,7 +23,7 @@ export function SectionMenuItem({ description, label, onPress }: SectionMenuItem
           {description}
         </Text>
       </View>
-      <Text style={styles.chevron}>›</Text>
+      <Text style={styles.chevron}>{'>'}</Text>
     </Pressable>
   );
 }

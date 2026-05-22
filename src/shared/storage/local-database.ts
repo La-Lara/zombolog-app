@@ -24,7 +24,7 @@ async function migrateDatabase(database: SQLiteDatabase) {
         name TEXT NOT NULL,
         profession TEXT NOT NULL,
         run_mode TEXT NOT NULL DEFAULT 'Apocalipse',
-        gender TEXT NOT NULL DEFAULT 'Nao informado',
+        gender TEXT NOT NULL DEFAULT 'Não informado',
         status TEXT NOT NULL,
         avatar_id TEXT,
         initial_city TEXT NOT NULL,
@@ -62,7 +62,7 @@ async function migrateDatabase(database: SQLiteDatabase) {
 
     if (!hasGender) {
       await database.execAsync(
-        "ALTER TABLE local_characters ADD COLUMN gender TEXT NOT NULL DEFAULT 'Nao informado'",
+        "ALTER TABLE local_characters ADD COLUMN gender TEXT NOT NULL DEFAULT 'Não informado'",
       );
     }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
+import { normalizeTraitId } from '@/shared/config/character-traits';
 
 import { defaultCharacterCreationDraft } from '../data/creation-catalog';
 import { characterCreationDraftStorage } from '../storage/character-creation-draft-storage';
@@ -82,7 +83,11 @@ function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null
     initialCity: storedDraft.initialCity ?? storedDraft.spawnCity,
     spawnCity: storedDraft.spawnCity,
     currentCity: storedDraft.currentCity,
-    traitIds: storedDraft.traitIds,
+    traitIds: uniqueValues(storedDraft.traitIds?.map(normalizeTraitId) ?? []),
     skills: storedDraft.skills,
   } satisfies Partial<CharacterCreationDraft>;
+}
+
+function uniqueValues(values: string[]) {
+  return [...new Set(values)];
 }

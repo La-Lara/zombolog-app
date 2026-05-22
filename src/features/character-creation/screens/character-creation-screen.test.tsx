@@ -75,6 +75,7 @@ describe('CharacterCreationScreen', () => {
           profession: 'Carpinteira',
           runMode: 'Outbreak',
           initialCity: 'Rosewood',
+          traitIds: ['organizada'],
         }),
       });
     });
@@ -108,6 +109,8 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
     fireEvent.press(screen.getAllByRole('button', { name: 'Rosewood' })[0]);
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Corajosa (-4)' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Fumante (+3)' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
@@ -115,6 +118,8 @@ describe('CharacterCreationScreen', () => {
     expect(screen.getByText('Cidade inicial')).toBeTruthy();
     expect(screen.getAllByText('Sandbox').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Corajosa (-4)').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Fumante (+3)').length).toBeGreaterThan(0);
 
     fireEvent.press(screen.getByRole('button', { name: 'Criar Personagem' }));
 
@@ -131,6 +136,7 @@ describe('CharacterCreationScreen', () => {
           initialCity: 'Rosewood',
           spawnCity: 'Rosewood',
           currentCity: 'Rosewood',
+          traitIds: ['corajosa', 'fumante'],
         }),
       });
     });

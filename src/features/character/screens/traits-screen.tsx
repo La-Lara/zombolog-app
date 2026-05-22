@@ -28,8 +28,8 @@ export function TraitsScreen() {
   if (characterQuery.isLoading) {
     return (
       <Screen>
-        <ScreenHeader title="Tracos" onBack={handleBack} />
-        <LoadingState label="Carregando tracos..." />
+        <ScreenHeader title="Ficha de Traços" onBack={handleBack} />
+        <LoadingState label="Carregando traços..." />
       </Screen>
     );
   }
@@ -37,9 +37,9 @@ export function TraitsScreen() {
   if (characterQuery.isError) {
     return (
       <Screen>
-        <ScreenHeader title="Tracos" onBack={handleBack} />
+        <ScreenHeader title="Ficha de Traços" onBack={handleBack} />
         <ErrorState
-          message="Nao foi possivel carregar os tracos."
+          message="Não foi possível carregar os traços."
           onRetry={() => void characterQuery.refetch()}
         />
       </Screen>
@@ -47,25 +47,38 @@ export function TraitsScreen() {
   }
 
   const character = characterQuery.data;
+
+  if (!character) {
+    return (
+      <Screen>
+        <ScreenHeader title="Ficha de Traços" onBack={handleBack} />
+        <EmptyState
+          description="Esse personagem não foi encontrado ou já foi removido."
+          title="Ficha de Traços indisponível"
+        />
+      </Screen>
+    );
+  }
+
   const positiveTraits = character?.traits.filter((trait) => trait.type === 'positive') ?? [];
   const negativeTraits = character?.traits.filter((trait) => trait.type === 'negative') ?? [];
 
   return (
     <Screen scroll>
-      <ScreenHeader title="Tracos" onBack={handleBack} />
+      <ScreenHeader title="Ficha de Traços" onBack={handleBack} />
       <View style={styles.titleGroup}>
-        <Text variant="subtitle">{character?.name ?? 'Personagem'}</Text>
-        <Text variant="caption">Vantagens e desvantagens separadas para leitura rapida.</Text>
+        <Text variant="subtitle">{character.name}</Text>
+        <Text variant="caption">Traços cadastrados na criação ou edição do personagem.</Text>
       </View>
       {positiveTraits.length || negativeTraits.length ? (
         <>
-          <TraitSection title="Positivos" traits={positiveTraits} />
-          <TraitSection title="Negativos" traits={negativeTraits} />
+          <TraitSection title="Traços positivos" traits={positiveTraits} />
+          <TraitSection title="Traços negativos" traits={negativeTraits} />
         </>
       ) : (
         <EmptyState
-          description="Nenhum traco foi registrado para este personagem."
-          title="Sem tracos"
+          description="Nenhum traço foi registrado para este personagem."
+          title="Sem traços"
         />
       )}
     </Screen>
@@ -79,7 +92,7 @@ function TraitSection({ title, traits }: { title: string; traits: Trait[] }) {
       {traits.length ? (
         traits.map((trait) => <TraitDescriptionCard key={trait.id} trait={trait} />)
       ) : (
-        <Text variant="caption">Nenhum traco nesta categoria.</Text>
+        <Text variant="caption">Nenhum traço nesta categoria.</Text>
       )}
     </View>
   );
