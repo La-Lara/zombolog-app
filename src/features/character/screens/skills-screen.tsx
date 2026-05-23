@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
 import { characterSkillSections } from '@/shared/config/character-skills';
-import { colors, spacing } from '@/shared/theme';
+import { colors, radius, spacing } from '@/shared/theme';
 import { EmptyState, ErrorState, LoadingState, Screen, Text } from '@/shared/ui';
 
 import { ScreenHeader } from '../components/screen-header';
@@ -145,9 +145,9 @@ const styles = StyleSheet.create({
   },
   skillSectionHeader: {
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radius.md,
     borderWidth: 1,
     flexDirection: 'row',
     gap: spacing.sm,

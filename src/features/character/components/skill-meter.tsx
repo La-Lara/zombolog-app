@@ -39,7 +39,7 @@ export function SkillMeter({ skill, showCategory = true }: SkillMeterProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.backgroundElevated,
     borderColor: colors.border,
     borderRadius: radius.md,
     borderWidth: 1,
