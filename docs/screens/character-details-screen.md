@@ -33,6 +33,8 @@ Back retorna à home. Delete abre confirmação. Cada seção navega para tela e
 
 Excluir limpa cache e volta para home. Dias de sobrevivência e zumbis abatidos devem exibir `0` quando ausentes. Dados de rota devem ser apenas `id`.
 
+A tela de habilidades deve seguir o catálogo compartilhado e exibir as seções recolhíveis na mesma ordem da criação.
+
 ## Futuras Expansões
 
 Compartilhar ficha, histórico, marcação de morte, edição rápida de métricas e sync multiplayer.

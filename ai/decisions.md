@@ -162,6 +162,14 @@ Motivo: os dados ja fazem parte do contrato e da persistencia local; criar nova 
 
 Tradeoff: a tela de detalhe continua exibindo as metricas no resumo principal, mas deixa de ter uma secao dedicada de metricas.
 
+## ADR-023: Catalogo Compartilhado de Habilidades
+
+Decisao: centralizar a lista e as secoes de habilidades em `src/shared/config/character-skills.ts`, usando essa fonte na criacao, edicao e visualizacao.
+
+Motivo: as mesmas habilidades precisam aparecer com a mesma ordem e agrupamento em mais de uma feature, e o catalogo nao depende de UI nem de persistencia.
+
+Tradeoff: habilidades antigas fora do catalogo atual sao preservadas no JSON local quando possivel, mas a interface exibe apenas o catalogo vigente, normalizando IDs antigos conhecidos.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

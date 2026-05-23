@@ -1,7 +1,9 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
+import { characterSkillSections } from '@/shared/config/character-skills';
 import { colors, spacing } from '@/shared/theme';
 import { EmptyState, ErrorState, LoadingState, Screen, Text } from '@/shared/ui';
 
@@ -15,14 +17,40 @@ export function SkillsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const characterId = Array.isArray(id) ? id[0] : id;
   const { session } = useSession();
+  const [expandedSectionIds, setExpandedSectionIds] = useState<string[]>([]);
   const characterQuery = useCharacterQuery({
     accessToken: session?.accessToken,
     characterId,
     userId: session?.user.id,
   });
+  const character = characterQuery.data;
+  const skillsById = useMemo(
+    () => new Map((character?.skills ?? []).map((skill) => [skill.id, skill])),
+    [character?.skills],
+  );
+
+  useEffect(() => {
+    if (!character || expandedSectionIds.length) {
+      return;
+    }
+
+    const sectionsWithProgress = characterSkillSections
+      .filter((section) => section.skills.some((skill) => (skillsById.get(skill.id)?.level ?? 0) > 0))
+      .map((section) => section.id);
+
+    setExpandedSectionIds(sectionsWithProgress.length ? sectionsWithProgress : [characterSkillSections[0].id]);
+  }, [character, expandedSectionIds.length, skillsById]);
 
   function handleBack() {
     router.back();
+  }
+
+  function toggleSection(sectionId: string) {
+    setExpandedSectionIds((currentSectionIds) =>
+      currentSectionIds.includes(sectionId) ?
+        currentSectionIds.filter((currentSectionId) => currentSectionId !== sectionId)
+      : [...currentSectionIds, sectionId],
+    );
   }
 
   if (characterQuery.isLoading) {
@@ -46,32 +74,63 @@ export function SkillsScreen() {
     );
   }
 
-  const character = characterQuery.data;
+  if (!character) {
+    return (
+      <Screen>
+        <ScreenHeader title="Habilidades" onBack={handleBack} />
+        <EmptyState description="Nenhuma habilidade foi registrada para este personagem." title="Sem habilidades" />
+      </Screen>
+    );
+  }
 
   return (
-    <Screen>
-      <FlatList
-        ListEmptyComponent={
-          <EmptyState
-            description="Nenhuma habilidade foi registrada para este personagem."
-            title="Sem habilidades"
-          />
-        }
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <ScreenHeader title="Habilidades" onBack={handleBack} />
-            <View style={styles.titleGroup}>
-              <Text variant="subtitle">{character?.name ?? 'Personagem'}</Text>
-              <Text variant="caption">Progressao por niveis, no estilo de ficha do Project Zomboid.</Text>
-            </View>
-          </View>
-        }
-        contentContainerStyle={styles.content}
-        data={character?.skills ?? []}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }: { item: Skill }) => <SkillMeter skill={item} />}
-      />
+    <Screen scroll>
+      <View style={styles.header}>
+        <ScreenHeader title="Habilidades" onBack={handleBack} />
+        <View style={styles.titleGroup}>
+          <Text variant="subtitle">{character.name}</Text>
+          <Text variant="caption">Progressão por níveis, no estilo de ficha do Project Zomboid.</Text>
+        </View>
+      </View>
+      {characterSkillSections.map((section) => (
+        <SkillSection
+          key={section.id}
+          isExpanded={expandedSectionIds.includes(section.id)}
+          section={section}
+          skillsById={skillsById}
+          toggleSection={toggleSection}
+        />
+      ))}
     </Screen>
+  );
+}
+
+type SkillSectionProps = {
+  isExpanded: boolean;
+  section: (typeof characterSkillSections)[number];
+  skillsById: Map<string, Skill>;
+  toggleSection: (sectionId: string) => void;
+};
+
+function SkillSection({ isExpanded, section, skillsById, toggleSection }: SkillSectionProps) {
+  return (
+    <View style={styles.skillSection}>
+      <Pressable
+        accessibilityLabel={`${isExpanded ? 'Recolher' : 'Expandir'} ${section.title}`}
+        accessibilityRole="button"
+        onPress={() => toggleSection(section.id)}
+        style={({ pressed }) => [styles.skillSectionHeader, pressed ? styles.pressed : null]}
+      >
+        <Text style={styles.skillSectionIcon}>{isExpanded ? 'v' : '>'}</Text>
+        <Text style={styles.skillSectionTitle}>{section.title}</Text>
+        <Text variant="caption">{section.skills.length}</Text>
+      </Pressable>
+      {isExpanded ?
+        section.skills.map((skill) => (
+          <SkillMeter key={skill.id} showCategory={false} skill={skillsById.get(skill.id) ?? skill} />
+        ))
+      : null}
+    </View>
   );
 }
 
@@ -88,5 +147,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     gap: spacing.xs,
     paddingBottom: spacing.md,
+  },
+  pressed: {
+    opacity: 0.82,
+  },
+  skillSection: {
+    gap: spacing.sm,
+  },
+  skillSectionHeader: {
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: spacing.sm,
+    minHeight: 48,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  skillSectionIcon: {
+    color: colors.primary,
+    fontWeight: '700',
+    width: 16,
+  },
+  skillSectionTitle: {
+    flex: 1,
+    fontWeight: '700',
   },
 });

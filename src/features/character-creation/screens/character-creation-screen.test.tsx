@@ -118,6 +118,8 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Corajosa (-4)' }));
     fireEvent.press(screen.getByRole('button', { name: 'Fumante (+3)' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Expandir Criação' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Aumentar Carpintaria' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
     expect(screen.getByText('Modo da run')).toBeTruthy();
@@ -145,6 +147,9 @@ describe('CharacterCreationScreen', () => {
           currentCity: 'Rosewood',
           daysAlive: 31,
           zombiesKilled: 221,
+          skills: expect.objectContaining({
+            carpentry: 1,
+          }),
           traitIds: ['corajosa', 'fumante'],
         }),
       });

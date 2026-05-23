@@ -1,4 +1,5 @@
 import { characterPortraits } from '@/shared/config/character-portraits';
+import { characterSkills, characterSkillSections } from '@/shared/config/character-skills';
 import { characterTraits } from '@/shared/config/character-traits';
 
 import { CreationCatalog, CharacterCreationDraft } from '../types';
@@ -31,14 +32,8 @@ export const creationCatalog: CreationCatalog = {
   avatars: characterPortraits.map((portrait) => portrait.id),
   genders: ['Feminino', 'Masculino', 'Não informado'],
   traits: characterTraits,
-  skills: [
-    { id: 'fitness', name: 'Condicionamento', category: 'Físico', level: 0, maxLevel: 10 },
-    { id: 'strength', name: 'Força', category: 'Físico', level: 0, maxLevel: 10 },
-    { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 0, maxLevel: 10 },
-    { id: 'carpentry', name: 'Carpintaria', category: 'Construção', level: 0, maxLevel: 10 },
-    { id: 'cooking', name: 'Culinária', category: 'Sobrevivência', level: 0, maxLevel: 10 },
-    { id: 'aiming', name: 'Mira', category: 'Combate', level: 0, maxLevel: 10 },
-  ],
+  skills: characterSkills,
+  skillSections: characterSkillSections,
 };
 
 export const defaultCharacterCreationDraft: CharacterCreationDraft = {

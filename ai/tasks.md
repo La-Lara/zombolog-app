@@ -182,6 +182,16 @@
 - [x] Atualizar testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Habilidades por Secoes Recolhiveis
+
+- [x] Analisar arquitetura, codigo atual e imagens de referencia.
+- [x] Atualizar catalogo completo de habilidades e secoes.
+- [x] Criar grupos recolhiveis na criacao/edicao.
+- [x] Aplicar a mesma organizacao na tela de habilidades.
+- [x] Normalizar habilidades antigas salvas para o novo catalogo quando houver correspondencia.
+- [x] Atualizar seeds, mocks e testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

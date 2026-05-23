@@ -7,9 +7,10 @@ import { Skill } from '../types';
 
 type SkillMeterProps = {
   skill: Skill;
+  showCategory?: boolean;
 };
 
-export function SkillMeter({ skill }: SkillMeterProps) {
+export function SkillMeter({ skill, showCategory = true }: SkillMeterProps) {
   const maxLevel = Math.max(skill.maxLevel, 1);
   const filledSlots = Math.min(Math.max(skill.level, 0), maxLevel);
 
@@ -18,7 +19,7 @@ export function SkillMeter({ skill }: SkillMeterProps) {
       <View style={styles.header}>
         <View style={styles.titleGroup}>
           <Text style={styles.name}>{skill.name}</Text>
-          <Text variant="caption">{skill.category}</Text>
+          {showCategory ? <Text variant="caption">{skill.category}</Text> : null}
         </View>
         <Text style={styles.level}>
           {filledSlots}/{maxLevel}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
+import { clampSkillLevel, normalizeSkillId } from '@/shared/config/character-skills';
 import { normalizeTraitId } from '@/shared/config/character-traits';
 
 import { defaultCharacterCreationDraft } from '../data/creation-catalog';
@@ -86,7 +87,7 @@ function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null
     daysAlive: sanitizeMetric(storedDraft.daysAlive),
     zombiesKilled: sanitizeMetric(storedDraft.zombiesKilled),
     traitIds: uniqueValues(storedDraft.traitIds?.map(normalizeTraitId) ?? []),
-    skills: storedDraft.skills,
+    skills: sanitizeSkills(storedDraft.skills),
   } satisfies Partial<CharacterCreationDraft>;
 }
 
@@ -100,4 +101,14 @@ function sanitizeMetric(value: number | undefined) {
   }
 
   return Math.floor(value);
+}
+
+function sanitizeSkills(skills: Record<string, number> | undefined) {
+  if (!skills) {
+    return undefined;
+  }
+
+  return Object.fromEntries(
+    Object.entries(skills).map(([skillId, level]) => [normalizeSkillId(skillId), clampSkillLevel(level)]),
+  );
 }

@@ -14,7 +14,7 @@ Todas as etapas usam background dark, header com back, título `Novo Personagem`
 2. Aparência: portrait e gênero.
 3. Localização: cidade de spawn e cidade atual.
 4. Traços: positivos e negativos.
-5. Habilidades: lista de skills.
+5. Habilidades: lista de habilidades agrupadas em seções recolhíveis.
 6. Resumo: confirmação e criação.
 
 ## Estados
@@ -28,7 +28,7 @@ Todas as etapas usam background dark, header com back, título `Novo Personagem`
 
 ## Loading
 
-Durante criação final, bloquear navegação e exibir loading no botão. Catálogos de profissão, cidades, traços e skills podem carregar antes ou em cache.
+Durante criação final, bloquear navegação e exibir loading no botão. Catálogos de profissão, cidades, traços e habilidades podem carregar antes ou em cache.
 
 ## Validações
 

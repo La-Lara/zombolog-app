@@ -84,7 +84,13 @@ Status: concluida na branch `implement-p1-start-city`.
 
 Adicionar cidade inicial na criacao, edicao, resumo, detalhe e persistencia local, mantendo fallback seguro para personagens antigos.
 
-### Task Atual: Metricas Editaveis de Sobrevivencia
+### Task Atual: Habilidades por Secoes Recolhiveis
+
+Status: concluida na branch `implement-p1-skill-sections`.
+
+Atualizar o catalogo completo de habilidades do personagem conforme as referencias, usando secoes recolhiveis na criacao/edicao e na tela de habilidades, com compatibilidade para habilidades antigas salvas.
+
+### Task Anterior: Metricas Editaveis de Sobrevivencia
 
 Status: concluida na branch `implement-p1-survival-metrics`.
 

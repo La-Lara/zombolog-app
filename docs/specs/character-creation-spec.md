@@ -52,7 +52,7 @@ Regras:
 
 ## Etapa 5: Habilidades
 
-Lista skills com ícone, nome, medidor e valor numérico. No mockup todos começam em `0` durante criação.
+Lista habilidades em seções recolhíveis com nome, controle de nível e valor numérico. No mockup todos começam em `0` durante criação.
 
 ## Etapa 6: Resumo
 

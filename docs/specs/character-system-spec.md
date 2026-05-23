@@ -32,6 +32,7 @@ type Character = {
 - Cidade de spawn e cidade atual são obrigatórias.
 - Dias de sobrevivência e zumbis abatidos começam em `0`, mas podem ser preenchidos manualmente na criação e edição.
 - Status inicial é `alive`.
+- Habilidades seguem um catálogo compartilhado com seções recolhíveis em criação, edição e visualização.
 - Traços positivos e negativos são listas separadas.
 - Habilidades são níveis inteiros dentro do range permitido pelo domínio.
 

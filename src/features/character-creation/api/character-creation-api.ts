@@ -1,6 +1,7 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
+import { clampSkillLevel, normalizeSkillId } from '@/shared/config/character-skills';
 import { normalizeTraitId, resolveCharacterTraits } from '@/shared/config/character-traits';
 import { localCharacterRepository, LocalCharacter, LocalSkill, LocalTrait } from '@/shared/storage';
 
@@ -72,10 +73,7 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     zombiesKilled: clampMetric(character.zombiesKilled),
     traitIds: character.traits.map((trait) => normalizeTraitId(trait.id)),
     legacyTraits: character.traits,
-    skills: {
-      ...defaultSkills(),
-      ...Object.fromEntries(character.skills.map((skill) => [skill.id, skill.level])),
-    },
+    skills: toSkillLevels(character.skills),
   };
 }
 
@@ -99,10 +97,7 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     daysAlive: clampMetric(character.days_alive ?? 0),
     zombiesKilled: clampMetric(character.zombies_killed ?? 0),
     traitIds: traitIds.map(normalizeTraitId),
-    skills: {
-      ...defaultSkills(),
-      ...skills,
-    },
+    skills: toSkillLevelsFromRecord(skills),
   };
 }
 
@@ -135,6 +130,24 @@ function defaultSkills() {
   return Object.fromEntries(creationCatalog.skills.map((skill) => [skill.id, 0]));
 }
 
+function toSkillLevels(skills: LocalSkill[]) {
+  return toSkillLevelsFromRecord(Object.fromEntries(skills.map((skill) => [skill.id, skill.level])));
+}
+
+function toSkillLevelsFromRecord(skills: Record<string, number>) {
+  const skillLevels = defaultSkills();
+
+  for (const [skillId, level] of Object.entries(skills)) {
+    const normalizedSkillId = normalizeSkillId(skillId);
+
+    if (normalizedSkillId in skillLevels) {
+      skillLevels[normalizedSkillId] = Math.max(skillLevels[normalizedSkillId] ?? 0, clampSkillLevel(level));
+    }
+  }
+
+  return skillLevels;
+}
+
 function clampMetric(value: number) {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
 }
@@ -147,9 +160,9 @@ function toLocalSkills(payload: CharacterCreationPayload, currentSkills: LocalSk
   const catalogSkillIds = new Set(creationCatalog.skills.map((skill) => skill.id));
   const editableSkills = creationCatalog.skills.map((skill) => ({
     ...skill,
-    level: payload.skills[skill.id] ?? 0,
+    level: clampSkillLevel(payload.skills[skill.id] ?? 0),
   }));
-  const preservedSkills = currentSkills.filter((skill) => !catalogSkillIds.has(skill.id));
+  const preservedSkills = currentSkills.filter((skill) => !catalogSkillIds.has(normalizeSkillId(skill.id)));
 
   return [...editableSkills, ...preservedSkills];
 }

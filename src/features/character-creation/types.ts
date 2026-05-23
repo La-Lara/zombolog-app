@@ -1,3 +1,4 @@
+import { CharacterSkillSection } from '@/shared/config/character-skills';
 import { LocalCharacterRunMode, LocalSkill, LocalTrait } from '@/shared/storage';
 
 export type CharacterRunMode = LocalCharacterRunMode;
@@ -35,4 +36,5 @@ export type CreationCatalog = {
   genders: string[];
   traits: LocalTrait[];
   skills: LocalSkill[];
+  skillSections: CharacterSkillSection[];
 };

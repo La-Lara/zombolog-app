@@ -6,7 +6,6 @@
 - [ ] Definir catálogo oficial de profissões.
 - [ ] Definir catálogo oficial de cidades.
 - [ ] Definir lista completa de traits e efeitos.
-- [ ] Definir lista completa de skills e ranges.
 - [ ] Definir regras de pontos positivos/negativos.
 - [ ] Definir status além de `Vivo`, como morto ou desaparecido.
 - [ ] Definir idioma inicial e estratégia de i18n.

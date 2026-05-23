@@ -1,3 +1,4 @@
+import { getCharacterSkill } from '@/shared/config/character-skills';
 import { getCharacterTrait, normalizeCharacterTraits } from '@/shared/config/character-traits';
 
 import { getLocalDatabase } from './local-database';
@@ -147,13 +148,13 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
         getCharacterTrait('sedenta'),
       ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
-        { id: 'carpentry', name: 'Carpintaria', category: 'Construção', level: 6, maxLevel: 10 },
-        { id: 'cooking', name: 'Culinária', category: 'Sobrevivência', level: 3, maxLevel: 10 },
-        { id: 'foraging', name: 'Coleta', category: 'Sobrevivência', level: 4, maxLevel: 10 },
-        { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 2, maxLevel: 10 },
-        { id: 'nimble', name: 'Agilidade', category: 'Combate', level: 2, maxLevel: 10 },
-        { id: 'long-blunt', name: 'Contundente Longo', category: 'Combate', level: 5, maxLevel: 10 },
-        { id: 'maintenance', name: 'Manutenção', category: 'Técnica', level: 4, maxLevel: 10 },
+        makeLocalSkill('carpentry', 6),
+        makeLocalSkill('cooking', 3),
+        makeLocalSkill('foraging', 4),
+        makeLocalSkill('sprinting', 2),
+        makeLocalSkill('nimble', 2),
+        makeLocalSkill('long-blunt', 5),
+        makeLocalSkill('maintenance', 4),
       ],
     },
     {
@@ -183,12 +184,12 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
         getCharacterTrait('leitora-lenta'),
       ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
-        { id: 'fitness', name: 'Condicionamento', category: 'Físico', level: 7, maxLevel: 10 },
-        { id: 'strength', name: 'Força', category: 'Físico', level: 6, maxLevel: 10 },
-        { id: 'axe', name: 'Machado', category: 'Combate', level: 4, maxLevel: 10 },
-        { id: 'sprinting', name: 'Corrida', category: 'Físico', level: 5, maxLevel: 10 },
-        { id: 'first-aid', name: 'Primeiros Socorros', category: 'Sobrevivência', level: 2, maxLevel: 10 },
-        { id: 'mechanics', name: 'Mecânica', category: 'Técnica', level: 1, maxLevel: 10 },
+        makeLocalSkill('fitness', 7),
+        makeLocalSkill('strength', 6),
+        makeLocalSkill('axes', 4),
+        makeLocalSkill('sprinting', 5),
+        makeLocalSkill('first-aid', 2),
+        makeLocalSkill('mechanics', 1),
       ],
     },
     {
@@ -218,12 +219,12 @@ function makeSeedCharacters(ownerId: string, now: string): LocalCharacter[] {
         getCharacterTrait('fumante'),
       ].filter((trait): trait is LocalTrait => Boolean(trait)),
       skills: [
-        { id: 'aiming', name: 'Mira', category: 'Combate', level: 6, maxLevel: 10 },
-        { id: 'reloading', name: 'Recarga', category: 'Combate', level: 5, maxLevel: 10 },
-        { id: 'sneaking', name: 'Furtividade', category: 'Sobrevivência', level: 4, maxLevel: 10 },
-        { id: 'lightfooted', name: 'Passos Leves', category: 'Sobrevivência', level: 4, maxLevel: 10 },
-        { id: 'tailoring', name: 'Costura', category: 'Técnica', level: 3, maxLevel: 10 },
-        { id: 'trapping', name: 'Armadilhas', category: 'Sobrevivência', level: 2, maxLevel: 10 },
+        makeLocalSkill('aiming', 6),
+        makeLocalSkill('reloading', 5),
+        makeLocalSkill('sneaking', 4),
+        makeLocalSkill('lightfooted', 4),
+        makeLocalSkill('tailoring', 3),
+        makeLocalSkill('hunting', 2),
       ],
     },
   ];
@@ -451,4 +452,16 @@ function parseJson(value: string): unknown {
   } catch {
     return [];
   }
+}
+
+function makeLocalSkill(skillId: string, level: number): LocalSkill {
+  const skill = getCharacterSkill(skillId);
+
+  return {
+    id: skill?.id ?? skillId,
+    name: skill?.name ?? skillId,
+    category: skill?.category ?? 'Habilidades',
+    level,
+    maxLevel: skill?.maxLevel ?? 10,
+  };
 }

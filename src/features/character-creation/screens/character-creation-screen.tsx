@@ -50,6 +50,9 @@ export function CharacterCreationScreen() {
   const [stepIndex, setStepIndex] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
   const [traitSearch, setTraitSearch] = useState('');
+  const [expandedSkillSectionIds, setExpandedSkillSectionIds] = useState<string[]>([
+    creationCatalog.skillSections[0]?.id ?? '',
+  ]);
   const [hasLoadedEditDraft, setHasLoadedEditDraft] = useState(false);
   const isLastStep = stepIndex === totalSteps - 1;
   const selectedTraits = useMemo(
@@ -80,6 +83,14 @@ export function CharacterCreationScreen() {
       ...values,
     }));
     setStepError(null);
+  }
+
+  function toggleSkillSection(sectionId: string) {
+    setExpandedSkillSectionIds((currentSectionIds) =>
+      currentSectionIds.includes(sectionId) ?
+        currentSectionIds.filter((currentSectionId) => currentSectionId !== sectionId)
+      : [...currentSectionIds, sectionId],
+    );
   }
 
   function validateCurrentStep() {
@@ -233,6 +244,8 @@ export function CharacterCreationScreen() {
           stepIndex,
           traitSearch,
           setTraitSearch,
+          expandedSkillSectionIds,
+          toggleSkillSection,
           updateDraft,
         })}
         {stepError ? <Text style={styles.error}>{stepError}</Text> : null}
@@ -256,6 +269,8 @@ type RenderStepParams = {
   selectedTraits: typeof creationCatalog.traits;
   traitSearch: string;
   setTraitSearch: (value: string) => void;
+  expandedSkillSectionIds: string[];
+  toggleSkillSection: (sectionId: string) => void;
   stepIndex: number;
   updateDraft: (values: Partial<CharacterCreationDraft>) => void;
 };
@@ -266,6 +281,8 @@ function renderStep({
   stepIndex,
   traitSearch,
   setTraitSearch,
+  expandedSkillSectionIds,
+  toggleSkillSection,
   updateDraft,
 }: RenderStepParams) {
   if (stepIndex === 0) {
@@ -381,43 +398,16 @@ function renderStep({
     return (
       <View style={styles.step}>
         <Text variant="subtitle">Habilidades</Text>
-        {creationCatalog.skills.map((skill) => {
-          const level = draft.skills[skill.id] ?? 0;
-
-          return (
-            <View key={skill.id} style={styles.skillRow}>
-              <View style={styles.skillTitle}>
-                <Text style={styles.skillName}>{skill.name}</Text>
-                <Text variant="caption">{skill.category}</Text>
-              </View>
-              <View style={styles.skillControls}>
-                <Pressable
-                  accessibilityLabel={`Diminuir ${skill.name}`}
-                  accessibilityRole="button"
-                  onPress={() =>
-                    updateDraft({ skills: { ...draft.skills, [skill.id]: Math.max(level - 1, 0) } })
-                  }
-                  style={styles.skillButton}
-                >
-                  <Text>-</Text>
-                </Pressable>
-                <Text style={styles.skillLevel}>{level}</Text>
-                <Pressable
-                  accessibilityLabel={`Aumentar ${skill.name}`}
-                  accessibilityRole="button"
-                  onPress={() =>
-                    updateDraft({
-                      skills: { ...draft.skills, [skill.id]: Math.min(level + 1, skill.maxLevel) },
-                    })
-                  }
-                  style={styles.skillButton}
-                >
-                  <Text>+</Text>
-                </Pressable>
-              </View>
-            </View>
-          );
-        })}
+        {creationCatalog.skillSections.map((section) => (
+          <SkillEditorSection
+            key={section.id}
+            draft={draft}
+            isExpanded={expandedSkillSectionIds.includes(section.id)}
+            section={section}
+            toggleSkillSection={toggleSkillSection}
+            updateDraft={updateDraft}
+          />
+        ))}
       </View>
     );
   }
@@ -589,6 +579,75 @@ function TraitSummary({ selectedTraits }: { selectedTraits: typeof creationCatal
   );
 }
 
+type SkillEditorSectionProps = {
+  draft: CharacterCreationDraft;
+  isExpanded: boolean;
+  section: (typeof creationCatalog.skillSections)[number];
+  toggleSkillSection: (sectionId: string) => void;
+  updateDraft: (values: Partial<CharacterCreationDraft>) => void;
+};
+
+function SkillEditorSection({
+  draft,
+  isExpanded,
+  section,
+  toggleSkillSection,
+  updateDraft,
+}: SkillEditorSectionProps) {
+  return (
+    <View style={styles.skillSection}>
+      <Pressable
+        accessibilityLabel={`${isExpanded ? 'Recolher' : 'Expandir'} ${section.title}`}
+        accessibilityRole="button"
+        onPress={() => toggleSkillSection(section.id)}
+        style={({ pressed }) => [styles.skillSectionHeader, pressed ? styles.pressed : null]}
+      >
+        <Text style={styles.skillSectionIcon}>{isExpanded ? 'v' : '>'}</Text>
+        <Text style={styles.skillSectionTitle}>{section.title}</Text>
+        <Text variant="caption">{section.skills.length}</Text>
+      </Pressable>
+      {isExpanded ?
+        section.skills.map((skill) => {
+          const level = draft.skills[skill.id] ?? 0;
+
+          return (
+            <View key={skill.id} style={styles.skillRow}>
+              <View style={styles.skillTitle}>
+                <Text style={styles.skillName}>{skill.name}</Text>
+              </View>
+              <View style={styles.skillControls}>
+                <Pressable
+                  accessibilityLabel={`Diminuir ${skill.name}`}
+                  accessibilityRole="button"
+                  onPress={() =>
+                    updateDraft({ skills: { ...draft.skills, [skill.id]: Math.max(level - 1, 0) } })
+                  }
+                  style={styles.skillButton}
+                >
+                  <Text>-</Text>
+                </Pressable>
+                <Text style={styles.skillLevel}>{level}</Text>
+                <Pressable
+                  accessibilityLabel={`Aumentar ${skill.name}`}
+                  accessibilityRole="button"
+                  onPress={() =>
+                    updateDraft({
+                      skills: { ...draft.skills, [skill.id]: Math.min(level + 1, skill.maxLevel) },
+                    })
+                  }
+                  style={styles.skillButton}
+                >
+                  <Text>+</Text>
+                </Pressable>
+              </View>
+            </View>
+          );
+        })
+      : null}
+    </View>
+  );
+}
+
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.summaryRow}>
@@ -738,6 +797,30 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     justifyContent: 'space-between',
     padding: spacing.md,
+  },
+  skillSection: {
+    gap: spacing.sm,
+  },
+  skillSectionHeader: {
+    alignItems: 'center',
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: spacing.sm,
+    minHeight: 48,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  skillSectionIcon: {
+    color: colors.primary,
+    fontWeight: '700',
+    width: 16,
+  },
+  skillSectionTitle: {
+    flex: 1,
+    fontWeight: '700',
   },
   skillTitle: {
     flex: 1,

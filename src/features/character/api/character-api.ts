@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { buildCharacterSkills, clampSkillLevel, getCharacterSkill } from '@/shared/config/character-skills';
 import { normalizeCharacterTrait, normalizeCharacterTraits } from '@/shared/config/character-traits';
 import { localCharacterRepository, LocalCharacter } from '@/shared/storage';
 
@@ -60,12 +61,14 @@ function toTrait(dto: TraitDto): Trait {
 }
 
 function toSkill(dto: SkillDto): Skill {
+  const catalogSkill = getCharacterSkill(dto.id);
+
   return {
-    id: dto.id,
-    name: dto.name,
-    category: dto.category,
-    level: clampMetric(dto.level),
-    maxLevel: dto.max_level ?? 10,
+    id: catalogSkill?.id ?? dto.id,
+    name: catalogSkill?.name ?? dto.name,
+    category: catalogSkill?.category ?? dto.category,
+    level: clampSkillLevel(dto.level),
+    maxLevel: catalogSkill?.maxLevel ?? dto.max_level ?? 10,
   };
 }
 
@@ -85,7 +88,7 @@ function toCharacter(dto: CharacterDto): Character {
     daysAlive: clampMetric(dto.days_alive ?? 0),
     zombiesKilled: clampMetric(dto.zombies_killed ?? 0),
     traits: dto.traits.map(toTrait),
-    skills: dto.skills.map(toSkill),
+    skills: buildCharacterSkills(dto.skills.map(toSkill)),
   };
 }
 
@@ -105,7 +108,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     daysAlive: clampMetric(character.daysAlive),
     zombiesKilled: clampMetric(character.zombiesKilled),
     traits: normalizeCharacterTraits(character.traits),
-    skills: character.skills,
+    skills: buildCharacterSkills(character.skills),
   };
 }
 
