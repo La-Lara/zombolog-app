@@ -58,11 +58,20 @@ describe('SkillsScreen', () => {
     expect(await screen.findByText('Maria Knox')).toBeTruthy();
     expect(screen.getByText('Combate - Armas de Fogo')).toBeTruthy();
     expect(screen.getByText('Criação')).toBeTruthy();
+    expect(screen.queryByText('Mira')).toBeNull();
+    expect(screen.queryByText('Carpintaria')).toBeNull();
+    expect(screen.queryByText('2')).toBeNull();
+    expect(screen.queryByText('12')).toBeNull();
+
+    fireEvent.press(screen.getByRole('button', { name: 'Expandir Combate - Armas de Fogo' }));
+
+    expect(screen.getByText('Mira')).toBeTruthy();
+
+    fireEvent.press(screen.getByRole('button', { name: 'Recolher Combate - Armas de Fogo' }));
 
     await waitFor(() => {
-      expect(screen.getByText('Mira')).toBeTruthy();
+      expect(screen.queryByText('Mira')).toBeNull();
     });
-    expect(screen.queryByText('Carpintaria')).toBeNull();
 
     fireEvent.press(screen.getByRole('button', { name: 'Expandir Criação' }));
 

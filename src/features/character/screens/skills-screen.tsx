@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
@@ -28,18 +28,6 @@ export function SkillsScreen() {
     () => new Map((character?.skills ?? []).map((skill) => [skill.id, skill])),
     [character?.skills],
   );
-
-  useEffect(() => {
-    if (!character || expandedSectionIds.length) {
-      return;
-    }
-
-    const sectionsWithProgress = characterSkillSections
-      .filter((section) => section.skills.some((skill) => (skillsById.get(skill.id)?.level ?? 0) > 0))
-      .map((section) => section.id);
-
-    setExpandedSectionIds(sectionsWithProgress.length ? sectionsWithProgress : [characterSkillSections[0].id]);
-  }, [character, expandedSectionIds.length, skillsById]);
 
   function handleBack() {
     router.back();
@@ -123,7 +111,6 @@ function SkillSection({ isExpanded, section, skillsById, toggleSection }: SkillS
       >
         <Text style={styles.skillSectionIcon}>{isExpanded ? 'v' : '>'}</Text>
         <Text style={styles.skillSectionTitle}>{section.title}</Text>
-        <Text variant="caption">{section.skills.length}</Text>
       </Pressable>
       {isExpanded ?
         section.skills.map((skill) => (

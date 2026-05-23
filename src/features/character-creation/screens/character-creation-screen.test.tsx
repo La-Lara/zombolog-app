@@ -118,8 +118,17 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Corajosa (-4)' }));
     fireEvent.press(screen.getByRole('button', { name: 'Fumante (+3)' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+
+    expect(screen.getByText('Combate - Armas de Fogo')).toBeTruthy();
+    expect(screen.queryByText('Mira')).toBeNull();
+    expect(screen.queryByText('2')).toBeNull();
+    expect(screen.queryByText('12')).toBeNull();
+
     fireEvent.press(screen.getByRole('button', { name: 'Expandir Criação' }));
     fireEvent.press(screen.getByRole('button', { name: 'Aumentar Carpintaria' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Recolher Criação' }));
+    expect(screen.queryByText('Carpintaria')).toBeNull();
+    fireEvent.press(screen.getByRole('button', { name: 'Expandir Criação' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
     expect(screen.getByText('Modo da run')).toBeTruthy();
