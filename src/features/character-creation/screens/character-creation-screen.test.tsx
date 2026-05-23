@@ -46,6 +46,8 @@ describe('CharacterCreationScreen', () => {
       initialCity: 'Rosewood',
       spawnCity: 'Rosewood',
       currentCity: 'Muldraugh',
+      daysAlive: 18,
+      zombiesKilled: 143,
       traitIds: ['organized'],
       skills: { carpentry: 6 },
     });
@@ -75,6 +77,8 @@ describe('CharacterCreationScreen', () => {
           profession: 'Carpinteira',
           runMode: 'Outbreak',
           initialCity: 'Rosewood',
+          daysAlive: 18,
+          zombiesKilled: 143,
           traitIds: ['organizada'],
         }),
       });
@@ -96,6 +100,8 @@ describe('CharacterCreationScreen', () => {
     expect(await screen.findByText('Novo Personagem')).toBeTruthy();
 
     fireEvent.changeText(screen.getByLabelText('Nome'), 'Ana Brooks');
+    fireEvent.changeText(screen.getByLabelText('Dias de Sobrevivência'), '31');
+    fireEvent.changeText(screen.getByLabelText('Zumbis abatidos'), '221');
     fireEvent.press(screen.getByRole('button', { name: 'Veterana' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
@@ -116,6 +122,7 @@ describe('CharacterCreationScreen', () => {
 
     expect(screen.getByText('Modo da run')).toBeTruthy();
     expect(screen.getByText('Cidade inicial')).toBeTruthy();
+    expect(screen.getByText('31 dias de sobrevivência - 221 zumbis abatidos')).toBeTruthy();
     expect(screen.getAllByText('Sandbox').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Corajosa (-4)').length).toBeGreaterThan(0);
@@ -136,6 +143,8 @@ describe('CharacterCreationScreen', () => {
           initialCity: 'Rosewood',
           spawnCity: 'Rosewood',
           currentCity: 'Rosewood',
+          daysAlive: 31,
+          zombiesKilled: 221,
           traitIds: ['corajosa', 'fumante'],
         }),
       });

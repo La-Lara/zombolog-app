@@ -71,6 +71,8 @@ export type CreateLocalCharacterInput = Pick<
   | 'initialCity'
   | 'spawnCity'
   | 'currentCity'
+  | 'daysAlive'
+  | 'zombiesKilled'
   | 'traits'
   | 'skills'
 >;
@@ -85,6 +87,8 @@ export type UpdateLocalCharacterInput = Pick<
   | 'initialCity'
   | 'spawnCity'
   | 'currentCity'
+  | 'daysAlive'
+  | 'zombiesKilled'
   | 'traits'
   | 'skills'
 >;
@@ -377,8 +381,6 @@ export const localCharacterRepository = {
       id: `${input.ownerId}.${slugify(input.name)}.${Date.now()}`,
       remoteId: null,
       status: 'alive',
-      daysAlive: 0,
-      zombiesKilled: 0,
       syncStatus: 'created',
       syncVersion: 1,
       createdAt: now,

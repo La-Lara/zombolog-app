@@ -17,7 +17,6 @@
 - [ ] Criar modal de confirmação ao descartar draft.
 - [ ] Criar fluxo de logout/configurações.
 - [ ] Criar recuperação de senha.
-- [ ] Criar UI para editar métricas de dias vivos e zumbis mortos.
 - [ ] Criar telas para equipamento, preferências e descrição.
 - [ ] Definir UI de compartilhamento social.
 

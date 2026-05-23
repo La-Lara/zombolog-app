@@ -11,6 +11,8 @@ export type CharacterCreationDraft = {
   initialCity: string;
   spawnCity: string;
   currentCity: string;
+  daysAlive: number;
+  zombiesKilled: number;
   traitIds: string[];
   legacyTraits?: LocalTrait[];
   skills: Record<string, number>;

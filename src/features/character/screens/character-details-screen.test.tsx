@@ -89,10 +89,16 @@ describe('CharacterDetailsScreen', () => {
     expect(screen.getByText('Apocalipse')).toBeTruthy();
     expect(screen.getByText('Feminino')).toBeTruthy();
     expect(screen.getByText('Cidade inicial')).toBeTruthy();
+    expect(screen.getByText('Dias de Sobrevivência')).toBeTruthy();
+    expect(screen.getByText('18')).toBeTruthy();
+    expect(screen.getByText('Zumbis abatidos')).toBeTruthy();
+    expect(screen.getByText('143')).toBeTruthy();
     expect(screen.getAllByText('Rosewood').length).toBeGreaterThan(0);
     expect(screen.getByText('Habilidades')).toBeTruthy();
     expect(screen.getByText('Traços')).toBeTruthy();
     expect(screen.getByText('1 positivo (-4), 1 negativo (+3)')).toBeTruthy();
+    expect(screen.queryByText('Métricas')).toBeNull();
+    expect(screen.queryByText('Spawn')).toBeNull();
     expect(screen.queryByText('Positivos: Organizada (-4)')).toBeNull();
     expect(screen.queryByText('Negativos: Fumante (+3)')).toBeNull();
   });

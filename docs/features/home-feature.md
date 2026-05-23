@@ -6,7 +6,7 @@ Exibir personagens do usuário e permitir criação ou acesso rápido ao detalhe
 
 ## Comportamento
 
-Header saúda `Olá, Sobrevivente` e mostra ação de configurações. A lista usa cards com avatar, nome, profissão, dias vivos, zumbis mortos, cidade atual e badge de status.
+Header saúda `Olá, Sobrevivente` e mostra ação de configurações. A lista usa cards com avatar, nome, profissão, dias de sobrevivência, zumbis abatidos, cidade atual e badge de status.
 
 ## Componentes
 

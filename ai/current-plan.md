@@ -84,7 +84,13 @@ Status: concluida na branch `implement-p1-start-city`.
 
 Adicionar cidade inicial na criacao, edicao, resumo, detalhe e persistencia local, mantendo fallback seguro para personagens antigos.
 
-### Task Atual: Tracos do Personagem
+### Task Atual: Metricas Editaveis de Sobrevivencia
+
+Status: concluida na branch `implement-p1-survival-metrics`.
+
+Simplificar o detalhe do personagem removendo a secao Metricas e o campo Spawn, renomear Dias Vivos para Dias de Sobrevivencia e permitir edicao manual de dias de sobrevivencia e zumbis abatidos na criacao/edicao com persistencia local segura.
+
+### Task Anterior: Tracos do Personagem
 
 Status: concluida na branch `implement-p1-character-traits`.
 

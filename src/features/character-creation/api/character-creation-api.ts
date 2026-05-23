@@ -32,6 +32,8 @@ type CharacterDraftDto = {
   initial_city?: string | null;
   spawn_city: string;
   current_city: string;
+  days_alive?: number | null;
+  zombies_killed?: number | null;
   trait_ids?: string[];
   traits?: { id: string }[];
   skills: { id: string; level: number }[] | Record<string, number>;
@@ -48,6 +50,8 @@ function toRequestBody(payload: CharacterCreationPayload) {
     initial_city: payload.initialCity,
     spawn_city: payload.spawnCity,
     current_city: payload.currentCity,
+    days_alive: payload.daysAlive,
+    zombies_killed: payload.zombiesKilled,
     trait_ids: payload.traitIds,
     skills: payload.skills,
   };
@@ -64,6 +68,8 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
     initialCity: character.initialCity,
     spawnCity: character.spawnCity,
     currentCity: character.currentCity,
+    daysAlive: clampMetric(character.daysAlive),
+    zombiesKilled: clampMetric(character.zombiesKilled),
     traitIds: character.traits.map((trait) => normalizeTraitId(trait.id)),
     legacyTraits: character.traits,
     skills: {
@@ -90,6 +96,8 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
     initialCity: character.initial_city ?? character.spawn_city,
     spawnCity: character.spawn_city,
     currentCity: character.current_city,
+    daysAlive: clampMetric(character.days_alive ?? 0),
+    zombiesKilled: clampMetric(character.zombies_killed ?? 0),
     traitIds: traitIds.map(normalizeTraitId),
     skills: {
       ...defaultSkills(),
@@ -108,6 +116,8 @@ function defaultDraftWithCurrentCatalog(): CharacterCreationDraft {
     initialCity: '',
     spawnCity: '',
     currentCity: '',
+    daysAlive: 0,
+    zombiesKilled: 0,
     traitIds: [],
     skills: defaultSkills(),
   };
@@ -123,6 +133,10 @@ function toRunMode(runMode?: string | null): CharacterRunMode {
 
 function defaultSkills() {
   return Object.fromEntries(creationCatalog.skills.map((skill) => [skill.id, 0]));
+}
+
+function clampMetric(value: number) {
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
 }
 
 function toLocalTraits(payload: CharacterCreationPayload, currentTraits: LocalTrait[] = []) {
@@ -177,6 +191,8 @@ export const characterCreationApi = {
         initialCity: payload.initialCity,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
+        daysAlive: payload.daysAlive,
+        zombiesKilled: payload.zombiesKilled,
         traits: toLocalTraits(payload),
         skills: toLocalSkills(payload),
       });
@@ -207,6 +223,8 @@ export const characterCreationApi = {
         initialCity: payload.initialCity,
         spawnCity: payload.spawnCity,
         currentCity: payload.currentCity,
+        daysAlive: payload.daysAlive,
+        zombiesKilled: payload.zombiesKilled,
         traits: toLocalTraits(payload, currentCharacter?.traits),
         skills: toLocalSkills(payload, currentCharacter?.skills),
       });

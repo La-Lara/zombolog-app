@@ -17,7 +17,7 @@ Gerenciar consulta, detalhe e expansão da ficha de sobrevivente.
 
 ## Regras
 
-Excluir personagem deve exigir confirmação. Editar personagem deve reutilizar o fluxo de criação com dados preenchidos. Métricas devem aceitar apenas números não negativos.
+Excluir personagem deve exigir confirmação. Editar personagem deve reutilizar o fluxo de criação com dados preenchidos. Dias de sobrevivência e zumbis abatidos devem aceitar apenas números não negativos.
 
 ## Estados
 

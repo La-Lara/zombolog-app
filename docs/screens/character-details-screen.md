@@ -6,7 +6,7 @@ Exibir ficha principal do personagem e dar acesso às seções detalhadas.
 
 ## Comportamento
 
-Header com voltar, nome e ação de excluir. Card principal mostra avatar, nome, profissão, status, dias vivos, zumbis mortos e cidade atual. Abaixo há menu de seções e botão `Editar Personagem`.
+Header com voltar, nome e ação de excluir. Card principal mostra avatar, nome, profissão, status, dias de sobrevivência, zumbis abatidos, modo da run, gênero, cidade inicial e cidade atual. Abaixo há menu de seções e botão `Editar Personagem`.
 
 ## Estados
 
@@ -31,7 +31,7 @@ Back retorna à home. Delete abre confirmação. Cada seção navega para tela e
 
 ## Regras
 
-Excluir limpa cache e volta para home. Métricas devem exibir `0` quando ausentes. Dados de rota devem ser apenas `id`.
+Excluir limpa cache e volta para home. Dias de sobrevivência e zumbis abatidos devem exibir `0` quando ausentes. Dados de rota devem ser apenas `id`.
 
 ## Futuras Expansões
 

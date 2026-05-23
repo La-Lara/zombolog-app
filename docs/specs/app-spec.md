@@ -6,7 +6,7 @@ App mobile companion para Project Zomboid focado em criar, consultar e compartil
 
 ## Usuários e Objetivos
 
-- Jogador: registrar personagens, acompanhar atributos, profissão, localização, dias vivos, zumbis mortos e traços.
+- Jogador: registrar personagens, acompanhar atributos, profissão, localização, dias de sobrevivência, zumbis abatidos e traços.
 - Criador de conteúdo: montar uma ficha visual compartilhável.
 - Usuário recorrente: acessar rapidamente personagens existentes e editar fichas.
 

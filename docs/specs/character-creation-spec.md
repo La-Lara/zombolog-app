@@ -56,7 +56,7 @@ Lista skills com ícone, nome, medidor e valor numérico. No mockup todos começ
 
 ## Etapa 6: Resumo
 
-Mostra avatar, nome, profissão, localização, dias vivos, zumbis mortos e traços selecionados. Botão final `Criar Personagem`.
+Mostra avatar, nome, profissão, localização, dias de sobrevivência, zumbis abatidos e traços selecionados. Botão final `Criar Personagem`.
 
 ## Persistência de Rascunho
 

@@ -294,6 +294,24 @@ function renderStep({
           title="Modo da run"
           onSelect={(runMode) => updateDraft({ runMode: runMode as CharacterRunMode })}
         />
+        <FieldSection title="Métricas de sobrevivência">
+          <View style={styles.metricInputs}>
+            <TextField
+              label="Dias de Sobrevivência"
+              keyboardType="number-pad"
+              onChangeText={(value) => updateDraft({ daysAlive: parseMetricInput(value) })}
+              placeholder="0"
+              value={String(draft.daysAlive)}
+            />
+            <TextField
+              label="Zumbis abatidos"
+              keyboardType="number-pad"
+              onChangeText={(value) => updateDraft({ zombiesKilled: parseMetricInput(value) })}
+              placeholder="0"
+              value={String(draft.zombiesKilled)}
+            />
+          </View>
+        </FieldSection>
       </View>
     );
   }
@@ -417,7 +435,10 @@ function renderStep({
         label="Localização"
         value={`${draft.initialCity || draft.spawnCity || 'Origem'} -> ${draft.currentCity || 'Atual'}`}
       />
-      <SummaryRow label="Sobrevivência" value="0 dias vivos - 0 zumbis mortos" />
+      <SummaryRow
+        label="Sobrevivência"
+        value={`${draft.daysAlive} dias de sobrevivência - ${draft.zombiesKilled} zumbis abatidos`}
+      />
       <TraitSummary selectedTraits={selectedTraits} />
     </View>
   );
@@ -594,6 +615,16 @@ function toggleValue(values: string[], value: string) {
   return values.includes(value) ? values.filter((item) => item !== value) : [...values, value];
 }
 
+function parseMetricInput(value: string) {
+  const digits = value.replace(/\D/g, '');
+
+  if (!digits) {
+    return 0;
+  }
+
+  return Number.parseInt(digits, 10);
+}
+
 function hasDraftData(draft: CharacterCreationDraft) {
   return Boolean(
     draft.name.trim() ||
@@ -602,6 +633,8 @@ function hasDraftData(draft: CharacterCreationDraft) {
       draft.initialCity ||
       draft.spawnCity ||
       draft.currentCity ||
+      draft.daysAlive > 0 ||
+      draft.zombiesKilled > 0 ||
       draft.traitIds.length ||
       Object.values(draft.skills).some((level) => level > 0),
   );
@@ -650,6 +683,10 @@ const styles = StyleSheet.create({
   },
   error: {
     color: colors.danger,
+  },
+  metricInputs: {
+    gap: spacing.md,
+    width: '100%',
   },
   pressed: {
     opacity: 0.82,

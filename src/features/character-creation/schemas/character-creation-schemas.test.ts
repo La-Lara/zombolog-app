@@ -8,18 +8,24 @@ import {
 
 describe('character creation schemas', () => {
   it('requires name and profession in the basic info step', () => {
-    expect(() => basicInfoStepSchema.parse({ name: '', profession: '', runMode: '' })).toThrow();
+    expect(() =>
+      basicInfoStepSchema.parse({ name: '', profession: '', runMode: '', daysAlive: 0, zombiesKilled: 0 }),
+    ).toThrow();
 
     expect(
       basicInfoStepSchema.parse({
         name: ' Maria Knox ',
         profession: 'Carpinteira',
         runMode: 'Apocalipse',
+        daysAlive: 12,
+        zombiesKilled: 45,
       }),
     ).toEqual({
       name: 'Maria Knox',
       profession: 'Carpinteira',
       runMode: 'Apocalipse',
+      daysAlive: 12,
+      zombiesKilled: 45,
     });
   });
 
@@ -29,6 +35,29 @@ describe('character creation schemas', () => {
         name: 'Maria Knox',
         profession: 'Carpinteira',
         runMode: 'Custom',
+        daysAlive: 0,
+        zombiesKilled: 0,
+      }),
+    ).toThrow();
+  });
+
+  it('requires survival metrics to be non-negative integers', () => {
+    expect(() =>
+      basicInfoStepSchema.parse({
+        name: 'Maria Knox',
+        profession: 'Carpinteira',
+        runMode: 'Apocalipse',
+        daysAlive: -1,
+        zombiesKilled: 0,
+      }),
+    ).toThrow();
+    expect(() =>
+      basicInfoStepSchema.parse({
+        name: 'Maria Knox',
+        profession: 'Carpinteira',
+        runMode: 'Apocalipse',
+        daysAlive: 1.5,
+        zombiesKilled: 0,
       }),
     ).toThrow();
   });
@@ -70,6 +99,8 @@ describe('character creation schemas', () => {
         initialCity: 'West Point',
         spawnCity: 'West Point',
         currentCity: 'West Point',
+        daysAlive: 31,
+        zombiesKilled: 221,
         traitIds: ['corajosa'],
         skills: { aiming: 3 },
       }),
@@ -82,6 +113,8 @@ describe('character creation schemas', () => {
       initialCity: 'West Point',
       spawnCity: 'West Point',
       currentCity: 'West Point',
+      daysAlive: 31,
+      zombiesKilled: 221,
       traitIds: ['corajosa'],
       skills: { aiming: 3 },
     });

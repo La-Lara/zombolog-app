@@ -28,12 +28,11 @@ export function CharacterSummaryCard({ character }: CharacterSummaryCardProps) {
         </View>
       </View>
       <View style={styles.metrics}>
-        <MetricRow label="Dias vivos" value={character.daysAlive} />
+        <MetricRow label="Dias de Sobrevivência" value={character.daysAlive} />
         <MetricRow label="Zumbis abatidos" value={character.zombiesKilled} />
         <MetricRow label="Modo da run" value={character.runMode} />
         <MetricRow label="Genero" value={character.gender} />
         <MetricRow label="Cidade inicial" value={character.initialCity} />
-        <MetricRow label="Spawn" value={character.spawnCity} />
         <MetricRow label="Cidade atual" value={character.currentCity} />
       </View>
     </Card>

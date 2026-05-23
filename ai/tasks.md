@@ -171,6 +171,17 @@
 - [x] Atualizar testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Metricas Editaveis de Sobrevivencia
+
+- [x] Analisar arquitetura, fluxo atual e pontos de persistencia.
+- [x] Remover secao Metricas e informacao Spawn do detalhe.
+- [x] Renomear Dias Vivos para Dias de Sobrevivencia na UI de personagem.
+- [x] Adicionar dias de sobrevivencia e zumbis abatidos ao draft, schemas, payloads e APIs.
+- [x] Persistir os valores em criacao e edicao mantendo fallback para registros antigos.
+- [x] Exibir os valores salvos no detalhe.
+- [x] Atualizar testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

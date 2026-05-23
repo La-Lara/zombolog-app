@@ -3,12 +3,15 @@ import { z } from 'zod';
 import { characterRunModes } from '../data/creation-catalog';
 
 const skillLevelSchema = z.number().int().min(0).max(10);
+const survivalMetricSchema = z.number().int().min(0, 'Informe um valor maior ou igual a zero.');
 const runModeSchema = z.enum(characterRunModes, 'Selecione o modo da run.');
 
 export const basicInfoStepSchema = z.object({
   name: z.string().trim().min(1, 'Informe o nome do personagem.'),
   profession: z.string().trim().min(1, 'Selecione uma profissao.'),
   runMode: runModeSchema,
+  daysAlive: survivalMetricSchema,
+  zombiesKilled: survivalMetricSchema,
 });
 
 export const appearanceStepSchema = z.object({

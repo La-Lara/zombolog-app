@@ -14,7 +14,7 @@ export function EmptyCharactersState({ onCreatePress }: EmptyCharactersStateProp
     <View style={styles.container}>
       <EmptyState
         title="Nenhum personagem"
-        description="Crie sua primeira ficha para acompanhar dias vivos, cidade atual e progresso da campanha."
+        description="Crie sua primeira ficha para acompanhar dias de sobrevivência, cidade atual e progresso da campanha."
       />
       <CreateCharacterButton onPress={onCreatePress} />
     </View>

@@ -83,6 +83,8 @@ function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null
     initialCity: storedDraft.initialCity ?? storedDraft.spawnCity,
     spawnCity: storedDraft.spawnCity,
     currentCity: storedDraft.currentCity,
+    daysAlive: sanitizeMetric(storedDraft.daysAlive),
+    zombiesKilled: sanitizeMetric(storedDraft.zombiesKilled),
     traitIds: uniqueValues(storedDraft.traitIds?.map(normalizeTraitId) ?? []),
     skills: storedDraft.skills,
   } satisfies Partial<CharacterCreationDraft>;
@@ -90,4 +92,12 @@ function sanitizeStoredDraft(storedDraft: Partial<CharacterCreationDraft> | null
 
 function uniqueValues(values: string[]) {
   return [...new Set(values)];
+}
+
+function sanitizeMetric(value: number | undefined) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    return 0;
+  }
+
+  return Math.floor(value);
 }

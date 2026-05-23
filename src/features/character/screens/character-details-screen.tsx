@@ -121,14 +121,6 @@ export function CharacterDetailsScreen() {
       />
       <CharacterSummaryCard character={character} />
       <View style={styles.section}>
-        <Text variant="subtitle">Métricas</Text>
-        <View style={styles.metrics}>
-          <Text variant="caption">Sobrevivência: {character.daysAlive} dias</Text>
-          <Text variant="caption">Combate: {character.zombiesKilled} zumbis abatidos</Text>
-          <Text variant="caption">Localização: {character.currentCity}</Text>
-        </View>
-      </View>
-      <View style={styles.section}>
         <Text variant="subtitle">Seções</Text>
         <SectionMenuItem
           description={`${character.skills.length} habilidades com progresso visual`}
@@ -149,9 +141,6 @@ export function CharacterDetailsScreen() {
 const styles = StyleSheet.create({
   section: {
     gap: spacing.sm,
-  },
-  metrics: {
-    gap: spacing.xs,
   },
 });
 

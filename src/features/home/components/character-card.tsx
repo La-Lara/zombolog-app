@@ -35,7 +35,7 @@ export function CharacterCard({ character, onPress }: CharacterCardProps) {
           <StatusBadge status={character.status} />
         </View>
         <View style={styles.metrics}>
-          <CharacterMetric label="Dias" value={character.daysAlive} />
+          <CharacterMetric label="Dias de Sobrevivência" value={`${character.daysAlive} dias`} />
           <CharacterMetric label="Zumbis" value={character.zombiesKilled} />
           <CharacterMetric label="Cidade" value={character.currentCity} />
         </View>

@@ -154,6 +154,14 @@ Motivo: simplifica o wizard e evita manter campos visuais sem representacao conc
 
 Tradeoff: IDs antigos de avatar passam a cair no retrato default `CharacterF` ate o usuario salvar uma nova escolha.
 
+## ADR-022: Metricas de Sobrevivencia Permanecem no Modelo de Personagem
+
+Decisao: manter dias de sobrevivencia e zumbis abatidos como campos diretos de `Character` e colunas ja existentes no SQLite, apenas expondo edicao no wizard de criacao/edicao.
+
+Motivo: os dados ja fazem parte do contrato e da persistencia local; criar nova tabela ou feature separada adicionaria acoplamento sem ganho para o escopo atual.
+
+Tradeoff: a tela de detalhe continua exibindo as metricas no resumo principal, mas deixa de ter uma secao dedicada de metricas.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

@@ -30,7 +30,7 @@ type Character = {
 - Nome do personagem é obrigatório.
 - Profissão é obrigatória.
 - Cidade de spawn e cidade atual são obrigatórias.
-- Dias vivos e zumbis mortos começam em `0`.
+- Dias de sobrevivência e zumbis abatidos começam em `0`, mas podem ser preenchidos manualmente na criação e edição.
 - Status inicial é `alive`.
 - Traços positivos e negativos são listas separadas.
 - Habilidades são níveis inteiros dentro do range permitido pelo domínio.

@@ -50,6 +50,8 @@ export const defaultCharacterCreationDraft: CharacterCreationDraft = {
   initialCity: '',
   spawnCity: '',
   currentCity: '',
+  daysAlive: 0,
+  zombiesKilled: 0,
   traitIds: [],
   skills: Object.fromEntries(creationCatalog.skills.map((skill) => [skill.id, 0])),
 };
