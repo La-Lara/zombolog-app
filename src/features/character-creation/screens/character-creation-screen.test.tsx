@@ -120,7 +120,8 @@ describe('CharacterCreationScreen', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
     expect(screen.getByText('Combate - Armas de Fogo')).toBeTruthy();
-    expect(screen.queryByText('Mira')).toBeNull();
+    expect(screen.getByText('Mira')).toBeTruthy();
+    expect(screen.queryByText('Carpintaria')).toBeNull();
     expect(screen.queryByText('2')).toBeNull();
     expect(screen.queryByText('12')).toBeNull();
 

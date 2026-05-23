@@ -17,7 +17,9 @@ export function SkillsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const characterId = Array.isArray(id) ? id[0] : id;
   const { session } = useSession();
-  const [expandedSectionIds, setExpandedSectionIds] = useState<string[]>([]);
+  const [expandedSectionIds, setExpandedSectionIds] = useState<string[]>([
+    characterSkillSections[0]?.id ?? '',
+  ]);
   const characterQuery = useCharacterQuery({
     accessToken: session?.accessToken,
     characterId,

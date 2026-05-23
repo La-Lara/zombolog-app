@@ -50,7 +50,9 @@ export function CharacterCreationScreen() {
   const [stepIndex, setStepIndex] = useState(0);
   const [stepError, setStepError] = useState<string | null>(null);
   const [traitSearch, setTraitSearch] = useState('');
-  const [expandedSkillSectionIds, setExpandedSkillSectionIds] = useState<string[]>([]);
+  const [expandedSkillSectionIds, setExpandedSkillSectionIds] = useState<string[]>([
+    creationCatalog.skillSections[0]?.id ?? '',
+  ]);
   const [hasLoadedEditDraft, setHasLoadedEditDraft] = useState(false);
   const isLastStep = stepIndex === totalSteps - 1;
   const selectedTraits = useMemo(
