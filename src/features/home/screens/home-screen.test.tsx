@@ -20,7 +20,7 @@ jest.mock('expo-router', () => ({
 const character: CharacterSummary = {
   id: 'character-1',
   name: 'Maria Knox',
-  profession: 'Carpinteira',
+  profession: 'Carpinteira(o)',
   status: 'alive',
   avatarId: null,
   currentCity: 'Muldraugh',
@@ -56,7 +56,7 @@ describe('HomeScreen', () => {
     const screen = renderWithProviders(<HomeScreen />);
 
     expect(await screen.findByText('Maria Knox')).toBeTruthy();
-    expect(screen.getByText('Carpinteira')).toBeTruthy();
+    expect(screen.getByText('Carpinteira(o)')).toBeTruthy();
     expect(screen.getByText('Muldraugh')).toBeTruthy();
 
     fireEvent.press(screen.getByRole('button', { name: 'Abrir ficha de Maria Knox' }));

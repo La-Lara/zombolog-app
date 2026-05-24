@@ -1,5 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
+import { getCharacterProfession } from '@/shared/config/character-professions';
 import { spacing } from '@/shared/theme';
 import { Card, Text } from '@/shared/ui';
 
@@ -13,6 +14,8 @@ type CharacterSummaryCardProps = {
 };
 
 export function CharacterSummaryCard({ character }: CharacterSummaryCardProps) {
+  const profession = getCharacterProfession(character.profession);
+
   return (
     <Card>
       <View style={styles.header}>
@@ -21,9 +24,12 @@ export function CharacterSummaryCard({ character }: CharacterSummaryCardProps) {
           <Text numberOfLines={2} variant="subtitle">
             {character.name}
           </Text>
-          <Text numberOfLines={1} variant="caption">
-            {character.profession}
-          </Text>
+          <View style={styles.profession}>
+            <Image accessibilityLabel={`Ícone ${profession.name}`} source={profession.icon} style={styles.professionIcon} />
+            <Text numberOfLines={1} variant="caption">
+              {profession.name}
+            </Text>
+          </View>
           <StatusBadge status={character.status} />
         </View>
       </View>
@@ -54,5 +60,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing.sm,
+  },
+  profession: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.xs,
+  },
+  professionIcon: {
+    height: 24,
+    width: 24,
   },
 });

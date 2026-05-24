@@ -192,6 +192,17 @@
 - [x] Atualizar seeds, mocks e testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Catalogo de Profissoes
+
+- [x] Analisar arquitetura e fluxo atual antes de alterar arquivos.
+- [x] Copiar icones de profissoes para assets do projeto.
+- [x] Criar catalogo tipado de profissoes com ordem e nomes atualizados.
+- [x] Separar profissao em etapa exclusiva do wizard.
+- [x] Exibir icone e nome da profissao na selecao e no detalhe.
+- [x] Normalizar profissoes antigas com fallback seguro.
+- [x] Atualizar schemas, seeds e testes afetados.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

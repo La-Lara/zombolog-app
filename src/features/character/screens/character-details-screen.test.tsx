@@ -25,7 +25,7 @@ const character: Character = {
   id: 'character-1',
   ownerId: 'user-1',
   name: 'Maria Knox',
-  profession: 'Carpinteira',
+  profession: 'Carpinteira(o)',
   runMode: 'Apocalipse',
   gender: 'Feminino',
   status: 'alive',
@@ -85,7 +85,8 @@ describe('CharacterDetailsScreen', () => {
     const screen = renderWithProviders(<CharacterDetailsScreen />);
 
     expect(await screen.findByText('Maria Knox')).toBeTruthy();
-    expect(screen.getByText('Carpinteira')).toBeTruthy();
+    expect(screen.getByText('Carpinteira(o)')).toBeTruthy();
+    expect(screen.getByLabelText('Ícone Carpinteira(o)')).toBeTruthy();
     expect(screen.getByText('Apocalipse')).toBeTruthy();
     expect(screen.getByText('Feminino')).toBeTruthy();
     expect(screen.getByText('Cidade inicial')).toBeTruthy();

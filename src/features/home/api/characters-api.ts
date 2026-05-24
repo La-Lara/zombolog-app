@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { normalizeProfessionName } from '@/shared/config/character-professions';
 import { localCharacterRepository } from '@/shared/storage';
 
 import { CharacterStatus, CharacterSummary } from '../types';
@@ -24,7 +25,7 @@ function toCharacterSummary(dto: CharacterSummaryDto): CharacterSummary {
   return {
     id: dto.id,
     name: dto.name,
-    profession: dto.profession,
+    profession: normalizeProfessionName(dto.profession),
     status: dto.status,
     avatarId: dto.avatar_id,
     currentCity: dto.current_city,
@@ -56,7 +57,7 @@ async function getLocalCharacters(ownerId: string): Promise<CharacterSummary[]> 
   return characters.map((character) => ({
     id: character.id,
     name: character.name,
-    profession: character.profession,
+    profession: normalizeProfessionName(character.profession),
     status: character.status,
     avatarId: character.avatarId,
     currentCity: character.currentCity,

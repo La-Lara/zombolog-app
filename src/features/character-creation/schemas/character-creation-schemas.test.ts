@@ -2,30 +2,37 @@ import {
   basicInfoStepSchema,
   characterCreationSchema,
   locationStepSchema,
+  professionStepSchema,
   skillsStepSchema,
   traitsStepSchema,
 } from './character-creation-schemas';
 
 describe('character creation schemas', () => {
-  it('requires name and profession in the basic info step', () => {
+  it('requires name in the basic info step', () => {
     expect(() =>
-      basicInfoStepSchema.parse({ name: '', profession: '', runMode: '', daysAlive: 0, zombiesKilled: 0 }),
+      basicInfoStepSchema.parse({ name: '', runMode: '', daysAlive: 0, zombiesKilled: 0 }),
     ).toThrow();
 
     expect(
       basicInfoStepSchema.parse({
         name: ' Maria Knox ',
-        profession: 'Carpinteira',
         runMode: 'Apocalipse',
         daysAlive: 12,
         zombiesKilled: 45,
       }),
     ).toEqual({
       name: 'Maria Knox',
-      profession: 'Carpinteira',
       runMode: 'Apocalipse',
       daysAlive: 12,
       zombiesKilled: 45,
+    });
+  });
+
+  it('requires a profession from the catalog', () => {
+    expect(() => professionStepSchema.parse({ profession: '' })).toThrow();
+    expect(() => professionStepSchema.parse({ profession: 'Carpinteira' })).toThrow();
+    expect(professionStepSchema.parse({ profession: 'Carpinteira(o)' })).toEqual({
+      profession: 'Carpinteira(o)',
     });
   });
 
@@ -33,7 +40,6 @@ describe('character creation schemas', () => {
     expect(() =>
       basicInfoStepSchema.parse({
         name: 'Maria Knox',
-        profession: 'Carpinteira',
         runMode: 'Custom',
         daysAlive: 0,
         zombiesKilled: 0,
@@ -45,7 +51,6 @@ describe('character creation schemas', () => {
     expect(() =>
       basicInfoStepSchema.parse({
         name: 'Maria Knox',
-        profession: 'Carpinteira',
         runMode: 'Apocalipse',
         daysAlive: -1,
         zombiesKilled: 0,
@@ -54,7 +59,6 @@ describe('character creation schemas', () => {
     expect(() =>
       basicInfoStepSchema.parse({
         name: 'Maria Knox',
-        profession: 'Carpinteira',
         runMode: 'Apocalipse',
         daysAlive: 1.5,
         zombiesKilled: 0,
@@ -92,7 +96,7 @@ describe('character creation schemas', () => {
     expect(
       characterCreationSchema.parse({
         name: 'Ana Brooks',
-        profession: 'Veterana',
+        profession: 'Veterana(o)',
         runMode: 'Sandbox',
         avatarId: 'CharacterF',
         gender: 'Feminino',
@@ -106,7 +110,7 @@ describe('character creation schemas', () => {
       }),
     ).toEqual({
       name: 'Ana Brooks',
-      profession: 'Veterana',
+      profession: 'Veterana(o)',
       runMode: 'Sandbox',
       avatarId: 'CharacterF',
       gender: 'Feminino',

@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
+import { normalizeProfessionName } from '@/shared/config/character-professions';
 import { buildCharacterSkills, clampSkillLevel, getCharacterSkill } from '@/shared/config/character-skills';
 import { normalizeCharacterTrait, normalizeCharacterTraits } from '@/shared/config/character-traits';
 import { localCharacterRepository, LocalCharacter } from '@/shared/storage';
@@ -77,7 +78,7 @@ function toCharacter(dto: CharacterDto): Character {
     id: dto.id,
     ownerId: dto.owner_id,
     name: dto.name,
-    profession: dto.profession,
+    profession: normalizeProfessionName(dto.profession),
     runMode: dto.run_mode ?? 'Apocalipse',
     gender: dto.gender ?? 'Não informado',
     status: dto.status,
@@ -97,7 +98,7 @@ function toCharacterFromLocal(character: LocalCharacter): Character {
     id: character.id,
     ownerId: character.ownerId,
     name: character.name,
-    profession: character.profession,
+    profession: normalizeProfessionName(character.profession),
     runMode: character.runMode,
     gender: character.gender,
     status: character.status,

@@ -2,7 +2,7 @@
 
 ## Contexto
 
-O mockup `telas.png` define um app companion para Project Zomboid com autenticacao, home de personagens, detalhe de ficha, criacao guiada em seis etapas, telas de habilidades e tracos. A arquitetura base ja existe; o proximo trabalho deve iniciar desenvolvimento real sem redesenhar a estrutura.
+O mockup `telas.png` define um app companion para Project Zomboid com autenticacao, home de personagens, detalhe de ficha, criacao guiada, telas de habilidades e tracos. A arquitetura base ja existe; o proximo trabalho deve iniciar desenvolvimento real sem redesenhar a estrutura.
 
 ## Stack Confirmada
 
@@ -42,7 +42,7 @@ Character implementado com detalhe por ID via TanStack Query, telas de habilidad
 
 Status: concluida na branch `implement-p2-character-creation`.
 
-Wizard de seis etapas implementado com draft persistido, validacao por etapa, catalogos locais, selecao de aparencia/localizacao/tracos/habilidades, resumo final e submit com fallback local enquanto nao houver backend.
+Wizard implementado com draft persistido, validacao por etapa, catalogos locais, selecao de profissao/aparencia/localizacao/tracos/habilidades, resumo final e submit com fallback local enquanto nao houver backend.
 
 ### Fase 6: Logoff
 
@@ -89,6 +89,12 @@ Adicionar cidade inicial na criacao, edicao, resumo, detalhe e persistencia loca
 Status: concluida na branch `implement-p1-skill-sections`.
 
 Atualizar o catalogo completo de habilidades do personagem conforme as referencias, usando secoes recolhiveis na criacao/edicao e na tela de habilidades, com compatibilidade para habilidades antigas salvas.
+
+### Task Atual: Catalogo de Profissoes
+
+Status: concluida na branch `implement-p1-professions`.
+
+Atualizar o catalogo completo de profissoes com icones, separar profissao em etapa exclusiva do wizard e normalizar exibicao/persistencia em criacao, edicao e detalhe.
 
 ### Task Anterior: Metricas Editaveis de Sobrevivencia
 

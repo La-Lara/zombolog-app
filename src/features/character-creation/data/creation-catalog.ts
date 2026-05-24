@@ -1,4 +1,5 @@
 import { characterPortraits } from '@/shared/config/character-portraits';
+import { characterProfessions } from '@/shared/config/character-professions';
 import { characterSkills, characterSkillSections } from '@/shared/config/character-skills';
 import { characterTraits } from '@/shared/config/character-traits';
 
@@ -14,7 +15,7 @@ export const characterRunModes = [
 ] as const;
 
 export const creationCatalog: CreationCatalog = {
-  professions: ['Desempregado', 'Carpinteira', 'Bombeiro', 'Veterana', 'Enfermeira', 'Mecanico'],
+  professions: characterProfessions,
   runModes: [...characterRunModes],
   cities: [
     'Muldraugh',
@@ -35,6 +36,8 @@ export const creationCatalog: CreationCatalog = {
   skills: characterSkills,
   skillSections: characterSkillSections,
 };
+
+export const professionNames = characterProfessions.map((profession) => profession.name);
 
 export const defaultCharacterCreationDraft: CharacterCreationDraft = {
   name: '',

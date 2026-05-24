@@ -3,7 +3,6 @@
 ## Produto
 
 - [ ] Definir se haverá backend real na primeira versão ou storage local.
-- [ ] Definir catálogo oficial de profissões.
 - [ ] Definir catálogo oficial de cidades.
 - [ ] Definir lista completa de traits e efeitos.
 - [ ] Definir regras de pontos positivos/negativos.

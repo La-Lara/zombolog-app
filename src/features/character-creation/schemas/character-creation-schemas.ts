@@ -1,17 +1,21 @@
 import { z } from 'zod';
 
-import { characterRunModes } from '../data/creation-catalog';
+import { characterRunModes, professionNames } from '../data/creation-catalog';
 
 const skillLevelSchema = z.number().int().min(0).max(10);
 const survivalMetricSchema = z.number().int().min(0, 'Informe um valor maior ou igual a zero.');
 const runModeSchema = z.enum(characterRunModes, 'Selecione o modo da run.');
+const professionSchema = z.enum(professionNames as [string, ...string[]], 'Selecione uma profissão.');
 
 export const basicInfoStepSchema = z.object({
   name: z.string().trim().min(1, 'Informe o nome do personagem.'),
-  profession: z.string().trim().min(1, 'Selecione uma profissao.'),
   runMode: runModeSchema,
   daysAlive: survivalMetricSchema,
   zombiesKilled: survivalMetricSchema,
+});
+
+export const professionStepSchema = z.object({
+  profession: professionSchema,
 });
 
 export const appearanceStepSchema = z.object({
@@ -38,6 +42,7 @@ export const skillsStepSchema = z.object({
 });
 
 export const characterCreationSchema = basicInfoStepSchema
+  .merge(professionStepSchema)
   .merge(appearanceStepSchema)
   .merge(locationStepSchema)
   .merge(traitsStepSchema)

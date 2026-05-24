@@ -170,6 +170,14 @@ Motivo: as mesmas habilidades precisam aparecer com a mesma ordem e agrupamento 
 
 Tradeoff: habilidades antigas fora do catalogo atual sao preservadas no JSON local quando possivel, mas a interface exibe apenas o catalogo vigente, normalizando IDs antigos conhecidos.
 
+## ADR-024: Catalogo Compartilhado de Profissoes
+
+Decisao: centralizar profissoes em `src/shared/config/character-professions.ts`, com nomes formatados, icones estaticos e normalizacao de nomes antigos.
+
+Motivo: criacao, edicao, home e detalhe precisam exibir o mesmo nome persistido e a tela de detalhe precisa resolver o icone correspondente sem `require` dinamico.
+
+Tradeoff: a origem de icones nao trouxe um asset especifico para Desempregada(o); foi criado um fallback local estatico para manter a importacao segura ate o asset definitivo existir.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
-import { Alert, Image, Pressable, StyleSheet, View } from 'react-native';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, Image, ImageSourcePropType, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { useSession } from '@/features/auth';
 import { toAppError } from '@/shared/api/errors';
@@ -23,18 +23,20 @@ import {
   basicInfoStepSchema,
   characterCreationSchema,
   locationStepSchema,
+  professionStepSchema,
   skillsStepSchema,
   traitsStepSchema,
 } from '../schemas/character-creation-schemas';
 import { CharacterCreationDraft, CharacterRunMode } from '../types';
 
-const totalSteps = 6;
+const totalSteps = 7;
 
 export function CharacterCreationScreen() {
   const router = useRouter();
   const { editId } = useLocalSearchParams<{ editId?: string }>();
   const characterId = Array.isArray(editId) ? editId[0] : editId;
   const isEditMode = Boolean(characterId);
+  const scrollRef = useRef<ScrollView>(null);
   const { session } = useSession();
   const userId = session?.user.id;
   const { draft, setDraft, isHydrated, clearDraft } = useCharacterCreationDraft(
@@ -83,6 +85,13 @@ export function CharacterCreationScreen() {
       ...values,
     }));
     setStepError(null);
+  }
+
+  function handleSelectProfession(profession: string) {
+    updateDraft({ profession });
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }, 100);
   }
 
   function toggleSkillSection(sectionId: string) {
@@ -221,7 +230,7 @@ export function CharacterCreationScreen() {
   }
 
   return (
-    <Screen scroll>
+    <Screen scroll scrollRef={scrollRef}>
       <View style={styles.header}>
         <Pressable
           accessibilityLabel="Voltar"
@@ -246,6 +255,7 @@ export function CharacterCreationScreen() {
           setTraitSearch,
           expandedSkillSectionIds,
           toggleSkillSection,
+          onSelectProfession: handleSelectProfession,
           updateDraft,
         })}
         {stepError ? <Text style={styles.error}>{stepError}</Text> : null}
@@ -271,6 +281,7 @@ type RenderStepParams = {
   setTraitSearch: (value: string) => void;
   expandedSkillSectionIds: string[];
   toggleSkillSection: (sectionId: string) => void;
+  onSelectProfession: (profession: string) => void;
   stepIndex: number;
   updateDraft: (values: Partial<CharacterCreationDraft>) => void;
 };
@@ -283,6 +294,7 @@ function renderStep({
   setTraitSearch,
   expandedSkillSectionIds,
   toggleSkillSection,
+  onSelectProfession,
   updateDraft,
 }: RenderStepParams) {
   if (stepIndex === 0) {
@@ -295,16 +307,6 @@ function renderStep({
           placeholder="Maria Knox"
           value={draft.name}
         />
-        <FieldSection title="Profissão">
-          {creationCatalog.professions.map((profession) => (
-            <OptionChip
-              key={profession}
-              label={profession}
-              selected={draft.profession === profession}
-              onPress={() => updateDraft({ profession })}
-            />
-          ))}
-        </FieldSection>
         <OptionGroup
           options={creationCatalog.runModes}
           selected={draft.runMode}
@@ -336,6 +338,25 @@ function renderStep({
   if (stepIndex === 1) {
     return (
       <View style={styles.step}>
+        <Text variant="subtitle">Profissão</Text>
+        <View style={styles.professionList}>
+          {creationCatalog.professions.map((profession) => (
+            <ProfessionOption
+              key={profession.id}
+              icon={profession.icon}
+              label={profession.name}
+              selected={draft.profession === profession.name}
+              onPress={() => onSelectProfession(profession.name)}
+            />
+          ))}
+        </View>
+      </View>
+    );
+  }
+
+  if (stepIndex === 2) {
+    return (
+      <View style={styles.step}>
         <Text variant="subtitle">Aparencia</Text>
         <PortraitCarousel selected={draft.avatarId} onSelect={(avatarId) => updateDraft({ avatarId })} />
         <OptionGroup
@@ -348,7 +369,7 @@ function renderStep({
     );
   }
 
-  if (stepIndex === 2) {
+  if (stepIndex === 3) {
     return (
       <View style={styles.step}>
         <Text variant="subtitle">Localização</Text>
@@ -378,7 +399,7 @@ function renderStep({
     );
   }
 
-  if (stepIndex === 3) {
+  if (stepIndex === 4) {
     return (
       <View style={styles.step}>
         <Text variant="subtitle">Traços</Text>
@@ -394,7 +415,7 @@ function renderStep({
     );
   }
 
-  if (stepIndex === 4) {
+  if (stepIndex === 5) {
     return (
       <View style={styles.step}>
         <Text variant="subtitle">Habilidades</Text>
@@ -498,6 +519,32 @@ function OptionGroup({ options, selected, title, onSelect }: OptionGroupProps) {
         <OptionChip key={option} label={option} selected={selected === option} onPress={() => onSelect(option)} />
       ))}
     </FieldSection>
+  );
+}
+
+type ProfessionOptionProps = {
+  icon: ImageSourcePropType;
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+};
+
+function ProfessionOption({ icon, label, selected, onPress }: ProfessionOptionProps) {
+  return (
+    <Pressable
+      accessibilityLabel={label}
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.professionOption,
+        selected ? styles.professionOptionSelected : null,
+        pressed ? styles.pressed : null,
+      ]}
+    >
+      <Image accessibilityLabel={`Ícone ${label}`} source={icon} style={styles.professionIcon} />
+      <Text style={[styles.professionName, selected ? styles.professionNameSelected : null]}>{label}</Text>
+    </Pressable>
   );
 }
 
@@ -659,6 +706,7 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
 function getStepSchema(stepIndex: number) {
   const schemas = [
     basicInfoStepSchema,
+    professionStepSchema,
     appearanceStepSchema,
     locationStepSchema,
     traitsStepSchema,
@@ -828,6 +876,35 @@ const styles = StyleSheet.create({
   },
   skillName: {
     fontWeight: '700',
+  },
+  professionIcon: {
+    height: 36,
+    width: 36,
+  },
+  professionList: {
+    gap: spacing.sm,
+  },
+  professionName: {
+    flex: 1,
+    fontWeight: '700',
+  },
+  professionNameSelected: {
+    color: colors.background,
+  },
+  professionOption: {
+    alignItems: 'center',
+    backgroundColor: colors.backgroundElevated,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: spacing.md,
+    minHeight: 56,
+    padding: spacing.md,
+  },
+  professionOptionSelected: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
   },
   skillControls: {
     alignItems: 'center',

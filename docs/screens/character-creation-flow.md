@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Criar ou futuramente editar um personagem via wizard linear de seis passos.
+Criar ou editar um personagem via wizard linear.
 
 ## Comportamento Geral
 
@@ -10,12 +10,13 @@ Todas as etapas usam background dark, header com back, título `Novo Personagem`
 
 ## Etapas
 
-1. Informações básicas: nome e profissão.
-2. Aparência: portrait e gênero.
-3. Localização: cidade de spawn e cidade atual.
-4. Traços: positivos e negativos.
-5. Habilidades: lista de habilidades agrupadas em seções recolhíveis.
-6. Resumo: confirmação e criação.
+1. Informações básicas: nome, modo da run e métricas.
+2. Profissão: lista com ícones.
+3. Aparência: portrait e gênero.
+4. Localização: cidade inicial e cidade atual.
+5. Traços: positivos e negativos.
+6. Habilidades: lista de habilidades agrupadas em seções recolhíveis.
+7. Resumo: confirmação e criação.
 
 ## Estados
 

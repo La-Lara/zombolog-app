@@ -1,4 +1,5 @@
 import { fireEvent, waitFor } from '@testing-library/react-native';
+import { ScrollView } from 'react-native';
 
 import { useSessionStore } from '@/features/auth/store/session-store';
 import { makeUserSession } from '@/test/factories/session-factory';
@@ -39,7 +40,7 @@ describe('CharacterCreationScreen', () => {
     mockParams = { editId: 'character-1' };
     jest.spyOn(characterCreationApi, 'getCharacterDraft').mockResolvedValueOnce({
       name: 'Maria Knox',
-      profession: 'Carpinteira',
+      profession: 'Carpinteira(o)',
       runMode: 'Outbreak',
       avatarId: 'CharacterF',
       gender: 'Feminino',
@@ -61,7 +62,7 @@ describe('CharacterCreationScreen', () => {
     expect(await screen.findByText('Editar Personagem')).toBeTruthy();
     expect(screen.getByDisplayValue('Maria Knox')).toBeTruthy();
 
-    for (let step = 0; step < 5; step += 1) {
+    for (let step = 0; step < 6; step += 1) {
       fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
     }
 
@@ -74,7 +75,7 @@ describe('CharacterCreationScreen', () => {
           characterId: 'character-1',
           ownerId: 'user-1',
           name: 'Maria Knox',
-          profession: 'Carpinteira',
+          profession: 'Carpinteira(o)',
           runMode: 'Outbreak',
           initialCity: 'Rosewood',
           daysAlive: 18,
@@ -91,6 +92,10 @@ describe('CharacterCreationScreen', () => {
   });
 
   it('requires run mode before creating and sends it in the creation payload', async () => {
+    jest.useFakeTimers();
+    const scrollToEndSpy = jest
+      .spyOn(ScrollView.prototype, 'scrollToEnd')
+      .mockImplementation(() => undefined);
     const createCharacterSpy = jest
       .spyOn(characterCreationApi, 'createCharacter')
       .mockResolvedValueOnce({ id: 'character-2' });
@@ -102,13 +107,28 @@ describe('CharacterCreationScreen', () => {
     fireEvent.changeText(screen.getByLabelText('Nome'), 'Ana Brooks');
     fireEvent.changeText(screen.getByLabelText('Dias de Sobrevivência'), '31');
     fireEvent.changeText(screen.getByLabelText('Zumbis abatidos'), '221');
-    fireEvent.press(screen.getByRole('button', { name: 'Veterana' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
 
     expect(await screen.findByText('Selecione o modo da run.')).toBeTruthy();
     expect(createCharacterSpy).not.toHaveBeenCalled();
 
     fireEvent.press(screen.getByRole('button', { name: 'Sandbox' }));
+
+    fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
+    expect(screen.getByText('Desempregada(o)')).toBeTruthy();
+    expect(screen.getByText('Assistente Técnica(o)')).toBeTruthy();
+    expect(screen.getByText('Veterana(o)')).toBeTruthy();
+    expect(screen.getByLabelText('Ícone Veterana(o)')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Veterana(o)' }).props.accessibilityState).toEqual({
+      selected: false,
+    });
+
+    fireEvent.press(screen.getByRole('button', { name: 'Veterana(o)' }));
+    jest.runOnlyPendingTimers();
+    expect(scrollToEndSpy).toHaveBeenCalledWith({ animated: true });
+    expect(screen.getByRole('button', { name: 'Veterana(o)' }).props.accessibilityState).toEqual({
+      selected: true,
+    });
 
     fireEvent.press(screen.getByRole('button', { name: 'Proximo' }));
     fireEvent.press(screen.getByRole('button', { name: 'Proximo retrato' }));
@@ -148,7 +168,7 @@ describe('CharacterCreationScreen', () => {
         payload: expect.objectContaining({
           ownerId: 'user-1',
           name: 'Ana Brooks',
-          profession: 'Veterana',
+          profession: 'Veterana(o)',
           runMode: 'Sandbox',
           avatarId: 'CharacterM',
           gender: 'Feminino',
@@ -164,5 +184,7 @@ describe('CharacterCreationScreen', () => {
         }),
       });
     });
+    scrollToEndSpy.mockRestore();
+    jest.useRealTimers();
   });
 });

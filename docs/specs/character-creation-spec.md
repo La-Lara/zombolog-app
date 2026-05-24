@@ -2,22 +2,27 @@
 
 ## Fluxo
 
-Criação em wizard de seis etapas com header `Novo Personagem` e indicador `n / 6`.
+Criação em wizard com header `Novo Personagem` e indicador de etapa.
 
 ## Etapa 1: Informações Básicas
 
 Campos:
 
 - nome do personagem;
-- profissão.
+- modo da run;
+- dias de sobrevivência;
+- zumbis abatidos.
 
 Validações:
 
 - nome obrigatório;
-- profissão obrigatória;
 - bloquear próximo até dados válidos.
 
-## Etapa 2: Aparência
+## Etapa 2: Profissão
+
+Lista profissões com ícone, nome formatado e seleção única. Nenhuma profissão inicia selecionada em criação.
+
+## Etapa 3: Aparência
 
 Campos:
 
@@ -29,18 +34,18 @@ UX:
 - preview deve atualizar imediatamente.
 - seletores devem ser consistentes com `SelectField`.
 
-## Etapa 3: Localização
+## Etapa 4: Localização
 
 Campos:
 
-- cidade de spawn;
+- cidade inicial;
 - cidade atual.
 
 Regra:
 
-- cidade atual inicia igual à cidade de spawn.
+- cidade atual inicia igual à cidade inicial.
 
-## Etapa 4: Traços
+## Etapa 5: Traços
 
 Permite adicionar/remover traços positivos e negativos. O mockup mostra exemplos: `Fast Reader`, `Fit`, `Organized`, `Lucky`, `High Thirst`, `Slow Reader`.
 
@@ -50,11 +55,11 @@ Regras:
 - separar positivos e negativos;
 - futura regra de pontos deve ser adicionada quando o domínio for fechado.
 
-## Etapa 5: Habilidades
+## Etapa 6: Habilidades
 
 Lista habilidades em seções recolhíveis com nome, controle de nível e valor numérico. No mockup todos começam em `0` durante criação.
 
-## Etapa 6: Resumo
+## Etapa 7: Resumo
 
 Mostra avatar, nome, profissão, localização, dias de sobrevivência, zumbis abatidos e traços selecionados. Botão final `Criar Personagem`.
 

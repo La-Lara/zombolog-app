@@ -1,6 +1,7 @@
 import { httpClient } from '@/shared/api/http-client';
 import { env } from '@/shared/config/env';
 import { getCharacterPortrait } from '@/shared/config/character-portraits';
+import { normalizeProfessionName } from '@/shared/config/character-professions';
 import { clampSkillLevel, normalizeSkillId } from '@/shared/config/character-skills';
 import { normalizeTraitId, resolveCharacterTraits } from '@/shared/config/character-traits';
 import { localCharacterRepository, LocalCharacter, LocalSkill, LocalTrait } from '@/shared/storage';
@@ -62,7 +63,7 @@ function toDraftFromLocal(character: LocalCharacter): CharacterCreationDraft {
   return {
     ...defaultDraftWithCurrentCatalog(),
     name: character.name,
-    profession: character.profession,
+    profession: normalizeProfessionName(character.profession),
     runMode: character.runMode,
     gender: character.gender,
     avatarId: getCharacterPortrait(character.avatarId).id,
@@ -87,7 +88,7 @@ function toDraftFromDto(character: CharacterDraftDto): CharacterCreationDraft {
   return {
     ...defaultDraftWithCurrentCatalog(),
     name: character.name,
-    profession: character.profession,
+    profession: normalizeProfessionName(character.profession),
     runMode: toRunMode(character.run_mode),
     avatarId: getCharacterPortrait(character.avatar_id).id,
     gender: character.gender ?? creationCatalog.genders[0],

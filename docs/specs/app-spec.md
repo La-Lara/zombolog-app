@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-App mobile companion para Project Zomboid focado em criar, consultar e compartilhar perfis de sobreviventes. O mockup define uma experiência dark, densa e temática, com autenticação simples, lista de personagens, detalhe de personagem e criação guiada em seis etapas.
+App mobile companion para Project Zomboid focado em criar, consultar e compartilhar perfis de sobreviventes. O mockup define uma experiência dark, densa e temática, com autenticação simples, lista de personagens, detalhe de personagem e criação guiada.
 
 ## Usuários e Objetivos
 
@@ -28,7 +28,7 @@ App mobile companion para Project Zomboid focado em criar, consultar e compartil
 1. Login ou cadastro.
 2. Home lista personagens do usuário.
 3. Usuário abre detalhes, edita ou cria novo personagem.
-4. Criação percorre seis passos: básico, aparência, localização, traços, habilidades e resumo.
+4. Criação percorre passos guiados: básico, profissão, aparência, localização, traços, habilidades e resumo.
 5. Detalhes permitem acessar seções de atributos, traços, informações gerais, equipamento, preferências e descrição.
 6. Compartilhamento social será acionado a partir do detalhe/resumo, embora não esteja visível no mockup.
 

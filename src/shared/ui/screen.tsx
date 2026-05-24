@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, RefObject } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,16 +8,19 @@ import { AppBackground } from './app-background';
 
 type ScreenProps = PropsWithChildren<{
   scroll?: boolean;
+  scrollRef?: RefObject<ScrollView | null>;
 }>;
 
-export function Screen({ children, scroll = false }: ScreenProps) {
+export function Screen({ children, scroll = false, scrollRef }: ScreenProps) {
   const content = <View style={styles.content}>{children}</View>;
 
   return (
     <AppBackground>
       <SafeAreaView style={styles.safeArea}>
         {scroll ? (
-          <ScrollView contentContainerStyle={styles.scrollContent}>{content}</ScrollView>
+          <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollContent}>
+            {content}
+          </ScrollView>
         ) : (
           content
         )}

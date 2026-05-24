@@ -1,4 +1,5 @@
 import { CharacterSkillSection } from '@/shared/config/character-skills';
+import { CharacterProfession } from '@/shared/config/character-professions';
 import { LocalCharacterRunMode, LocalSkill, LocalTrait } from '@/shared/storage';
 
 export type CharacterRunMode = LocalCharacterRunMode;
@@ -29,7 +30,7 @@ export type CharacterUpdatePayload = CharacterCreationPayload & {
 };
 
 export type CreationCatalog = {
-  professions: string[];
+  professions: CharacterProfession[];
   runModes: CharacterRunMode[];
   cities: string[];
   avatars: string[];

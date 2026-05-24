@@ -5,7 +5,7 @@ import { characterCreationApi } from './character-creation-api';
 const basePayload = {
   ownerId: 'user-1',
   name: 'Ana Brooks',
-  profession: 'Veterana',
+  profession: 'Veterana(o)',
   runMode: 'Sandbox' as const,
   avatarId: 'CharacterF',
   gender: 'Feminino',
@@ -32,6 +32,7 @@ describe('characterCreationApi', () => {
 
     expect(createSpy).toHaveBeenCalledWith(
       expect.objectContaining({
+        profession: 'Veterana(o)',
         daysAlive: 31,
         zombiesKilled: 221,
         skills: expect.arrayContaining([
@@ -98,5 +99,6 @@ describe('characterCreationApi', () => {
 
     expect(draft?.skills.axes).toBe(4);
     expect(draft?.skills.hunting).toBe(2);
+    expect(draft?.profession).toBe('Bombeira(o)');
   });
 });

@@ -38,6 +38,7 @@ describe('characterApi', () => {
       ownerId: 'user-1',
     });
 
+    expect(character?.profession).toBe('Bombeira(o)');
     expect(character?.skills).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ id: 'axes', name: 'Machados', level: 4 }),
