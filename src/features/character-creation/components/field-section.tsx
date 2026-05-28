@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   error: {
     color: colors.danger,

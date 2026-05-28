@@ -48,7 +48,7 @@ export function Button({
       }}
       {...props}
     >
-      {isLoading ? <ActivityIndicator color={colors.background} /> : <Text style={styles.label}>{title}</Text>}
+      {isLoading ? <ActivityIndicator color={colors.primary} /> : <Text style={styles.label}>{title}</Text>}
     </Pressable>
   );
 }
@@ -57,27 +57,28 @@ const styles = StyleSheet.create({
   base: {
     alignItems: 'center',
     borderRadius: radius.md,
-    minHeight: 48,
+    borderWidth: 1,
+    minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
   },
   primary: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.primary,
   },
   secondary: {
-    backgroundColor: colors.surfaceMuted,
+    backgroundColor: colors.backgroundElevated,
     borderColor: colors.border,
-    borderWidth: 1,
   },
   pressed: {
-    opacity: 0.85,
+    backgroundColor: colors.surfacePressed,
   },
   disabled: {
     opacity: 0.5,
   },
   label: {
-    color: colors.background,
+    color: colors.text,
     fontWeight: '700',
   },
 });

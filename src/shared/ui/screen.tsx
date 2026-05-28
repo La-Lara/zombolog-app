@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    gap: spacing.md,
-    padding: spacing.md,
+    gap: spacing.lg,
+    padding: spacing.lg,
   },
   scrollContent: {
     flexGrow: 1,

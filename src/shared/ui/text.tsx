@@ -22,10 +22,11 @@ export function Text({ children, style, variant = 'body', ...props }: TextProps)
 const styles = StyleSheet.create({
   base: {
     color: colors.text,
+    letterSpacing: 0,
   },
   title: {
     fontSize: typography.title,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   subtitle: {
     fontSize: typography.subtitle,

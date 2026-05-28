@@ -178,6 +178,14 @@ Motivo: criacao, edicao, home e detalhe precisam exibir o mesmo nome persistido 
 
 Tradeoff: a origem de icones nao trouxe um asset especifico para Desempregada(o); foi criado um fallback local estatico para manter a importacao segura ate o asset definitivo existir.
 
+## ADR-025: Tema Visual Inspirado em Menus de Jogo
+
+Decisao: concentrar a mudanca visual nos tokens de tema e componentes base, usando paleta quase preta, bordas cinza, paineis retangulares compactos e destaque ambar discreto.
+
+Motivo: a Parte 1 pede apenas base visual e estilo. Centralizar a direcao no tema reduz retrabalho nas proximas partes e evita tocar em regras de negocio, persistencia, schemas, modelos ou navegacao.
+
+Tradeoff: alguns ajustes locais continuam necessarios em componentes que tinham estilos proprios de menu, habilidades e wizard. Eles devem permanecer visuais e pequenos.
+
 ## Duvidas Abertas
 
 - Haverá backend no MVP ou dados locais primeiro?

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
   },
   pressed: {
-    opacity: 0.8,
+    backgroundColor: colors.surfacePressed,
   },
   disabled: {
     opacity: 0.6,

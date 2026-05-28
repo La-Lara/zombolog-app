@@ -45,10 +45,14 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   positive: {
-    backgroundColor: 'rgba(143, 191, 111, 0.16)',
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.primary,
+    borderWidth: 1,
   },
   negative: {
-    backgroundColor: 'rgba(214, 107, 95, 0.16)',
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.danger,
+    borderWidth: 1,
   },
   points: {
     fontSize: 12,

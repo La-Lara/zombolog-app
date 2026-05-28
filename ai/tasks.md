@@ -203,6 +203,17 @@
 - [x] Atualizar schemas, seeds e testes afetados.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: Base Visual Game UI
+
+- [x] Ler arquitetura, estrutura de pastas e convencoes do projeto.
+- [x] Analisar componentes e telas atuais sem alterar regras de negocio.
+- [x] Analisar referencias `MenuInsideProfile.JPG`, `MenuSkills1.JPG` e `MenuSkills2.JPG`.
+- [x] Atualizar tokens de tema para paleta escura, compacta e com destaque ambar.
+- [x] Refatorar componentes base de tela, card, texto, botao e input.
+- [x] Ajustar aparencia inicial de headers, listas, cards, menus, accordions e medidores.
+- [x] Preservar navegacao, persistencia, schemas, modelos e regras existentes.
+- [x] Validar com typecheck, lint e testes aplicaveis.
+
 ## Backlog
 
 ### Sharing e Refinamentos

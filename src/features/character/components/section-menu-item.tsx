@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     gap: spacing.md,
-    minHeight: 68,
+    minHeight: 56,
     padding: spacing.md,
   },
   pressed: {
-    opacity: 0.86,
+    backgroundColor: colors.surfacePressed,
   },
   content: {
     flex: 1,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   chevron: {
     color: colors.primary,
-    fontSize: 28,
-    lineHeight: 28,
+    fontSize: 22,
+    lineHeight: 22,
   },
 });

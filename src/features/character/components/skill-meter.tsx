@@ -39,12 +39,10 @@ export function SkillMeter({ skill, showCategory = true }: SkillMeterProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundElevated,
-    borderColor: colors.border,
-    borderRadius: radius.md,
-    borderWidth: 1,
+    backgroundColor: 'transparent',
     gap: spacing.sm,
-    padding: spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   header: {
     alignItems: 'flex-start',
@@ -66,18 +64,18 @@ const styles = StyleSheet.create({
   },
   track: {
     flexDirection: 'row',
-    gap: spacing.xs,
+    gap: 3,
   },
   slot: {
-    backgroundColor: colors.backgroundElevated,
+    backgroundColor: colors.background,
     borderColor: colors.border,
     borderRadius: radius.sm,
     borderWidth: 1,
     flex: 1,
-    height: 12,
+    height: 14,
   },
   slotFilled: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    borderColor: colors.primaryPressed,
   },
 });

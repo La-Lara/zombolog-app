@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     gap: spacing.md,
-    padding: spacing.md,
+    padding: spacing.sm,
   },
   pressed: {
-    opacity: 0.86,
+    backgroundColor: colors.surfacePressed,
   },
   content: {
     flex: 1,
-    gap: spacing.md,
+    gap: spacing.sm,
     minWidth: 0,
   },
   titleRow: {
@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   name: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
   },
   metrics: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.md,
+    gap: spacing.sm,
   },
 });
