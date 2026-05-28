@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 1,
     gap: spacing.sm,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
 });

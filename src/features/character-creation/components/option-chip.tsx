@@ -34,17 +34,17 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 1,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   selected: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.surfacePressed,
     borderColor: colors.primary,
   },
   selectedLabel: {
-    color: colors.background,
+    color: colors.primaryPressed,
     fontWeight: '700',
   },
   pressed: {
-    opacity: 0.82,
+    backgroundColor: colors.surfacePressed,
   },
 });

@@ -36,7 +36,7 @@ function ProjectLogo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: spacing.lg,
+    gap: spacing.md,
     justifyContent: 'center',
     paddingVertical: spacing.xl,
   },
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   logoMark: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: 2,
     borderWidth: 1,
     color: colors.primary,
     fontSize: 28,
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   card: {
-    gap: spacing.md,
+    gap: spacing.sm,
   },
 });

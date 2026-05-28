@@ -27,17 +27,17 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   alive: {
-    backgroundColor: 'rgba(143, 191, 111, 0.16)',
+    backgroundColor: colors.backgroundElevated,
     borderColor: colors.primary,
     borderWidth: 1,
   },
   dead: {
-    backgroundColor: 'rgba(214, 107, 95, 0.16)',
+    backgroundColor: colors.backgroundElevated,
     borderColor: colors.danger,
     borderWidth: 1,
   },
   missing: {
-    backgroundColor: 'rgba(213, 168, 79, 0.16)',
+    backgroundColor: colors.backgroundElevated,
     borderColor: colors.warning,
     borderWidth: 1,
   },

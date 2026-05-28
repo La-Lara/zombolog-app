@@ -96,6 +96,12 @@ Status: concluida na branch `implement-p1-professions`.
 
 Atualizar o catalogo completo de profissoes com icones, separar profissao em etapa exclusiva do wizard e normalizar exibicao/persistencia em criacao, edicao e detalhe.
 
+### Task Atual: Base Visual Game UI
+
+Status: concluida na branch `implement-p1-game-ui-theme`.
+
+Criar/refatorar a base visual inspirada nos menus internos de Project Zomboid, centralizando tema escuro, paineis compactos, botoes retangulares, bordas finas, tipografia menor e destaques ambar sem alterar regras de negocio, persistencia, schemas, modelos, navegacao ou logica de funcionamento.
+
 ### Task Anterior: Metricas Editaveis de Sobrevivencia
 
 Status: concluida na branch `implement-p1-survival-metrics`.

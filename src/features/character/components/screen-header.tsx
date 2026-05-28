@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: 44,
   },
   pressed: {
-    opacity: 0.82,
+    backgroundColor: colors.surfacePressed,
   },
   disabled: {
     opacity: 0.5,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
   },

@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
     flexBasis: '47%',
     flexGrow: 1,
     gap: spacing.xs,
-    minHeight: 64,
-    padding: spacing.sm,
+    minHeight: 52,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   value: {
     fontWeight: '700',
