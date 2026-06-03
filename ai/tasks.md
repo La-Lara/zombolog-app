@@ -214,6 +214,15 @@
 - [x] Preservar navegacao, persistencia, schemas, modelos e regras existentes.
 - [x] Validar com typecheck, lint e testes aplicaveis.
 
+## P1: README com Apresentacao e Telas
+
+- [x] Ler arquitetura, estrutura de pastas e convencoes do projeto.
+- [x] Criar branch propria seguindo o gitflow do projeto.
+- [x] Mapear os prints em `docs/PrintTelasDoApp`.
+- [x] Atualizar o README com apresentacao resumida do projeto.
+- [x] Demonstrar a navegacao de telas usando as imagens locais.
+- [x] Validar alteracoes documentais.
+
 ## Backlog
 
 ### Sharing e Refinamentos
