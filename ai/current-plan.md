@@ -114,6 +114,12 @@ Status: concluida na branch `implement-p1-character-traits`.
 
 Corrigir selecao, persistencia, edicao e exibicao de tracos do personagem, atualizando o catalogo completo de tracos positivos/negativos e mantendo compatibilidade com registros antigos.
 
+### Task Atual: README com Apresentacao e Telas
+
+Status: concluida na branch `implement-p1-readme`.
+
+Atualizar o README com apresentacao resumida do projeto e demonstracao da navegacao usando os prints locais em `/docs/PrintTelasDoApp`.
+
 ## Fontes de Verdade
 
 - Produto: `/docs/specs/app-spec.md`.
